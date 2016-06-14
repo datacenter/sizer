@@ -1,0 +1,78 @@
+<div  class="addServer clear wid99" id="addSwitchWindow">
+   
+              <form class="formDataStyle" name="addSwitchForm" ng-submit="addSwitchForm.$valid && saveAddSwitch($event)">
+					     <!-- <h4 class="sectionTitle">Adding Switch</h4>-->
+                                <div class="clear overflowHidden">
+                                
+                                	<dl class="serverDevice lightGray">
+                                 	 <dd>
+                                        <div class="wid40 pull-left">Device Type</div>
+                                        <div class="wid50 pull-left " >
+                                        		  <select required  class="text_field" ng-model="switchDetails.deviceType" ng-change="getSwitchTemplate()"> 
+                                                     <option value="" selected hidden>Device Type</option>                                                
+                                                     <option>Leaf</option>
+                                                     <option>Spine</option>
+                                                    </select> 
+                                        </div>
+                                    </dd>
+                                    <dd>
+                                        <div class="wid40 pull-left">Template</div>
+                                        <div class="wid50 pull-left " >
+                                        		<select required  class="text_field" ng-model="switchDetails.templateType" ng-change="updateSwitchInstanceDetails()"> 
+                                                   <option value="" selected hidden>Template</option>                                                  
+                                                   <option ng-repeat = "switchName in switchTemplateTypes" value="{{switchName.id}}">{{switchName.name}}</option>
+                                               	</select> 
+                                        </div>
+                                    </dd>
+                                     <div class="popupSubTitle wid50">Instance Details</div>
+                                      <dd>
+                                        <div class="wid40 pull-left">RUs:</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                        		 <input id="switchrus" type="text" class="text_field" ng-model="switchDetails.rus" required readonly>
+                                        </div>
+                                      </dd>
+                                         <dd>
+                                        <div class="wid40 pull-left">Power</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                            <input id="switchpower" type="text" class="text_field" value="{{(switchDetails.power != Null)? switchDetails.power+' W':' '}}" required readonly>
+                                        </div>
+                                      	</dd>
+                                        <dd>
+                                        <div class="wid40 pull-left">Cooling</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                            <input id="switchcooling" type="text" class="text_field" value="{{(switchDetails.cooling != Null)? switchDetails.cooling+' BTU/hr':' '}} " required readonly>
+                                        </div>
+                                  	</dd>
+                           </dl> 
+                      </div>
+                               
+                                <div class="popupSubTitle margin_top-10 brdBTM_none">Ports</div>
+                                <div class="">  
+                                    <table class="table" cellpadding="0" cellspacing="0" width="100%"> 
+                                        <thead>
+                                            <!--th>Port group</th-->
+                                            <th>Speed</th>
+                                            <th>Ports</th>
+                                            <th>Connector</th> 
+                                        </thead>
+                                        <tbody>
+                                         <tr  ng-repeat="switch in switchDetails.list">
+                                            <!--td>{{switch.name}}</td-->
+                                            <td>{{switch.speed}}</td>
+                                            <td>{{switch.numOfPorts}}</td>
+                                            <td>{{switch.type}}</td>
+                                            
+                                            <!--td nowrap><i class="fa fa-pencil cursor"></i> <i class="fa fa-trash cursor"  ng-click="removeSwitchRow($index)"  ></i></td-->
+                                            </tr>
+                                           
+                                        </tbody>
+                                    </table>
+ 
+                              </div> 
+                        <div class="pull-right popupButtonFooter">
+                                <input type="button" class="btn cancel_btn width100"   value="Cancel" ng-click="cancelAddSwitch()" /> &nbsp;  
+                                <input type="submit" class="btn save_btn width100" value="Save"/> 
+                         </div>
+               	 </form>
+                        
+      </div>

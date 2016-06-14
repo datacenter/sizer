@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="aci.common.min.css" />
+    <link rel="stylesheet" href="aci.material.min.css" />
+
+    <script src="jquery.min.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="aci.all.min.js"></script>
+</head>
+<body>
+<div id="example" ng-app="ACIDemos">
+    <div class="demo-section" ng-controller="MyCtrl">
+        <div>
+            <h4>Basic Button</h4>
+            <p>
+                <aci-button class="a-primary" ng-click="onClick1()">Primary Button</aci-button>
+                <aci-button on-click="onClick2()">Button</aci-button>
+            </p>
+            
+            <h4>Disabled buttons</h4>
+            <p>
+                <aci-button enable="false" class="a-primary">Disabled Primary Button</aci-button>
+                <aci-button enable="false">Disabled Button</aci-button>
+            </p>
+            <p>
+                <aci-button ng-disabled="disabled">Support for ngDisabled</aci-button><br />
+                <label><input type="checkbox" ng-model="disabled" /> Disable</label>
+            </p>
+            
+            <h4>Buttons with icons</h4>
+            <p>
+                <aci-button sprite-css-class="'a-icon a-i-funnel'">Filter</aci-button>
+                <aci-button icon="'funnel-clear'">Clear Filter</aci-button>
+                <aci-button sprite-css-class="'a-icon a-i-refresh'"><span class="a-sprite">Refresh</span></aci-button>
+            </p>
+    </div>
+        
+    <style>
+        .demo-section p {
+            margin: 0 0 30px;
+            line-height: 50px;
+        }
+        .demo-section p .a-button {
+            margin: 0 10px 0 0;
+        }
+        .a-primary {
+            min-width: 150px;
+        }                
+    </style>
+</div>
+
+<script>
+  angular.module("ACIDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.onClick1 = function() {
+            alert("Primary button click");
+          };
+          $scope.onClick2 = function() {
+            alert("Second button click");
+          };
+      })
+</script>
+
+
+</body>
+</html>

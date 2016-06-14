@@ -1,0 +1,26 @@
+<!--<div class="aci-dialog-content-div">
+    <form class="formDataStyle" name="cloneRoomForm"  ng-submit="cloneRoomForm.$valid && validateCloneRoom(roomDetailsArr[selected].id,roomDetailsArr.name,$index)" id="deleteRoomForm">    
+        <div class="aci-dialog-content-span">
+            <label class="deleteFormLabels" id="cloneRoomLabel"></label>            
+        </div>
+       <br>
+        <div class="aci-dialog-content-span margin_top-10">
+            <div class="window-button">
+                <input class = "a-button yes_btn" type="submit" value="Yes"/>
+                <span><input class = "a-button no_btn" ng-click="onCancelCloneRoom()" value="No"/></span>
+            </div>
+       </div>s
+    </form>
+</div>-->
+
+<div class="aci-dialog-content-div">
+        <div class="aci-dialog-content-span">
+            <label style="margin-left:10px;font-weight:normal" ng-bind="cloneprojLabel"></label>
+        </div>
+		<br/>			
+
+        <div class="aci-dialog-content-span clone-project-footer">
+            <input type="button" class = "a-button clone-delete-project-buttons" ng-click="duplicateRoom()" value="Yes"/ style="margin-left:19%">
+            <span><input type="button" class = "a-button clone-delete-project-buttons" ng-click="onCancelCloneRoom()" value="No"></span>
+        </div>
+</div>

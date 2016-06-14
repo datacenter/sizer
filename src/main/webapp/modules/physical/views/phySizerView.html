@@ -1,0 +1,53 @@
+<div ng-include src="'modules/physical/views/racksList.html'" ng-show="room.roomDetailsScreen == true"></div> 
+ <div class="" ng-click="hidePolicy()">
+  	<!--<div class="list-container">
+     <div class="wid100 room_Scrollcontainer"  id="wid60scrollbar">--> 
+  <div class="list-container" id="roomScroll"  ng-style="{height:roomContainerHeight}">
+     <div class="wid100 room_Scrollcontainer"  id="wid60scrollbar">
+ <div class="roomCardContainer physicalContainer" ng-show="room.roomDetailsScreen != true;"> 
+ 	
+	 <ul> 
+	  <li ng-repeat="Room in roomDetailsArr" class="roomDetailsCard" ng-mouseover="actionDetails = true" ng-mouseleave="actionDetails = false">
+	  <div ng-show="$index !== editRoomIndex" class="position_relative">
+	  <div class="roomDropDownSpacing">
+	  <div class="roomTitle pull-left">{{Room.name}}</div>
+	  <div class="pull-right showIcons grayTextColor" ng-show="actionDetails">
+	  		
+	  		 <i class="tooltip" title="Clone Room"><span  class="fa fa-clone cursor"  ng-click="opencloneroomWindow(Room.id,Room.name)" title="" ></span></i>&nbsp; | &nbsp;
+	  		<i class="tooltip" title="Delete Room"><span  class="fa fa-trash cursor" title=""  ng-click="delRoom($index, Room.id)"></span></i>
+	  </div> 
+	  </div>
+	   
+		<div class="roomDetails clear"> <label class="pull-left">Rows</label><span class="addRoomYellowText">{{Room.noOfRows}}</span>
+		<a href="javascript:void(0)" ng-click="EditRoom($index,$event)" class="editRoomIcon pull-right"><i class="fa fa-pencil cursor"></i> Edit</a>
+		</div>
+		<div class="roomDetails"><label class="pull-left">Racks per row</label> <span class="addRoomYellowText">{{Room.noOfRacks}}</span> </div>
+		<div class="roomDetails" > <label class="pull-left">Rack Height</label><span class="addRoomYellowText">{{Room.rackType.type}}</span></div> 
+		<div class="roomDetails"><label class="pull-left">Policy</label><span class="addRoomYellowText">{{Room.policy.name}}</span></div>
+		<div class="viewRoom" ng-click="showRoomDetails($index)">View Room  </div>
+		</div>
+		<div ng-show="$index == editRoomIndex">
+		<span ng-include src="'modules/physical/views/addRoomForm.html'"></span>
+		</div>
+	     
+		</li>
+		</ul>
+
+
+	<div id="addRoom" ng-show="room.enterRoomDetails == false" ng-click="enableAddRoom()" > 
+		<div id="addRoomText"> 
+			<div>+</div>
+			Add Room
+		</div>
+	</div>
+	</div>
+
+	<div id="addRoomWin" class="addRoomWin" ng-hide="room.enterRoomDetails == false">
+	<span ng-include src="'modules/physical/views/addRoomForm.html'"></span>
+		
+	</div>
+	<div id="deleteRoomWindow" style="display:none;" ng-include src="'modules/physical/views/deleteRoom.html'" style="border-radius:4px"></div>
+	<div id="cloneRoomWindow" style="display:none;" ng-include src="'modules/physical/views/cloneRoom.html'" style="border-radius:4px"></div>
+</div>
+</div>	
+</div> 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="ACIDemos">
+    <div class="demo-section" ng-controller="MyCtrl">
+        <h4>Menu orientation</h4>
+        <select aci-drop-down-list aci-ng-model="menuOrientation" aci-value-primitive="true">
+            <option value="horizontal">Horizontal</option>
+            <option value="vertical">Vertical</option>
+        </select>
+        
+        <h4 style="padding-top: 2em;">Preview</h4>
+          <ul aci-menu 
+            aci-orientation="menuOrientation"
+            aci-rebind="menuOrientation"
+            aci-on-select="onSelect(aciEvent)">
+          <li>
+            Cisco
+            <ul>
+              <li>ACI
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                  <li>Item 4</li>
+                  <li>Item 5</li>
+                </ul>
+              </li>
+              <li>Sizer
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                  <li>Item 4</li>
+                  <li>Item 5</li>
+                </ul>
+              </li>
+              <li>Other
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                  <li>Item 4</li>
+                  <li>Item 5</li>
+                </ul>
+              </li>
+              <li>Accessories</li>
+            </ul>
+          </li>
+          <li>
+            Maple
+           <ul>
+              <li>ACI
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                  <li>Item 4</li>
+                  <li>Item 5</li>
+                </ul>
+              </li>
+              <li>Sizer
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                  <li>Item 4</li>
+                  <li>Item 5</li>
+                </ul>
+              </li>
+              <li>Other
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                  <li>Item 3</li>
+                  <li>Item 4</li>
+                  <li>Item 5</li>
+                </ul>
+              </li>
+              <li>Accessories</li>
+            </ul>
+			
+          </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+  angular.module("ACIDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.menuOrientation = "horizontal";
+          $scope.onSelect = function(ev) {
+              alert($(ev.item.firstChild).text());
+          };
+      })
+</script>
+
+
+</body>
+</html>

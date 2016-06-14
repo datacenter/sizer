@@ -1,0 +1,246 @@
+<div  class="aci-dialog-content-div terminateRow" id="terminateRoomWindow"  ng-click="hideTerminationroomPolicy(); hideteminationroomPolicy()"> 
+    <form class="formDataStyle" name="terminateRoomForm" ng-submit="terminateRoomForm.$valid && startTerminateRoom()" id="terminateRoom">
+        <div class="" > 
+          <ul class="rowTabs">
+              <li id="leafTab" class="rowtabActive" ng-click="terminateTabs('leafTab','leafContent')">Leafs</li>
+              <li id="spineTab" ng-click="terminateTabs('spineTab','spineContent')">Spines</li> 
+          </ul> 
+          <div class="clear overflowHidden innerBoxContainer brd">
+                <div id="leafContent" class="margin_top-10">
+                  <div class="margin_top_10">
+                  <p>Do you want to place new leafs or only terminate existing leafs</p>
+                    <label class="aci-radio-label radio-text-align">
+                       <input type="radio" class="aci-radio" checked="checked" ng-click="leafRadio1()" name="t1" value="1" /> 
+                        <span title=" ">Place & Terminate</span>
+                    </label> 
+                     <label class="aci-radio-label radio-text-align margin_left10">
+                       <input type="radio" class="aci-radio"  name="t1" value="2"  ng-click="leafRadio2()" /> 
+                        <span title=" ">Terminate existing leafs only</span>
+                    </label> 
+                </div>
+                <!--<div style="display:none" id="leaf_terminate">If the option is "No", then you can terminate using existing leaf ONLY!</div>-->
+      <!-- <fieldset class="field_set"> 
+          <legend> 
+                <div class="pull-left fancyCheckbox margin_left10">
+                      <input type="checkbox" checked id="terminaterow" ng-click="terminationRow()"  />  <label for="terminaterow">Terminate Row</label> 
+               </div>
+          </legend>-->
+      <div ng-hide="leafDetails">
+
+         <div class="textFieldContent" id="switchLeaf">
+    <div class="leafTerm" style="display:none"></div>
+       <dl class="clear ">
+            <dd>
+                <div class="wid25 pull-left"><span>Preferred Leaf</span><span class="error">&nbsp;*</span></div>
+                <div class="pull-left">
+                    
+                      <div class="select-style brd policyLeftSelect group colorBlue" id="leafId"  ng-click="rowTerminationPolicy(); $event.stopPropagation()">
+                            <input type="text"  id="terminateRowSelect" class="text_field wid90 preLeaf cursor" ng-class="{wid90: room.policyFlag == 'false'}" readonly   ng-model="terminateRoom.leafTemplate"></input>
+                        </div>
+                         <div class="policyDetails" id="policyDiv"  ng-show="room.policyleafDetail" style="width: 59.3%; margin-left:4.3% !important"> 
+                          <div class="list-container">
+                               <div class="wid100 left_Scrollcontainer"  id="wid60scrollbar">
+                                <ul> 
+                                        <li ng-click="selectRoomLeafPolicyDetails(showSwitchDetails.id, showSwitchDetails.name); $event.stopPropagation()" ng-repeat="showSwitchDetails in switchLeafTemplateTypes"> 
+                                         <div class="clear">
+                                          <h5 class="grayTextColor pull-left">{{showSwitchDetails.name}}</h5>  
+                                          <div class="pull-right rus_position">
+                                                <label>RUs :</label>
+                                                <label class="colorBlue">{{showSwitchDetails.physicalStats.noOfRus}}</label>
+                                          </div>
+                                          </div>
+                                            <div></div> 
+                                            <div class="clear overflowHidden">
+                                            <div class="pull-left" ng-repeat="switchPort in showSwitchDetails.defaultPortGroup"> 
+                                                <label> {{switchPort.speed}} : </label>
+                                                <label class="colorBlue width70">{{switchPort.numOfPorts}} {{switchPort.type}}</label> 
+                                            </div> 
+                                          </div>
+                                        </li> 
+                                </ul>
+                              </div>
+                            </div>
+                        </div>
+
+                 </div>
+
+           </dd>
+           <dd>
+                <div class="wid25 pull-left"><span>Algorithm</span><span class="error">&nbsp;*</span></div>
+                <div class="pull-left  group">
+                    <div class="select-style colorBlue actColor">
+                        <select id="terminateRowSelect" ng-model="terminateRoom.algorithm"
+                                  class="aci-field physicalLabels text_field">  
+                            <!-- <option  hidden></option> -->
+                            <option disabled selected value>-- Select Algorithm --</option>
+                            <option value="1-1-1" >1-1-1 Placement</option>
+                            <option value="2-0-2" >2-0-2 Placement</option>
+                            <option value="0-2-0" >0-2-0 Placement</option> 
+                            <option value="2-2-2" >2-2-2 Placement</option>
+                          </select>
+                      </div>
+                 </div>
+           </dd>
+           </dl>
+      </div>
+        </div>
+          <div  class="addTenantTable">
+           <dl class="margin_top-10"> 
+              <dd>
+                   <label class="aci-radio-label radio-text-align">
+                    <input type="radio" class="aci-radio" checked="checked" ng-model="terminateRoom.allRows" value="1" /> 
+                      <span title=" ">All Rows</span>
+                  </label>
+              </dd>
+              <dd> 
+                   <label class="aci-radio-label radio-text-align">
+                      <input type="radio" class="aci-radio" ng-model="terminateRoom.allRows" value="0"> 
+                      <span title=" ">Selected Rows</span>
+                   </label>
+              </dd>
+          </dl> 
+          </div>
+
+   <div class="selectBoxMove">
+        <dl>
+            <dd>
+                <div>Available Rows</div>
+                <div>
+                    <select id="leftBox" multiple class="form-control text_field" ng-disabled="terminateRoom.allRows==1" id="sel2">
+                      <!-- <option value="" selected hidden></option> -->
+                      <option ng-repeat = "row in rowsArray" value="{{row.id}}">{{row.name}}</option>
+                   </select>
+                </div>
+            </dd>
+            <dd><br/>
+                <p><input type="button" value=">" ng-click="listbox_moveacross('leftBox', 'rightBox');" ng-disabled="terminateRoom.allRows==1"/></p>
+                <p><input type="button" value="<" ng-click="listbox_moveacross('rightBox', 'leftBox');" ng-disabled="terminateRoom.allRows==1"/></p>
+            </dd>
+            <dd>
+                <div>Selected Rows</div>
+                <select id="rightBox" multiple class="text_field form-control" > 
+                </select> 
+            </dd>
+        </dl>
+    </div> 
+
+   <!--  <div class="clear fancyCheckbox">
+        <input type="checkbox" id="terminateswitch" checked ng-click="addSwitche()" /> 
+        <label for="terminateswitch">Add Leaf and Terminate</label> 
+    </div>-->
+   
+    
+  <!-- </fieldset> -->
+      </div>
+      <div id="spineContent" style="display:none"> 
+       <!--              <fieldset class="field_set margin_top_10">
+          <legend> 
+                <div class="pull-left fancyCheckbox margin_left10">
+                      <input type="checkbox" checked id="terminatespine" ng-click="terminateSpine()" /> 
+                       <label for="terminatespine">Terminate Spine</label> 
+               </div>
+          </legend> -->
+        <div class="termDisable" style="display:none"></div>
+       <div class="textFieldContent">
+        <div class="margin_top_10">
+                  <p>Do you want to place new spines or only terminate existing spines?</p>
+                    <!-- <label class="aci-radio-label radio-text-align">
+                       <input type="radio" class="aci-radio" checked="checked" ng-click="spineRadio1()"  name="t4" value="1" /> 
+                        <span title=" ">Place & Terminate</span>
+                    </label> 
+                     <label class="aci-radio-label radio-text-align margin_left10">
+                       <input type="radio" class="aci-radio"   name="t4" value="2" ng-click="spineRadio2()" /> 
+                        <span title=" ">Terminate existing spines only</span>
+                    </label>  -->
+                    <label><strong>Place & Terminate</strong></label>
+                </div>
+
+                 <div style="display:none" id="spains_terminate">If the option is "No", then you can terminate using existing leaf ONLY!</div>
+
+      <div ng-hide="spineDetails">
+        <dl class="clear margin_top_10">  
+           <dd>
+                <div class="wid25 pull-left"><span>Preferred Spine</span><span class="error">&nbsp;*</span></div>
+                <div class="pull-left"> 
+                      <div class="select-style brd policyLeftSelect group colorBlue" id="preSpine"  ng-click="roomTerminationPolicy(); $event.stopPropagation()">
+                            <input type="text"  id="terminateRowSelect" class="text_field wid90 cursor" ng-class="{wid90: room.policyFlag == 'false'}" readonly  ng-model="terminateRoom.spineTemplate"></input>
+                        </div>
+                         <div class="policyDetails" id="policyDiv"  ng-show="room.policyDetails" style="width: 59.3%; margin-left:4.3% !important"> 
+                                    <div class="list-container">
+                                         <div class="wid100 left_Scrollcontainer"  id="wid60scrollbar">
+                                          <ul> 
+                                                  <li ng-click="selectRoomPolicyDetails(showSpineDetails.id, showSpineDetails.name); $event.stopPropagation()" ng-repeat="showSpineDetails in switchSpineTemplateTypes"> 
+                                                   <div class="clear">
+                                                      <h5 class="grayTextColor pull-left">{{showSpineDetails.name}}</h5>  
+                                                      <div class="pull-right rus_position">
+                                                          <label>RUs :</label>
+                                                            <label class="colorBlue">{{showSpineDetails.physicalStats.noOfRus}}</label>
+                                                      </div>
+                                                   </div>
+                                                      <div></div> 
+                                                      <div class="clear overflowHidden">
+                                                      <div class="pull-left overflowHidden" ng-repeat="switchPort in showSpineDetails.defaultPortGroup">       
+                                                          
+                                                          <label> {{switchPort.speed}} : </label>
+                                                          <label class="colorBlue width70">{{switchPort.numOfPorts}} {{switchPort.type}}</label> 
+                                                      </div> 
+                                                      </div>
+                                                  </li> 
+                                          </ul>
+                                        </div>
+                                      </div>
+                                  </div>
+
+                         </div>
+                   </dd>
+                </dl> 
+           
+
+       <div class="rackCon margin_top_10">
+        <div class="aci-dialog-content-span">
+                <label >Spine Rack</label>
+          </div>
+          <hr/> 
+           <div class="clear fancyCheckbox margin_top_10">
+               <input type="checkbox" checked id="networkRacks" ng-click="networkRack()"/><label for="networkRacks">Use All Network Racks</label> 
+           </div>
+           <div class="netRack"></div>
+          <dl class="overflowHidden nRack"> 
+            <dd class="margin_top_15">Row</dd>
+            <dd>
+              <div class="select-style colorBlue group actColor">
+                       <select id="terminateRowSelect" ng-model="terminateRoom.spineRow"
+                              class="aci-field physicalLabels text_field wid30" ng-change="getSpineRackArray()"> 
+                         <!-- <option value="" selected hidden></option>  -->
+                         <option   ng-repeat = "row in rowsArray" value="{{row.id}}">{{row.name}}</option>
+                      </select>
+             </div>
+            </dd>
+            <dd class="margin_top_15">Rack</dd>
+            <dd> 
+                <div class="select-style clear group colorBlue actColor">
+                  <select id="terminateRowSelect" ng-model="terminateRoom.spineRack" class="aci-field physicalLabels text_field wid30"> 
+                     <!-- <option value="" selected hidden></option>  -->
+                     <option   ng-repeat = "rack in SpineRackArray" value="{{rack.id}}">{{rack.name}}</option>
+                  </select>
+              </div>
+            </dd>
+          </dl> 
+    </div>
+
+  <!-- </fieldset>  -->
+              </div>
+          </div> 
+
+</div>
+ 
+ 
+    </div> 
+      
+      <div class="aci-dialog-content-span add-tenant-footer">
+        <div class="window-button">
+            <input  class = "a-button add-project-footer wid80" id="termAction" type="submit" value="Place & Terminate Leafs"/> 
+        </div>
+     </div>
+    </form>
+ </div>

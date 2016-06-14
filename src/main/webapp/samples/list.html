@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<script src="sampledata.js"></script>
+
+<div id="example" ng-app="AciDemos">
+    <div ng-controller="MyCtrl">
+
+    <div class="demo-section aci-header wide">
+        <div aci-list-view id="listView" aci-data-source="source">
+            <div class="product" aci-template>
+                <img ng-src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />
+                <h3>{{ dataItem.ProductName }}</h3>
+				<p>{{ dataItem.UnitPrice | currency }}</p>
+            </div>
+        </div>
+        <div aci-pager aci-data-source="source"></div>
+    </div>
+
+    <script type="text/x-aci-angular-template" id="template">
+    </script>
+
+    <style>
+        #listView {
+            padding: 10px 5px;
+            margin-bottom: -1px;
+            min-height: 510px;
+        }
+        .product {
+            float: left;
+            position: relative;
+            width: 111px;
+            height: 170px;
+            margin: 0 5px;
+            padding: 0;
+        }
+        .product img {
+            width: 110px;
+            height: 110px;
+        }
+        .product h3 {
+            margin: 0;
+            padding: 3px 5px 0 0;
+            max-width: 96px;
+            overflow: hidden;
+            line-height: 1.1em;
+            font-size: .9em;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: #999;
+        }
+        .product p {
+            visibility: hidden;
+        }
+        .product:hover p {
+            visibility: visible;
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            line-height: 110px;
+            vertical-align: middle;
+            text-align: center;
+            color: #fff;
+            background-color: rgba(0,0,0,0.75);
+            transition: background .2s linear, color .2s linear;
+            -moz-transition: background .2s linear, color .2s linear;
+            -webkit-transition: background .2s linear, color .2s linear;
+            -o-transition: background .2s linear, color .2s linear;
+        }
+        .aci-listview:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+    </style>
+</div>
+</div>
+
+<script>
+    angular.module("AciDemos", [ "aci.directives" ])
+        .controller("MyCtrl", function($scope){
+            $scope.source = new aci.data.DataSource({
+                data: products,
+                pageSize: 21
+            });
+        })
+</script>
+
+
+</body>
+</html>

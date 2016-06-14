@@ -1,0 +1,16 @@
+<div class="aci-dialog-content-div">
+    <form class="formDataStyle" name="deleteRowForm"  ng-submit="deleteRowForm.$valid && validateDeleteRow($event)" id="deleteRowForm">   
+        <div class="aci-dialog-content-span">
+            <label class="deleteFormLabels" id="delRowLabel"></label>            
+        </div>
+    <br>
+        <div class="aci-dialog-content-span margin_top-10">
+            <div class="window-button">
+                <input class = "a-button yes_btn" type="submit" value="Yes" />
+                <span><input class = "a-button no_btn" ng-click="onCancelDeleteRow()" value="No" /></span>
+            </div>
+       </div>
+    </form>
+</div>
+
+

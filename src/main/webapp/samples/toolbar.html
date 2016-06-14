@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+  <div class="demo-section wide" ng-controller="MyCtrl">
+    <div aci-toolbar aci-options="toolbarOptions"></div>
+  </div>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.toolbarOptions = {
+              items: [
+                  { type: "button", text: "Button" },
+                  { type: "button", text: "Toggle Button", togglable: true },
+                  {
+                      type: "splitButton",
+                      text: "Insert",
+                      menuButtons: [
+                          { text: "Insert above", icon: "insert-n" },
+                          { text: "Insert between", icon: "insert-m" },
+                          { text: "Insert below", icon: "insert-s" }
+                      ]
+                  },
+                  { type: "separator" },
+                  { template: "<label>Format:</label>" },
+                  {
+                      template: "<input aci-drop-down-list aci-options='formatOptions' style='width: 150px;' />",
+                      overflow: "never"
+                  },
+                  { type: "separator" },
+                  {
+                      type: "buttonGroup",
+                      buttons: [
+                          { spriteCssClass: "aci-tool-icon aci-justifyLeft", text: "Left", togglable: true, group: "text-align" },
+                          { spriteCssClass: "aci-tool-icon aci-justifyCenter", text: "Center", togglable: true, group: "text-align" },
+                          { spriteCssClass: "aci-tool-icon aci-justifyRight", text: "Right", togglable: true, group: "text-align" }
+                      ]
+                  },
+                  {
+                      type: "buttonGroup",
+                      buttons: [
+                          { spriteCssClass: "aci-tool-icon aci-bold", text: "Bold", togglable: true, showText: "overflow" },
+                          { spriteCssClass: "aci-tool-icon aci-italic", text: "Italic", togglable: true, showText: "overflow" },
+                          { spriteCssClass: "aci-tool-icon aci-underline", text: "Underline", togglable: true, showText: "overflow" }
+                      ]
+                  },
+                  {
+                      type: "button",
+                      text: "Action",
+                      overflow: "always"
+                  },
+                  {
+                      type: "button",
+                      text: "Another Action",
+                      overflow: "always"
+                  },
+                  {
+                      type: "button",
+                      text: "Something else here",
+                      overflow: "always"
+                  }
+              ]
+          };
+          $scope.formatOptions = {
+              optionLabel: "Paragraph",
+              dataTextField: "text",
+              dataValueField: "value",
+              dataSource: [
+                  { text: "Heading 1", value: 1 },
+                  { text: "Heading 2", value: 2 },
+                  { text: "Heading 3", value: 3 },
+                  { text: "Title", value: 4 },
+                  { text: "Subtitle", value: 5 },
+              ]
+          };
+      })
+</script>
+
+
+</body>
+</html>

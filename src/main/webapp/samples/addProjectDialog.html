@@ -1,0 +1,21 @@
+<div class="aci-dialog-content-div">
+	<div class="aci-dialog-content-span">Name:<input ng-model="addProjectDialog.name" type="text" class="aci-textbox" style="width: 75%;"/>
+	</div>
+	<div class="aci-dialog-content-span">Customer Name :<input ng-model="addProjectDialog.customerName"  type="text" class="aci-textbox" style="width: 100%;"/>
+	</div>
+	<div class="aci-dialog-content-span">Sales Contact:<input ng-model="addProjectDialog.salesContact"  type="text" class="aci-textbox" style="width: 100%;"/>
+	</div>
+	<div class="aci-dialog-content-span">Opportunity:<input ng-model="addProjectDialog.opportunity"  type="text" class="aci-textbox" style="width: 100%;"/>
+	</div>
+	<div class="aci-dialog-content-span">Account:<input ng-model="addProjectDialog.account"  type="text" class="aci-textbox" style="width: 100%;"/>
+	</div>
+	<br/>
+	
+</div>
+
+
+
+<div class="aci-dialog-content-div">
+	<aci-button class="aci-primary" style="float : right;" ng-click="onAddProjectDialogSave()">Something</aci-button>
+	<aci-button on-click="onAddProjectDialogCancel()" style="float : right;margin-right: 10px;">Cancel</aci-button>
+</div>

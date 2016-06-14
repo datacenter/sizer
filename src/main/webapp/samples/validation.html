@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+       <link rel="stylesheet" href="aci.common.min.css" />
+    <link rel="stylesheet" href="aci.material.min.css" />
+
+    <script src="jquery.min.js"></script>
+    <script src="angular.min.js"></script>
+    <!--script src="aci.all.min.js"></script-->
+	
+    <script src="aci.core.min.js"></script>
+    <script src="aci.web.min.js"></script>
+    <script src="aci.angular.min.js"></script>
+	
+</head>
+<body>
+    <div id="example" ng-app="AciDemos">
+        <div class="demo-section" ng-controller="MyCtrl">
+            <ul id="fieldlist">
+              <li>
+                <label>Phone number:</label>
+                  <input aci-masked-text-box ng-model="phone"
+                         a-mask="'(999) 000-0000'" />
+                <div class="value">Value: {{phone}}</div>
+              </li>
+              <li>
+                <label>Credit Card number:</label>
+                  <input aci-masked-text-box ng-model="cc"
+                         a-mask="'0000 0000 0000 0000'" />
+                <div class="value">Value: {{cc}}</div>
+              </li>
+              <li>
+                <label>Social security number:</label>
+                  <input aci-masked-text-box ng-model="ssn"
+                         a-mask="'000-00-0000'" />
+                <div class="value">Value: {{ssn}}</div>
+              </li>
+              <li>
+                <label>UK postcode:</label>
+                  <input aci-masked-text-box ng-model="post"
+                         a-mask="'L0L 0LL'" />
+                <div class="value">Value: {{post}}</div>
+              </li>
+            </ul>
+        </div>
+        <style>
+            #fieldlist {
+                margin: 0 0 -2em;
+                padding: 0;
+            }
+    
+            #fieldlist li {
+                list-style: none;
+                padding-bottom: 2em;
+            }
+    
+            #fieldlist label {
+                display: block;
+                padding-bottom: 1em;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 12px;
+                color: #444;
+            }
+    
+            #fieldlist input {
+                width: 100%;
+            }
+            .value {
+                padding: .5em 0 0;
+                font-size: 12px;
+            }
+        </style>
+    </div>
+    
+    <script>
+      angular.module("AciDemos", [ "aci.directives" ])
+          .controller("MyCtrl", function($scope){
+              $scope.phone = "555 123 4567";
+              $scope.cc = "1234 1234 1234 1234"
+              $scope.ssn = "003-12-3456";
+              $scope.post = "W1N 1AC";
+          })
+    </script>
+
+</body>
+</html>

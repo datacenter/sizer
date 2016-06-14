@@ -1,0 +1,118 @@
+<div class="container physicalContainer dashboardScroll">
+ <div class="wid100 list_inner_container" id="rack1scroll" ng-scrollbar  scrollbar-x="false" scrollbar-y="true" scrollbar-config="{show: true}">
+ 	<div class="col-lg-12 padding-10">  
+    <div class="margin_bottom_10 overflowHidden">
+                <a href="javascript:void(0)" class="pull-left"  ng-click="openAddProjectWindow()"><span class="project-title">Projects</span> <i class="fa fa-plus-circle"></i></a>
+       </div>
+       <hr class="wid100"/>
+ 		 <div class="clear inner_container  margin_top_15"> 
+                <div class="client_box_container" ng-repeat="projects in projectlistResponce" ng-class="{active_box: $index == selected}" ng-mouseover="wgtAction = true" ng-mouseleave="wgtAction = false">
+                        	<div class="client_box_title">
+                            	<label>{{projectlistResponce[$index].name}}</label>
+                                <div class="pull-right grayTextColor position_relative" ng-show="wgtAction">
+                                   	
+                                      <i class="tooltip" title="Clone Project"><span class="fa fa-clone cursor" ng-click="opencloneProjectWindow(projects.id,projects.name)"  title="" ></span></i>  |  
+                                     <i class="tooltip" title="Delete Project"><span class="fa fa-trash cursor" ng-click="openDelProjectWindow(projects.id,projects.name)"  title="" ></span></i> 
+                                </div>
+                                <div class="clear lightGrayTxt">
+                                  <span>{{date[$index]}} {{month[$index]}} {{year[$index]}}</span> | <span>{{projects.account}}</span><i class="tooltip" title="Edit Project info"  ng-show="wgtAction"><span class="fa fa-pencil cursor" title="" ng-click="openEditProjectWindow($index)"></span></i>
+                                 
+
+                                </div>
+                            </div> 
+                         <div class="innerDashboardBox">
+                            <ul class="dashboardTab">
+                            	<li class="dashboardTabActive dashboardPhyTab" ng-click="physicalSizer($event)" ng-class="setActivePhysicalTab(projectlistResponce[$index].type, $index)">Physical Sizer</li>
+                                <li class="dashboardLogicalTab" ng-hide="projectlistResponce[$index].type == 'Nexus 9000'" ng-click="logicalSizer($event)">Logical Sizer</li>
+                            </ul>
+                            <div   class="overflowHidden logicalId clear" ng-hide="projectlistResponce[$index].type == 'Nexus 9000'" style="display:none;" > 
+                                   <ul class="physicalDetails">
+                                	<li>
+                                    	 <dl> 
+                                          <dd><div>{{projects.logicalRequirementSummary.tenantCount}}</div><div>Tenants</div></dd>
+                                          <dd><div>{{projects.logicalRequirementSummary.vrfCount}}</div><div>VRFs</div></dd>
+                                          <dd><div>{{projects.logicalRequirementSummary.bdCount}}</div><div>BDs</div></dd>
+                                     	</dl>
+                                    </li>
+                                    <li>
+                                    	<dl> 
+                                          <dd><div>{{projects.logicalRequirementSummary.epgCount}}</div><div>EPGs</div></dd>
+                                          <dd><div>{{projects.logicalRequirementSummary.endPoints}}</div><div>Endpoints</div></dd>
+                                          <dd><div>{{projects.logicalRequirementSummary.contractCount}}</div><div>Contracts</div></dd>
+                                     	</dl>
+                                    </li>
+                                </ul> 
+                                <a href="javascript:void(0)" class="viewProject pull-right" ng-click="loadProjectview(projectlistResponce[$index], 'logical')">Logical Details</a>                   
+                            </div>
+                            <div  class="physicalId overflowHidden" ng-style="projectlistResponce[$index].type !== 'Nexus 9000'">
+                            	<ul class="physicalDetails">
+                                	<li>
+                                    	 <dl> 
+                                          <dd><div>{{physicalInventory[$index].totalNumOfRooms}}&nbsp;</div><div>Rooms</div></dd>
+                                          <dd><div>{{physicalInventory[$index].totalNumOfRows}}&nbsp;</div><div>Rows</div></dd>
+                                          <dd><div>{{physicalInventory[$index].totalNumOfRacks}}&nbsp;</div><div>Racks</div></dd>
+                                     	</dl>
+                                    </li>
+                                    <li>
+                                    	<dl> 
+                                          <dd><div>{{physicalInventory[$index].totalDeviceCount}}&nbsp;</div><div>Device</div></dd>
+                                          <dd><div>{{physicalInventory[$index].deviceCounts.Leaf}}&nbsp;</div><div>Leafs</div></dd>
+                                          <dd><div>{{physicalInventory[$index].deviceCounts.Spine}}&nbsp;</div><div>Spines</div></dd>
+                                     	</dl>
+                                    </li>
+                                </ul>
+                                <a href="javascript:void(0)" class="viewProject pull-right" ng-click="loadProjectview(projectlistResponce[$index], 'physical')">Physical Details</a>               
+                            </div> 
+                        </div>
+
+
+               </div>   
+ 		 </div> 
+ 	</div>
+</div>
+  </div>
+</div>
+
+<span id="notificationProject" style="display:none;"></span>
+<div id="projectwindow" ng-include src="'modules/dashboard/views/addProject.html'"  class="popupRds"></div>
+<div id="delProjectWindow" ng-include src="'modules/dashboard/views/delProject.html'"  class="popupRds"></div>
+<div id="cloneProjectWindow" ng-include src="'modules/dashboard/views/cloneProject.html'"  class="popupRds"></div>
+
+<script>
+    $("#tabs").tabs();
+</script>
+<script id="errorTemplateProj" type="text/x-aci-template">
+    
+    <div id="errorPopUpId" class="error-popup">
+        <div class="error-popup-header">
+            <span class="error-popup-title">ERROR</span>
+        </div>
+        <img src="images/errorIcon.png"/>
+
+        <div class="error-popup-desc">
+            <span class="error-popup-msg">#= title #</span>
+            <br>
+            <span class="error-popup-description">#= message #</span>
+        </div>
+        <button id="errorClose" class="error-popup-close" onClick="errorClose()">Close</button>
+    </div>
+</script>
+<script>
+
+
+    function errorClose() { 
+        // console.log(document.getElementsByClassName("a-animation-container"));
+        var errorDiv = document.getElementsByClassName("a-animation-container");
+        var len = errorDiv.length;
+        for (var i = 0; i < len; i++) {
+            if(errorDiv[i].classList.length == 2){
+                 errorDiv[i].remove();
+             }           
+        }
+        $('#lightBox').hide();
+        $("#PopupMaskProject").remove();
+    }
+		//$(function(){	
+			
+		//})
+</script>

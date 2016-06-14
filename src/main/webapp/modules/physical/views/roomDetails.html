@@ -1,0 +1,229 @@
+ <div  class="clear">
+ 		<ul class="rowTabs">
+        	<li id="deviceTab" class="rowtabActive" ng-click="rowTabs('deviceTab','deviceContent')">Room Details </li>
+            <li id="portTab" ng-click="rowTabs('portTab','portContent')">Inventory </li>
+            <li id="physicalTab" ng-click="rowTabs('physicalTab','physicalContent')">Port Details</li>
+        </ul>
+        <div class="tabBorder"></div>
+  		<div class="clear overflowHidden innerBoxContainer">
+        				<div id="deviceContent" > 
+                        <a href="javascript:void(0)" class="editBtn pull-right" ng-click="editRoomSelected($event); "><i class="fa fa-pencil  cursor" ></i>Edit Room</a>
+                        		<div class="roomDet clear ">
+                                	<dl class="deviceValue overflowHidden">
+                                       <dd>
+                                            <div class="wid20 pull-left">Rows</div>
+                                            <div class="wid12 pull-left  group"><input type="number" min="1"  class="text_field colorBlue"  id="num" onkeypress="return numberOnly(event)"  ng-model="editRoom.value1" ng-readonly="editRoomView2"  required> </div>
+                                       </dd>
+                                       <dd>
+                                            <div class="wid20 pull-left">Racks</div>
+                                            <div class="wid12 pull-left  group"><input type="number" min="1" ng-show="rackDetails == false"  onkeypress="return numberOnly(event)"  class="text_field text_readonly colorBlue" ng-model="editRoom.value2" ng-readonly="editRoomView2" required> </div>
+                                       </dd>
+                                       <dd>
+                                            <div class="wid20 pull-left">Rack Height</div>
+                                            <div class="wid12 pull-left group"> 
+                                            		<div class="select-style colorBlue" style="background:none">
+                                                    <select required  class="text_field " ng-model="editRoom.rackType" ng-options="item.id as item.type for item in rackTypesArr"
+                                                           ng-disabled="editRoomView2">
+                                                            <!-- <option value="" selected hidden></option>  -->
+                                                          </select> 
+                                                    </div>
+                                             </div>
+                                       </dd>
+                                       <dd id="editroomPolicy">
+                                            <div class="wid20 pull-left">Room Policy</div>
+                                            <div class="wid30 pull-left group pull-left" > 
+                                            		<div class="select-style colorBlue" style="background:none" ng-click="showExpandedPolicy()"> 
+														 
+                                                          <input type="text" class="text_field wid90 cursor" readonly  ng-model="editRoom.value3" required  ng-click="togglePolicyDisplay(); $event.stopPropagation()"></input>
+                                                          
+                                                      </div> 
+                                                       
+                                             </div> <label class="infoIcon" ng-mouseover="roomPolicyBox=true"  ng-mouseleave="roomPolicyBox=false" ng-hide="!tooltipPolicy" ></label>  
+                                              
+                                              
+                                              
+                                              <div class="policyDetails" id="policyDiv" ng-show="!editRoomView2 && room.policyDetail" >
+                                                  <div class="list-container" style="height:220px">
+                                                       <div class="wid100 left_Scrollcontainer"  id="wid60scrollbar">
+                                                        <ul> 
+                                                                <li ng-repeat="policy in roomPolicyArr" ng-click="selectRoomPolicy(policy.id, policy.name);  $event.stopPropagation()">
+                                                                 <h5 class="grayTextColor">{{policy.name}}</h5>   
+                                                                    <div>                                                                     
+                                                                        <label>Leaf Oversubscription Ratio:</label>
+                                                                        <label class="colorBlue">{{policy.details.leafOversubscription}}</label>
+                                                                        <label> Leaf Utilization: </label>
+                                                                        <label class="colorBlue">{{policy.details.leafUtilization}}%</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Rack RUs Utilization:</label>
+                                                                        <label class="colorBlue">{{policy.details.rackRuUtilization}}%</label>
+                                                                        <label>Rack Power Utilization:</label>
+                                                                        <label class="colorBlue">{{policy.details.rackPowerUtilization}}%</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Preferred Leaf: </label>
+                                                                        <label class="colorBlue"> {{policy.details.preferredAciLeaf}}</label>
+                                                                        <label>Preferred Spine: </label>
+                                                                        <label class="colorBlue">{{policy.details.preferredAciSpine}}</label>
+                                                                    </div>
+                                                                </li> 
+                                                        </ul>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                       </dd> 
+                                    </dl> 
+                                     	<div class="policyDetails"   ng-show="roomPolicyBox" style="margin-top:-20px;">
+                                                        <ul> 
+                                                                <li>
+                                                                 <h5 class="grayTextColor">{{roomPolicyArr.name}}</h5>   
+                                                                    <div>                                                                     
+                                                                        <label>Leaf Oversubscription Ratio:</label>
+                                                                        <label class="colorBlue">{{roomDetailsArr[selectedRoomIndex].policy.details.leafOversubscription}}</label>
+                                                                        <label> Leaf Utilization: </label>
+                                                                        <label class="colorBlue">{{roomDetailsArr[selectedRoomIndex].policy.details.leafUtilization}}%</label>
+                                                                     </div>
+                                                                     <div>
+                                                                        <label>Rack RUs Utilization: </label>
+                                                                        <label class="colorBlue">{{roomDetailsArr[selectedRoomIndex].policy.details.rackRuUtilization}}%</label>
+                                                                        <label> Rack Power Utilization: </label>
+                                                                        <label class="colorBlue">{{roomDetailsArr[selectedRoomIndex].policy.details.rackPowerUtilization}}%</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Preferred Leaf: </label>
+                                                                        <label class="colorBlue">{{roomDetailsArr[selectedRoomIndex].policy.details.preferredAciLeaf}}</label>
+                                                                        <label>Preferred Spine: </label>
+                                                                        <label class="colorBlue">{{roomDetailsArr[selectedRoomIndex].policy.details.preferredAciSpine}}</label>
+                                                                    </div>
+                                                                </li> 
+                                                        </ul>
+                                                </div>
+                                 
+                                        <p class="clear" ng-hide="editRoomView2">
+                                            <input type="button" class="btn cancel_btn wid48 margin_right_10"   value="Cancel" ng-click="cancelEditDetails()">     
+                                            <input type="submit" class="btn save_btn wid48 pull-right" id="save_item" value="Save" ng-click="editDetails()" /> 
+                                       	</p>
+                                </div><br/><br/>  
+                       		</div>  
+                        	<div class="clear"  id="portContent"  style="display:none"> 
+                          		<div  class="deviceCarousel overflowHidden">
+                                	<h4 class="grayTextColor headingBrd">Device Inventory</h4>                                     
+                                    <dl class="deviceValue">
+                                       <dd ng-repeat ="devices in roomDetailsArr[selectedRoomIndex].inventoryInfo.deviceCounts">
+                                        <div class="wid30 pull-left">{{roomInventoryKeys[$index]}} </div><div class="wid70 pull-left colorBlue" >{{roomDetailsArr[selectedRoomIndex].inventoryInfo.deviceCounts[roomInventoryKeys[$index]]}}</div></dd>
+                                       
+                                    </dl>  
+                           			<div class="clear overflowHidden">
+                            	 <h4 class="grayTextColor subheadingBrd">Utilization Details</h4>
+                                     <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                                     <thead>  
+                                      <tr>
+                                        <th ></th>
+                                        <th >Available</th>
+                                        <th >Used</th>
+                                        <th >Utilization</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      <tr>
+                                        <td>RU</td>
+                                        <td class="colorBlue">{{roomDetailsArr[selectedRoomIndex].inventoryInfo.totalNumOfRus}}</td>
+                                        <td class="colorBlue" >{{roomDetailsArr[selectedRoomIndex].inventoryInfo.rusConsumed}}</td>
+                                        <td  class="colorBlue">{{ruUtilization}}</td>
+                                      </tr>
+                                     <tr><td>Power (kWh)</td>
+                                        <td class="colorBlue" >{{totalPower}}</td>
+                                        <td class="colorBlue" >{{powerConsumed}}</td>
+                                        <td class="colorBlue" >{{powerUtilization}}</td>
+                                      </tr>
+                                      <tr><td nowrap>Cooling (BTU/hr)</td>
+                                        <td class="colorBlue" >{{roomDetailsArr[selectedRoomIndex].inventoryInfo.totalCooling}}</td>
+                                        <td class="colorBlue" >{{roomDetailsArr[selectedRoomIndex].inventoryInfo.coolingConsumed}}</td>
+                                        <td class="colorBlue" >{{coolingUtilization}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>  
+                               </div> 
+                              </div>
+                         </div>  
+                             <div class="canvas-holder overflowHidden position_relative"  id="physicalContent" style="display:none">
+                              <h4 class="grayTextColor headingBrd">Device Ports &nbsp; <label class="infoIcon"></label></h4> 
+                                <div  class="tabbedContents" >
+
+                                <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr ng-show="roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventoryDevice.length > 0">
+                                  <th ></th>
+                                  <th >Total</th>
+                                  <th >Terminated</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                <tr>
+                                  <div class="noDataText" ng-hide="roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventoryDevice.length > 0">No data available</div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat ="devicePorts in roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventoryDevice">
+                                  <td>{{devicePorts.type}}</td>
+                                  <td  class="colorBlue">{{devicePorts.totalPorts}}</td>
+                                  <td class="colorBlue" >{{devicePorts.terminated}}</td>
+                                  <td class="colorBlue" >{{devicePortUtil[$index]}}</td>
+                                </tr>
+                              </tbody>
+                            </table>  
+                                    
+                                   <!--  <div ><span class="usedValue">{{roomDetailsArr[selectedRoomIndex].inventoryInfo.totalNumOfPotsTerminated}} terminated</span>&nbsp <span>/ Total ports {{roomDetailsArr[selectedRoomIndex].inventoryInfo.totalNumOfPorts}}</span></div> -->
+                            </div> 
+                             <h4 class="grayTextColor headingBrd margin_top_15">Leaf Ports &nbsp; <label class="infoIcon"></label></h4>
+                                <div  class="tabbedContents" >
+
+                                <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr ng-show="roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventoryLeaf.length > 0">
+                                  <th ></th>
+                                  <th >Total</th>
+                                  <th >Terminated</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                <tr>
+                                  <div class="noDataText" ng-hide="roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventoryLeaf.length > 0">No data available</div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                               <tr ng-repeat ="leafPorts in roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventoryLeaf">
+                                  <td>{{leafPorts.type}}</td>
+                                  <td  class="colorBlue">{{leafPorts.totalPorts}}</td>
+                                  <td class="colorBlue" >{{leafPorts.terminated}}</td>
+                                  <td class="colorBlue" >{{leafPortUtil[$index]}}</td>
+                                </tr>
+                              </tbody>
+                            </table>  
+                            </div>
+
+                            <h4 class="grayTextColor headingBrd margin_top_15">Spine Ports</h4>
+                                <div  class="tabbedContents"> 
+                             <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr ng-show= "roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventorySpines.length > 0">
+                                  <th ></th>
+                                  <th >Total</th>
+                                  <th >Terminated</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                 <tr>
+                                  <div class="noDataText" ng-hide="roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventorySpines.length > 0">No data available</div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr  ng-repeat ="spinePorts in roomDetailsArr[selectedRoomIndex].inventoryInfo.portInventorySpines">
+                                  <td>{{spinePorts.type}}</td>
+                                  <td  class="colorBlue">{{spinePorts.totalPorts}}</td>
+                                  <td  class="colorBlue">{{spinePorts.terminated}}</td>
+                                  <td  class="colorBlue">{{spinePortUtil[$index]}}</td>
+                           		</tr>
+                              </tbody>
+                            </table>  
+                            </div> 
+                   		</div>
+                    </div>  
+             </div> 

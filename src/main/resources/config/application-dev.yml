@@ -1,0 +1,47 @@
+#Web Server properties
+server:
+    port: 8080
+
+#https Configuration
+keystorefile: keystore.p12
+keystorepass: maplelabs
+sslport: 8443
+
+#Spring properties
+spring:
+  datasource:
+    serverName: http://localhost
+    driverClassName: org.postgresql.Driver
+    databaseName: acisizer
+    url: jdbc:postgresql://localhost:5432/acisizer
+    user: postgres
+    password: postgres
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    cachePrepStmts: true
+    useServerPrepStmts: true
+    dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+    poolName: ACISizerConnectionPool
+    maximumPoolSize: 50
+    minimumIdle: 6
+    connectionTimeout: 30000
+    idleTimeout: 30000
+    
+  jpa:
+    show-sql : true
+    
+    
+ #cisco tool properties
+cisco: 
+  remote:
+    host: 10.11.0.171
+    userName: sizer
+    password: maple123$
+    directory: /home/sizer/acitool/
+
+
+logging:
+  file: my.log
+  level:
+    org.hibernate : DEBUG
+    

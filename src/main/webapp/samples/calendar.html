@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div class="demo-section" ng-controller="MyCtrl">
+        <div>
+            <h4>Start date: <span ng-show="startDate">{{startDate | date:"MMM d, yyyy"}}</span></h4>
+            <aci-calendar ng-model="startDate" aci-rebind="endDate" max="endDate"></aci-calendar>
+        </div>
+        <div ng-show="startDate" style="padding-top: 1em;">
+            <h4>End date: <span ng-show="endDate">{{endDate | date:"MMM d, yyyy"}}</span></h4>
+            <aci-calendar ng-model="endDate" aci-rebind="startDate" min="startDate" max="maxEndDate"></aci-calendar>
+        </div>
+    </div>
+    <style>
+        .demo-section {
+            text-align: center;
+        }
+    </style>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+        .controller("MyCtrl", function($scope){
+            $scope.$watch("startDate", function(val){
+              var maxEndDate = new Date(val);
+              maxEndDate.setDate(maxEndDate.getDate() + 14);
+              $scope.maxEndDate = maxEndDate;
+              delete $scope.endDate;
+          });  
+      })
+</script>
+
+
+</body>
+</html>

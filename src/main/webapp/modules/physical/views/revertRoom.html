@@ -1,0 +1,54 @@
+<div  class="aci-dialog-content-div" id="revertRoomWindow"> 
+    <form class="formDataStyle" name="revertRoomForm" ng-submit="revertRoomForm.$valid && startRevertRoom()" id="revertRoom">
+        <div class="margin_top-10">
+        <div class="addTenantTable margin_left10">
+          <dl> 
+              <dd>
+                   <label class="aci-radio-label radio-text-align">
+                    <input type="radio" class="aci-radio" checked="checked" ng-model="revertRoom.allRows" value="1" /> 
+                      <span title=" ">All Rows</span>
+                  </label>
+              </dd>
+              <dd> 
+                   <label class="aci-radio-label radio-text-align">
+                      <input type="radio" class="aci-radio" ng-model="revertRoom.allRows" value="0"> 
+                      <span title=" ">Selected Rows</span>
+                   </label>
+              </dd>
+          </dl>
+        </div> 
+    </div>
+    <div class="selectBoxMove">
+        <dl>
+            <dd>
+                <div>Available Rows</div>
+                <div>
+                    <select id="leftBoxrevert" multiple class="form-control text_field" ng-disabled="revertRoom.allRows==1" id="sel2">
+                      <option value="" selected hidden></option>
+                      <option ng-repeat = "row in rowsArray" value="{{row.id}}">{{row.name}}</option>
+                   </select>
+                </div>
+            </dd>
+            <dd><br/>
+                <p><input type="button" value=">" ng-click="listbox_moveacross('leftBoxrevert', 'rightBoxrevert');" ng-disabled="revertRoom.allRows==1" /></p>
+                <p><input type="button" value="<" ng-click="listbox_moveacross('rightBoxrevert', 'leftBoxrevert');" ng-disabled="revertRoom.allRows==1" /></p>
+            </dd>
+            <dd>
+                <div>Selected Rows</div>
+                <select id="rightBoxrevert" multiple class="text_field form-control" > 
+                </select> 
+            </dd>
+        </dl>
+    </div>
+      <div class="textFieldContent">
+        <dl class="clear overflowHidden">
+        </dl>
+      </div>
+      <div class="aci-dialog-content-span add-tenant-footer">
+            <div class="window-button">
+                <input  class = "a-button add-project-footer" type="submit" value="Save"/>
+                <span><input  type="button" class = "a-button add-project-footer" type="button" ng-click="onCancelRevertRoomTerminate()" value="Cancel" style="margin-left:0px;padding-bottom: 1px"></span>
+            </div>
+       </div>
+    </form>
+ </div>

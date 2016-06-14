@@ -1,0 +1,36 @@
+<div class="edit_rooms margin_top_10 "> 
+                   		 <form  method="">
+                            <div class="group">      
+                              <input type="number" class="text_field" onkeypress="return numberOnly(event)"  ng-model="editRoom.value1"required>
+                              <span class="highlight"></span>
+                              <span class="bar"></span>
+                              <label ng-bind="editRoomLabel1"></label>
+                            </div>
+                            
+                            <div class="group">
+							  <input type="number" ng-show="rackDetails == false" class="text_field text_readonly" onkeypress="return numberOnly(event)"  ng-model="editRoom.value2" readonly required>
+                       
+                               <select required  class="text_field text_readonly" ng-model="editRoom.value2" readonly ng-show="rackDetails"ng-options="item.id as item.type for item in rackTypesArr">
+								<option value="" selected hidden></option> 
+							  </select>
+                              <span class="highlight"></span>
+                              <span class="bar"></span>
+                              <label ng-bind="editRoomLabel2"></label>
+                              </div>
+                            
+                            <div class="group">
+                            <div class="select-style brd_btm">
+                              <select required  class="text_field" ng-model="editRoom.value3" ng-options="item.id as item.name for item in roomPolicyArr">
+								<option value="" selected hidden></option> 
+							  </select>
+                                <span class="highlight"></span>
+                              <span class="bar"></span>
+                              <label ng-bind="editRoomLabel3"></label>
+                              </div>
+                            </div>
+                            <p align="center">
+                                <input type="button" class="btn cancel_btn width100"   value="Cancel" ng-click="cancelEditDetails()">     
+                                <input type="submit" class="btn save_btn width100" id="save_item" value="Save" ng-click="editDetails()" /> 
+                            </p>
+                         </form>
+                    </div>

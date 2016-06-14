@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+     <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div ng-controller="MyCtrl">
+  <ol class="playlist" aci-sortable aci-placeholder="placeholder" aci-hint="hint">
+    <li>Item 1 <span>3:04</span></li>
+    <li>Item 2<span>2:35</span></li>
+    <li>Item 3<span>3:23</span></li>
+    <li>Item 4 <span>3:20</span></li>
+    <li>Item 5 <span>3:29</span></li>
+    <li>Item 6 <span>3:03</span></li>
+    <li>Item 7 <span>3:09</span></li>
+    <li>Item 8 <span>3:36</span></li>
+  </ol>
+</div>
+<style>
+    .playlist {
+        margin: 30px auto;
+        padding: 10px;
+        width: 300px;
+        background-color: #f3f5f7;
+        border-radius: 4px;
+        border: 1px solid rgba(0,0,0,.1);
+    }
+    .playlist li {
+        list-style-type: none;
+        position: relative;
+        padding: 6px 8px;
+        margin: 0;
+        color: #666;
+        font-size: 1.2em;
+        cursor: url('../content/web/sortable/grab.cur'), default;
+    }
+    .playlist li:hover {
+        background-color: #dceffd;
+    }
+    .playlist li span {
+        position: absolute;
+        right: 5px;
+    }
+    li.hint {
+        display: block;
+        padding: 10px;
+        width: 200px;
+        background-color: #52aef7;
+        color: #fff;
+    }
+    
+    li.hint:last-child {
+        border-radius: 4px;
+    }
+    
+    li.hint span {
+        color: #fff;
+    }
+    
+    li.placeholder {
+        background-color: #dceffd;
+        color: #52aef7;
+        text-align: right;
+    }
+</style>
+</div>
+
+<script>
+    angular.module("AciDemos", [ "aci.directives" ])
+        .controller("MyCtrl", function($scope){
+            $scope.placeholder = function(element) {
+                return element.clone().addClass("placeholder").text("drop here");
+            };
+            $scope.hint = function(element) {
+                return element.clone().addClass("hint");
+            };
+        })
+</script>
+
+
+</body>
+</html>

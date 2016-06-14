@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div class="demo-section" style="width: 300px;">
+        <div ng-controller="MyCtrl">
+            <div aci-tab-strip aci-content-urls="[ null, null]">
+              <!-- tab list -->
+              <ul>
+                <li class="aci-state-active">First tab</li>
+                <li>Second tab</li>
+                <li>Third tab</li>
+                <li>Fourth tab</li>
+                <li>Fifth tab</li>
+                <li>Sixth tab</li>
+              </ul>
+          
+              <div style="padding: 1em">
+                This is the first tab
+              </div>
+          
+              <div style="padding: 1em">
+                This is the second tab
+              </div>
+			  
+			  <div style="padding: 1em">
+                This is the Third tab
+              </div>
+			   <div style="padding: 1em">
+                This is the Fourth tab
+              </div>
+			   <div style="padding: 1em">
+                This is the Fifth tab
+              </div>
+			   <div style="padding: 1em">
+                This is the Sixth tab
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.hello = "Hello from Controller!";
+      })
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<div class="aci-dialog-content-div">
+    <form class="formDataStyle" name="deleteRackForm"  ng-submit="deleteRackForm.$valid && validateDeleteRack($event)" id="deleteRackForm">   
+        <div class="aci-dialog-content-span">
+            <label class="deleteFormLabels" id="delRackLabel"></label>            
+        </div>
+       <br>
+        <div class="aci-dialog-content-span margin_top-10">
+            <div class="window-button">
+                <input class = "a-button yes_btn" type="submit" value="Yes"/>
+                <span><input class = "a-button no_btn" ng-click="onCancelDeleteRack()" value="No" /></span>
+            </div>
+       </div>
+    </form>
+</div>
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+   <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+  <div ng-controller="MyCtrl">
+    <div class="hasMenu" ng-style="{ 'padding': '3em',
+                                     'background': menuOpen ? '#52c35d' : '#d1d1d1' }">
+      Right-click me
+      <span ng-show="menuOpen">- Menu is open</span>
+      <div ng-show="selected" ng-style="{ 'padding-top': '1em' }">Selected: <b>{{selected}}</b></div>
+    </div>
+    <ul aci-context-menu
+        aci-filter="'.hasMenu'"
+        aci-on-open="menuOpen = menuOpen + 1"
+        aci-on-close="menuOpen = menuOpen - 1"
+        aci-on-select="onSelect(aciEvent)">
+      <li>Item 1
+        <ul>
+          <li>Subitem 1.1</li>
+          <li>Subitem 1.2</li>
+          <li>Subitem 1.3</li>
+        </ul>
+      </li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.menuOpen = 0;
+          $scope.onSelect = function(e) {
+              $scope.selected = $(e.item).children(".k-link").text();
+          };
+      })
+</script>
+
+
+</body>
+</html>

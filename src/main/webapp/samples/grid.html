@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="aci.common.min.css" />
+    <link rel="stylesheet" href="aci.material.min.css">
+
+    <script src="jquery.min.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="aci.all.min.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciSizer">
+    <div ng-controller="AciCtrl">
+        <aci-grid options="mainGridOptions" />
+    </div>
+</div>
+
+<script>
+    angular.module("AciSizer", [ "aci.directives" ])
+        .controller("AciCtrl", function($scope){
+			$scope.change = function(){
+				alert("Hello");
+			}
+            $scope.mainGridOptions = {
+			selectable:"multiple",
+			change : function(){
+				var selectedRows = this.select();
+				var rowIndex = selectedRows[0].rowIndex;
+				var selectedDataItems = [];
+					for (var i = 0; i < selectedRows.length; i++) {
+						var dataItem = this.dataItem(selectedRows[i]);
+						selectedDataItems.push(dataItem);
+					}
+					alert(rowIndex);
+				},
+			dataSource: {
+                            data : [
+							  {
+								"EmployeeID": 1,
+								"LastName": "Sachin",
+								"FirstName": "Mallangada",
+								"Title": "Sales Representative",
+								"TitleOfCourtesy": "Ms.",
+								"BirthDate": "/Date(-664761600000)/",
+								"HireDate": "/Date(704678400000)/",
+								"City": "Seattle",
+								"Region": "WA",
+								"PostalCode": "98122",
+								"Country": "USA"
+								
+							  },
+							  {
+								"EmployeeID": 2,
+								"LastName": "Murthy",
+								"FirstName": "Pramod",
+								"Title": "Vice President, Sales",
+								"BirthDate": "/Date(-563846400000)/",
+								"HireDate": "/Date(713750400000)/",
+								"City": "Tacoma",
+								"Region": "WA",
+								"PostalCode": "98401",
+								"Country": "USA"
+							  },
+							  {
+								"EmployeeID": 3,
+								"LastName": "User LN",
+								"FirstName": "user FN",
+								"Title": "Sales Representative",
+								"BirthDate": "/Date(-200102400000)/",
+								"HireDate": "/Date(702086400000)/",
+								"City": "Kirkland",
+								"Region": "WA",
+								"PostalCode": "98033",
+								"Country": "USA"
+							  },
+							  {
+								"EmployeeID": 4,
+								"LastName": "World",
+								"FirstName": "Hello",
+								"Title": "Sales Representative",
+								"BirthDate": "/Date(-1018828800000)/",
+								"HireDate": "/Date(736387200000)/",
+								"Address": "4110 Old Redmond Rd.",
+								"City": "Redmond",
+								"Region": "WA",
+								"PostalCode": "98052",
+								"Country": "USA"
+							  },
+							  {
+								"EmployeeID": 5,
+								"LastName": "Sreeni",
+								"FirstName": "Sreeni",
+								"Title": "Sales Manager",
+								"TitleOfCourtesy": "Mr.",
+								"BirthDate": "/Date(-468028800000)/",
+								"HireDate": "/Date(750816000000)/",
+								"Address": "14 Garrett Hill",
+								"City": "London",
+								"Region": null,
+								"PostalCode": "SW1 8JR",
+								"Country": "UK"
+								}
+							],
+                            schema: {
+                                model: {
+                                    fields: {
+                                        FirstName: { type: "string" },
+                                        LastName: { type: "string" },
+                                        BirthDate: { type: "date" },
+										Country : { type: "string" }
+                                    }
+                                }
+                            },
+							pageSize: 5,
+							serverPaging: false,
+							serverSorting: false,
+							serverFiltering: false
+                        },
+				 filterable: {
+                            extra: false,
+                            operators: {
+                                string: {
+                                    startswith: "Starts with",
+                                    eq: "Is equal to",
+                                    neq: "Is not equal to"
+                                }
+                            }
+                        },
+                sortable: true,
+                pageable: true,
+                columns: [{
+                    field: "FirstName",
+                    title: "First Name",
+					filterable: {
+                                    ui: "textfield"
+                               },
+                    width: "120px"
+                    },{
+                    field: "LastName",
+                    title: "Last Name",
+                  //  width: "120px",
+					filterable: {
+                                    ui: "textfield"
+                               }
+                    },{
+                    field: "Country",
+                //    width: "120px",
+					filterable: {
+								ui: "textfield"
+						   },
+
+                    },{
+                    field: "BirthDate",
+					 format: "{0:MM/dd/yyyy HH:mm tt}",
+					filterable: {
+						ui: "datetimepicker"
+					}
+                }]
+            };
+        })
+</script>
+
+
+</body>
+</html>

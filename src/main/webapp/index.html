@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Network Sizer</title>
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="styles/aci.common.min.css">
+    <link rel="stylesheet" href="styles/aci.rtl.css">
+    <link rel="stylesheet" href="styles/aci.material.min.css">
+    <link rel="stylesheet" href="styles/aci.mobile.all.min.css">
+    <link rel="stylesheet" href="styles/libs/codetabs.src.css">
+    <link rel="stylesheet" href="styles/libs/code.animate.src.css">
+    <link rel="stylesheet" href="styles/aci.css"/>
+    <link rel="stylesheet" href="styles/libs/lightslider.css"/>
+    <link rel="stylesheet" href="styles/jquery-ui.css"/>
+    <link rel="stylesheet" href="styles/Physicalstyle2.css"/>
+    <link rel="stylesheet" href="styles/xeditable.css"/>
+    <link rel="stylesheet" href="styles/font-awesome.min.css"/>
+    <link rel="stylesheet" href="styles/angular-chart.css"/>
+     <link rel="stylesheet" href="modules/physical/styles/physical.css"/>  
+</head>
+<body ng-app="webappApp" class="aci-content" ng-controller="IndexController">
+
+<!--[if lt IE 10]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<header >
+
+    <div id="header">
+             <div class="editFormHeader" style="display:none" id="headerBox"></div>
+        <div class="logo-bar">
+            <img alt="Cisco UI logo" class="pull-left" src="images/logo.png">
+            <span class="logo-text">Network Sizer</span>
+        </div>
+       <!-- <div class="v-divider"></div>-->
+        <div class="project-name-container">
+        	<div class="projectName-box">
+            	<div class="project-name-text pull-left" ng-bind="projectName"></div>
+                <div class="pull-left projectSelectionBox" ng-show="projectDropDown" ng-cloak>
+                        <div class="select-style1">
+                            <select required  class="text_field" ng-model="project.selectedProject" ng-change="changeProject(project.selectedProject)">
+                                    <!-- <option value="" selected hidden></option>  -->
+                                    <option value="Physical">Physical</option>
+                                    <!-- for Nexus 9000 disable the Logical option-->
+                                    <option value="Logical" ng-hide="currProject.type == 'Nexus 9000'">Logical</option>
+                            </select> 
+                        </div>
+                </div>
+            </div>
+            <!--<div class="tenantName-box">
+            	<div class="tenant-name-text" ng-show="showTenantName==true">{{tenantList[selectedTenantIndex].displayName}}</div>
+            </div>-->
+		</div>
+        <!-- <ul class="nav nav-tabs">
+             <li role="presentation"><a href="#">Home</a></li>
+             <li role="presentation"><a href="#">Profile</a></li>
+             <li role="presentation"><a href="#">Messages</a></li>
+         </ul>
+         -->
+        <span ng-cloak >
+            <!--ng-switch="authenticated"-->
+            <span class="acitabs collapse navbar-collapse" id="navbar-collapse">
+            <ul  class="nav navbar-nav nav-pills  navbar-right">
+                <!--li id ="sizer-logical-tab" class="active">
+                    <a class="acitab-link" href="#projects" data-toggle="tab">Logical <div class="white-actvarrow"></div></a>
+                    
+                </li>
+                <li id ="sizer-physical-tab">                
+                <a href="#physical" class="acitab-link" data-toggle="tab">Physical <div class="white-actvarrow"></div></a>
+                
+                </li-->
+                <!--li id ="sizer-result-tab"><a class="acitab-link" href="#results" data-toggle="tab">Sizer Result</a>
+                </li-->
+                <!--li><a class="acitab-link" href="#template" data-toggle="tab">Template</a>
+                </li-->
+                <!--<li class="disabled">&nbsp;</li>--> 
+                <li style="width: auto"  ng-show="isProjectVisible"><a href="#" ng-click="showDashBoard()" ><div class="home-icon"></div></a></li>
+                <li style="width: auto; height:20px; margin-top: 10px;" class="v-line" ng-show="isProjectVisible"></li> 
+                <li style="width: auto" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top:0px;">
+                        <div class="dropmenu-icon" aria-hidden="true"></div>
+                          <ul class="dropdown-menu">
+                        <li><a target="_blank" href="views/releasenotes.html">Release Notes</a></li>
+                        <li><a target="_blank" href="views/userguide.html">User Guide</a></li>
+                        <li><a target="_blank" href="https://www.surveymonkey.com/r/Y337KS7">Feedback</a></li>
+                      </ul>
+                    </a>         
+                </li>
+            </ul>
+
+            </span>
+        </span>
+    </div>
+</header>
+
+
+
+<!--<div class="tab-content clearfix">
+    <div class="tab-pane active" id="projects">
+        <h3>Same as example 1 but we have now styled the tab's corner</h3>
+    </div>
+    <div class="tab-pane" id="physical">
+        <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+    </div>
+    <div class="tab-pane" id="results">
+        <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+    </div>
+    <div class="tab-pane" id="template">
+        <h3>We use css to change the background color of the content to be equal to the tab</h3>
+    </div>
+</div>-->
+
+<div class="" ng-view="" style="height: 93.6% !important;"></div>
+<div class="lightBoxPopup" style="display:none" id="lightBox"></div>
+
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+<script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
+
+<!--Start local libraries -->
+<script src="scripts/libs/jszip.min.js"></script>
+<script src="scripts/libs/lightslider.js"></script>
+<script src="scripts/libs/xeditable.js"></script>
+<script src="scripts/libs/Chart.js"></script>
+<script src="scripts/libs/angular-chart.js"></script> 
+<!--End local libraries -->
+
+<!-- Start of framework scripts -->
+<script src="scripts/framework/aci.all.min.js"></script>
+<script src="scripts/framework/aci.angular.min.js"></script>
+<script src="scripts/framework/aci.timezones.min.js"></script>
+<!-- End of framework scripts -->
+
+<!-- Start of Custom scripts -->
+<!--<script src="scripts/http-auth-interceptor.js"></script>-->
+<script src="scripts/truncate.js"></script>
+<script src="scripts/utils.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/constants.js"></script>
+<script src="modules/physical/scripts/physicalController.js"></script>
+<script src="modules/physical/scripts/physicalSizerServices.js"></script>
+<script src="modules/physical/scripts/physicalConstants.js"></script>
+<script src="modules/physical/scripts/physicalDirective.js"></script>
+<script src="modules/dashboard/scripts/dashboardController.js"></script>
+<script src="modules/dashboard/scripts/dashboardServices.js"></script>
+<script src="scripts/IndexController.js"></script>
+<script src="scripts/controllers.js"></script>
+<script src="scripts/services.js"></script>
+<script src="scripts/factory.js"></script>
+<script src="scripts/directives.js"></script>
+<script src="scripts/cbpTooltipMenu.min.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/jquery-ui.js"></script>
+<script src="scripts/ngscrollbar.js"></script>
+<script src="scripts/jquery.slimscroll.js"></script>
+<!-- End of custom scripts -->
+<script>
+    $("#tabs").tabs();
+</script>
+<!-- Start bootstrap custom scripts -->
+<!--
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/affix.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/alert.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/tooltip.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/modal.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/transition.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/button.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/popover.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/carousel.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/scrollspy.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/collapse.js"></script>
+<script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab.js"></script>
+-->
+<!-- End bootstrap custom scripts -->
+
+<!-- end:Others-->
+</body>
+</html>

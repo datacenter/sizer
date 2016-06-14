@@ -1,0 +1,75 @@
+<div  class="aci-dialog-content-div terminateRow" id="terminateRowWindow" ng-click="hideTerminationPolicy()">
+   
+              <form class="formDataStyle" name="terminateRowForm" ng-submit="startTerminateRow($event)" id="terminateRow"><!--terminateRowForm.$valid && -->
+           
+ <div class="textFieldContent">
+        <dl class="clear overflowHidden">
+             <dd>
+               <!--  <div class="pull-left fancyCheckbox margin_left10">
+                      <input type="checkbox"  id="addswitch" name="chk"  ng-click="checkBox()"  checked   /> 
+                       <label for="addswitch">Add Leaf and Terminate</label> 
+               </div> -->
+               <h5 class="margin_left10">Do you want to place new leaf and terminate ?</h5>
+               <label class="margin_left10 wid15 margin_top_10" ng-click="radio1()"><input type="radio" name="r1" checked />Yes</label>  
+               <label class="margin_left10 margin_top_10" ng-click="radio2()"><input type="radio" name="r1" />No</label>
+           </dd>
+           <dd><div style="display:none" id="already_terminate">If the option is "No", then you can terminate using existing leaf ONLY!</div></dd>
+            <dd class="margin_top_20"> 
+                <div class="wid20 pull-left margin_left10"><span>Preferred Leaf</span></div> 
+                    <div class="select-style colorBlue actColor selectBx">  
+                        <div class="select-style brd policySelect group colorBlue"  ng-click="rowTerminationPolicyDetails();   $event.stopPropagation()">
+                            <input type="text" class="text_field wid90 cursor"  id="p_id" ng-class="{wid90: room.policyFlag == 'false'}" readonly    ng-model="terminate.templateName" required></input>
+                        </div>
+                         <div class="policyDetails" id="policyDiv"  ng-show="room.roompolicyDetail" style="width: 68%;"> 
+                                      <div class="list-container">
+                                           <div class="wid100 left_Scrollcontainer"  id="wid60scrollbar"> 
+                                             <ul> 
+                                                    <li ng-click="terminateRowLeafDetails(showSwitchDetails.id, showSwitchDetails.name);   $event.stopPropagation()" ng-repeat="showSwitchDetails in switchTemplateTypes"> 
+                                                      <div class="clear">
+                                                        <h5 class="grayTextColor pull-left">{{showSwitchDetails.name}}</h5>
+                                                         <div class="pull-right rus_position"><label >RUs :</label> <label class="">{{showSwitchDetails.physicalStats.noOfRus}}</label>
+                                                         </div> 
+                                                      </div>
+                                                        <div></div> 
+                                                       <div class="clear overflowHidden">
+                                                        <div class="pull-left overflowHidden" ng-repeat="switchPort in showSwitchDetails.defaultPortGroup">    
+                                                            <label> {{switchPort.speed}} : </label>
+                                                            <label class="width70">{{switchPort.numOfPorts}} {{switchPort.type}}</label> 
+                                                        </div> 
+                                                        </div>
+                                                    </li> 
+                                            </ul>
+                                          </div>
+                                   </div>
+                           </div>
+                      </div> 
+           </dd>
+            <dd>
+                <div class="wid20 pull-left "><span class="margin_left10">Algorithm</span></div>
+                <div class="pull-left  group selectBx">
+                    <div class="select-style  aggeSelect colorBlue actColor ">  
+                         <select id="terminateRowSelect" ng-model="terminate.algorithm"
+                              class="aci-field physicalLabels pull-right text_field" required> 
+                        <option disabled selected value="">-- Select Algorithm --</option>
+                        <option value="1-1-1" >1-1-1 Placement</option>
+                        <option value="2-0-2" >2-0-2 Placement</option>
+                        <option value="0-2-0" >0-2-0 Placement</option> 
+                        <option value="2-2-2" >2-2-2 Placement</option>
+                      </select>
+                      </div>
+                 </div>
+           </dd>
+
+          
+          </dl>
+    </div>
+ 
+            <div class="aci-dialog-content-span add-tenant-footer" id="termFooter" style="margin-top:40px;">
+            <div class="window-button" align="center">
+                <input  class = "a-button add-project-footer wid80" type="submit" value="Place leaf & terminate"/>
+                <!-- <span><input  type="button" class = "a-button add-project-footer" type="button" ng-click="onCancelRowTerminate()" value="Cancel" style="margin-left:0px;padding-bottom: 1px"></span> -->
+            </div>
+       </div>
+                 </form>
+                        
+      </div>

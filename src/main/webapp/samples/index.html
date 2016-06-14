@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div class="demo-section aci-content" ng-controller="MyCtrl">
+    <ul aci-panel-bar aci-options="panelBarOptions">
+      <li>
+       Cisco
+        <ul>
+          <li>Routers</li>
+          <li>Switches</li>
+          <li>Servers</li>
+          <li>Sizing</li>
+          <li>Tools</li>
+          <li>Others</li>
+          <li>Others again</li>
+        </ul>
+      </li>
+      <li>
+        Maple
+        <ul>
+          <li>Sizing tool</li>
+          <li>Development</li>
+          <li>Big Date</li>
+          <li>Services</li>
+          <li>Others</li>
+        </ul>
+      </li>
+      <li>
+        Ajax Item
+        <div style="padding: 0 1em"></div>
+      </li>
+    </ul>
+    </div>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.panelBarOptions = {
+            contentUrls: [ null, null, "sometext.html" ]
+          };
+          $scope.hello = "Hello from controller";
+      })
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<div ng-include src="'views/racksList.html'" ng-show="room.roomDetailsScreen == true"></div>
+
+<div class="roomCardContainer" ng-show="room.roomDetailsScreen != true;">
+<ul>
+  <li ng-repeat="Room in roomDetailsArr" class="roomDetailsCard">
+  <div ng-show="$index !== editRoomIndex" class="position_relative">
+  <div style="border-bottom:1px solid #e1e1e1;padding-bottom:10px;">
+  <div class="roomTitle">{{Room.name}}</div>
+	<a class="dropdown-toggle" data-toggle="dropdown">
+								<div class="menuIcon" ></div>
+								<ul class="dropdown-menu" id="roomDropDown">
+										<li ng-click="EditRoom($index)"><a>Edit Room</a></li>
+										<li ng-click="delRoom(Room.id)"><a>Delete Room</a></li>
+										<li ng-click="duplicateRoom(Room.id)"><a>Duplicate Room</a></li>
+									</ul>
+								</a>
+  </div>
+	<div class="roomDetails"> <label class="pull-left">Rows</label><span class="addRoomYellowText">{{Room.noOfRows}}</span></div>
+	<div class="roomDetails"><label class="pull-left">Racks</label> <span class="addRoomYellowText">{{Room.noOfRacks}}</span> </div>
+	<div class="roomDetails" > <label class="pull-left">Type</label><span class="addRoomYellowText">{{Room.rackType.type}}</span></div> 
+	<div class="roomDetails"><label class="pull-left">Policy</label><span class="addRoomYellowText">{{Room.policy.name}}</span></div>
+	<span class="roomDetBtn" ng-click="showRoomDetails($index)">Room details >></span>
+	</div>
+	<div ng-show="$index == editRoomIndex">
+	<span ng-include src="'modules/physical/views/addRoomForm.html'"></span>
+	</div>
+     
+	</li>
+	</ul>
+
+
+<div id="addRoom" ng-show="room.enterRoomDetails == false"> 
+	<div id="addRoomText">Click on <br/> <span class="addRoomYellowText">Add Room</span><br/> buttons to create <br/> a new room</div>
+ <input class = "save_btn wid100" type="submit" value="+ Add Room" ng-click="enableAddRoom()" />
+</div>
+
+<div id="addRoomWin" class="addRoomWin" ng-hide="room.enterRoomDetails == false">
+<span ng-include src="'modules/physical/views/addRoomForm.html'"></span>
+	
+</div>
+</div>

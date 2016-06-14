@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+
+    <div ng-controller="MyCtrl">
+        <div class="demo-section">
+            <div id="droptarget" aci-droptarget aci-dragenter="onDragEnter" aci-dragleave="onDragLeave" aci-drop="onDrop" class="aci-header">{{ dropTargetText }}</div>
+            <div class="{{ draggableCLass }}" id="draggable" aci-draggable aci-hint="draggableHint" aci-dragstart="onDragStart" aci-dragend="onDragEnd"></div>
+        </div>
+    </div>
+
+    <script>
+        angular.module("AciDemos", [ "aci.directives" ])
+            .controller("MyCtrl", function($scope){
+                $scope.dropTargetText = "Drag the small circle here.";
+    
+                $scope.draggableHint = function() {
+                    return $("#draggable").clone();
+                }
+    
+                $scope.onDragEnd = function() {
+                    var draggable = $("#draggable");
+    
+                    if (!draggable.data("aciDraggable").dropped) {
+                        $scope.dropTargetText = "Try again!";
+                    }
+    
+                    draggable.removeClass("hollow");
+                }
+    
+                $scope.onDragStart = function() {
+                    $scope.$apply(function() {
+                        $scope.draggableClass = "hollow";
+                        $scope.dropTargetText = "Drop here.";
+                    });
+                }
+    
+                $scope.onDragEnter = function(e) {
+                    $scope.$apply(function() {
+                        $scope.dropTargetText = "Now drop...";
+                    });
+                }
+    
+                $scope.onDragLeave = function(e) {
+                    $scope.$apply(function() {
+                        $scope.dropTargetText = "Drop here.";
+                    });
+                }
+    
+                $scope.onDrop = function(e) {
+                    $scope.$apply(function() {
+                        $scope.dropTargetText = "You did great!";
+                        $scope.draggableClass = "";
+                    });
+                }
+            })
+</script>
+
+<style>
+    #draggable {
+        cursor: move;
+        position: absolute;
+        top: 260px;
+        left: 50%;
+        margin-left: -28px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background-color: #03a9f4;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+    }
+    .painted {
+        background-color: #03a9f4;
+        color: #fff;
+    }
+    
+    #draggable.hollow
+    {
+        cursor: default;
+        background: #ececec;
+    }
+    
+    #droptarget
+    {
+        height: 200px;
+        width: 200px;
+        font-size: 14px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 200px;
+        margin: 0 auto;
+        cursor: default;
+        border: 1px solid #999;
+    }
+
+    .demo-section
+    {
+        height: 300px;
+        position: relative;
+    }
+</style>
+</div>
+
+
+</body>
+</html>

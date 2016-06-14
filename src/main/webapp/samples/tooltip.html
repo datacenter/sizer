@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+       <link rel="stylesheet" href="../styles/aci.common.core.css" />
+        <link rel="stylesheet" href="../styles/aci.material.css" />
+        <link rel="stylesheet" href="../styles/aci.css" />
+ 
+    <script src="../bower_components/jquery/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+ 	<script src="../scripts/framework/aci.ui.core.js"></script>
+ </head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div ng-controller="MyCtrl">
+        <div aci-tooltip aci-content="'The <b>tooltip</b><br />Time is: {{time}}'" class="aci-group">
+            I have a tooltip.
+        </div>
+
+        <div aci-tooltip aci-content="theContent" class="aci-group">
+            I also have a tooltip.
+        </div>
+
+        <style>
+            #example {
+                text-align: center;
+            }
+            .aci-group {
+                display: inline-block;
+                text-align: center;
+                width: 150px;
+                white-space: nowrap;
+                border-width: 1px;
+                border-style: solid;
+                padding: 2em;
+                margin: 10px auto;
+            }
+        </style>
+    </div>
+</div>
+
+<script>
+    angular.module("AciDemos", [ "aci.directives" ])
+        .controller("MyCtrl", function($scope, $timeout){
+            function updateTime() {
+                $scope.time = "Hello World";
+                $timeout(updateTime, 78);
+            };
+            $scope.theContent = "The <b style='color:blue;'>tooltip</b><br />Time is: {{time}}";
+            updateTime();
+        })
+</script>
+
+
+</body>
+</html>

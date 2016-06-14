@@ -1,0 +1,27 @@
+<div class="aci-dialog-content-div">
+    <form class="formDataStyle" name="editRowForm"  ng-submit="editRowForm.$valid && validateEditRow($event)" id="editRowForm">
+    
+        <div class="aci-dialog-content-span">
+            <label>No. of Racks</label>
+            <input class="physicalLabels" type="number" id="editRackInstances" ng-model="editRowF.noOfRacks" required/>
+        </div>
+        <br>
+
+        <div class="aci-dialog-content-span">
+           <label>Rack Type</label>
+             <select id="editRacksRU" ng-model="editRowF.rackType" required validationMessage="Enter RU type" placeholder="Select RU Type"
+                class="aci-field physicalLabels wid90" required >                   
+             </select>  
+        </div>
+        <br>       
+        
+        <div class="aci-dialog-content-span add-tenant-footer">
+            <div class="window-button">
+                <input class = "a-button add-tenant-buttons" type="submit" value="Save" style="margin-left:-20px"/>
+                <span><input class = "a-button add-tenant-buttons" ng-click="onCancelEditRow()" value="Cancel" ></span>
+            </div>
+       </div>
+    </form>
+</div>
+
+<!-- ng-model="editRowF.rackU"  -->

@@ -1,0 +1,147 @@
+<div  class="addServer paddingInner margin_top-10 clear" id="serverAddDevice">
+						<form class="formDataStyle"  >
+                    	<h4 class="grayTextColor headingBrd margin_left10">Server Details</h4>
+                          <span class="pull-right editBtn cursor"  ng-click="editServerSelected($event)" style="position: absolute; top: 0px; right: 0px;"><i class="fa fa-pencil"></i> Edit</span>
+                       
+                       
+                        <div class="clear margin_top_10">
+                        	 <dl class="serverDevice lightGray ">
+                                 	 <dd>
+                                        <div class="wid30 pull-left">Template Type</div>
+                                        <div class="wid50 pull-left" >
+                                        	<div class="select-style colorBlue" style="background:none">
+                                        		<select required  class="text_field text_readonly" ng-disabled>  
+											        	<option value="1" selected hiddden>{{serverGroup.templateType}}</option>
+                                          		</select> 
+                                            </div>
+                                        </div>
+                                    </dd>
+                                    <dd>
+                                        <div class="wid30 pull-left">Instance</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                        		 <input type="number"  class="text_field text_readonly" id="instance"  min="1" ng-model="serverGroup.instances" focus="{{truefalse}}" ng-readonly="!editDevice"> 
+                                        </div>
+                                    </dd>
+                                    <dd ng-show="serverGroup.showUcsManaged" class="brdBTM_none">
+                                        <div class="pull-left fancyCheckbox">
+                                            <input type="checkbox" value="Untagged" id="untag"  ng-model="serverGroup.ucs" ng-disabled="!editDevice" /> 
+                                            <label for="untag">UCS Managed </label> 
+                                       </div> 
+                                    </dd>
+                                    <h4 class="grayTextColor headingBrd margin_top_10 margin_left10">Instance Details</h4>
+                                    
+                                    <dd>
+                                        <div class="wid30 pull-left"> RUs </div>
+                                        <div class="wid50 pull-left colorBlue"> <input type="text" class="text_field text_readonly" value="{{serverGroup.rus}}" required readonly/></div>
+                                    </dd>
+                                    <dd>
+                                        <div class="wid30 pull-left">Power (W) </div>
+                                        <div class="wid50 pull-left colorBlue" > <input type="text" class="text_field text_readonly" value="{{serverGroup.power}}" required readonly/> </div>
+                                    </dd>
+                                    <dd>
+                                        <div class="wid30 pull-left">Cooling (BTU/hr) </div>
+                                        <div class="wid50 pull-left colorBlue"><input type="text" class="text_field text_readonly" value="{{serverGroup.cooling}}" required readonly/> </div>
+                                    </dd>
+                              </dl> 
+                                             
+                        </div> 
+                         <h4 class="grayTextColor subheadingBrd margin_left10">Ports</h4>
+                        <!--form name="myValid" --> 
+            <div class="padTopBottom" id="tablescroll">
+              <div class="list-container" style="height:130px">
+               <div class="wid100 left_Scrollcontainer">  
+                        <table class="table" cellpadding="0" cellspacing="0" width="100%"> 
+                            <thead>
+                            	<th nowrap><span >Port group</span> </th>
+                                <th nowrap>Speed</th>
+                                <th>Ports</th>
+                                <th nowrap><span>Connector</span> </th>
+                                <th nowrap><span >Redundancy</span> </th>
+                            </thead>
+                            <tbody>
+                           	 <tr  ng-repeat="server in serverList track by $index" class="colorBlue">
+                            	<td><input type="text" class="wid100  txtFields" value={{server.name}} disabled  /></td>
+                                <td><input type="text" class="wid100  txtFields" ng-show="editablePortGroup[$index]==false" value={{server.speed}} disabled />
+                                    <div class="select-style txtBrd" ng-hide="editablePortGroup[$index]==false">  
+                                                  <select class="select_field wid100 txtFields" ng-model="server.speed"> 
+                                                     <option value="" selected hidden></option>
+                                                      <option value="1G" >1G</option>
+                                                      <option value="10G" >10G</option>
+                                                      <option value="40G" >40G</option> 
+                                                  </select>
+                                              </div>
+                                </td>
+                                <td><input type="text" class="wid100  txtFields" value={{server.numOfPorts}} readonly />
+                                </td>
+                                <td><input type="text" class="wid100  txtFields"ng-show="editablePortGroup[$index]==false"  value={{server.type}} disabled />
+                                  <div class="select-style brd" ng-hide="editablePortGroup[$index]==false">  
+                                            <select class="select_field wid100"   ng-model="server.type">
+                                                  <option value="" selected hidden></option>
+                                                        <option value="RJ45" >RJ45</option>
+                                                  <option value="SFP+" >SFP+</option>
+                                                    <option value="QSFP+" >QSFP+</option>
+                                                  </select>
+                                            </div>
+                                </td>
+                                <td><input type="text" class="wid100  txtFields" ng-show="editablePortGroup[$index]==false"value={{server.redundancyModel}} disabled />
+                                    <div class="select-style brd" ng-hide="editablePortGroup[$index]==false">  
+                                                 <select class="select_field wid100"   ng-model="server.redundancyModel"> 
+                                                     <option value="" selected hidden></option>
+                                                      <option value="A-A" >A-A</option>
+                                                      <option value="A-S" >A-S</option>
+                                                      <option value="Individual" >Individual</option>
+                                                  </select>
+                                            </div> 
+                                </td>
+                                <td ng-show="editDevice"nowrap><i class="fa fa-pencil colorGray cursor" ng-click="editDeviceFields($index, $event)"></i> <i class="fa fa-trash colorGray cursor"  ng-click="removeServRow($index)"  ></i></td>
+								              </tr>
+                              <tr ng-show="editDevice">
+                              <td><input type="text" ng-model="serverForm.name" class="wid100"/></td>
+                                <td> 
+                                       <div class="select-style brd">  
+                                          <select class="select_field wid100" ng-model="serverForm.speed"> 
+                                             <option value="" selected hidden></option>
+                                              <option value="10G" >10G</option>
+                                              <option value="40G" >40G</option> 
+                                          </select>
+                                      </div>
+                                </td>
+                                <td><input type="number" ng-model="serverForm.numOfPorts" min="1" class="wid100"/></td>
+                                <td> 
+                                  <div class="select-style brd">  
+                                    <select class="select_field wid100"   ng-model="serverForm.type">
+                                          <option value="" selected hidden></option>
+                                              <option value="RJ45" >RJ45</option>
+                                              <option value="SFP+" >SFP+</option>
+                                              <option value="QSFP+" >QSFP+</option> 
+                                          </select>
+                                    </div>
+                                </td>
+                                <td> 
+                                      <div class="select-style brd">  
+                                         <select class="select_field wid100"   ng-model="serverForm.redundancyModel"> 
+                                             <option value="" selected hidden></option>
+                                              <option value="A-A" >A-A</option>
+                                              <option value="A-S" >A-S</option>
+                                              <option value="Individual" >Individual</option>
+                                          </select>
+                                    </div>
+                                </td>
+                               <td nowrap><a href="javascript:void(0)" ng-click="addServRow()"> + Add </a></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                        </div> 
+                      </div>
+                  </div>  
+                      <!--div class="clear buttonFooter " ng-hide="editDevice">
+                          <!--       <input type="button" class="btn save_btn wid48"   value="Edit Server" ng-click="editServerSelected()" />   
+                                <input type="submit" class="btn save_btn wid48" value="Delete Server" ng-click="deleteServer()"> 
+                         </div-->   
+                         <p class="clear buttonFooter" ng-hide="!editDevice">
+                                            <input type="button" class="btn cancel_btn wid48 margin_right_10"   value="Cancel" ng-click="cancelEditServer()">     
+                                            <input type="submit" class="btn save_btn wid48 pull-right" id="save_item" value="Save" ng-click="editServer()" /> 
+                          </p>
+                    </form>
+                  </div>
+         

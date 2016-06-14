@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.min.css" />
+
+    <script src="../bower_components/jquery/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.all.min.js"></script>
+
+<style>
+
+
+@font-face {
+    font-family: SourceSansPro-Semibold;
+    src: url(../fonts/SourceSansPro-Semibold.otf);
+}
+
+@font-face {
+    font-family: SourceSansPro-Regular;
+    src: url(../fonts/SourceSansPro-Regular.otf);
+}
+
+@font-face {
+    font-family: Roboto-Medium;
+    src: url(../fonts/Roboto-Medium.ttf);
+}
+
+@font-face {
+    font-family: Roboto-Regular;
+    src: url(../fonts/Roboto-Regular.ttf);
+}
+
+body {
+    font-family: SourceSansPro-Regular;
+}
+
+img {
+    border: 0;
+}
+
+/*START  - Header and Logo Bar*/
+#header {
+    background-color: #03a3e2;
+    height: 52px;
+    color: #fff;
+}
+
+#header a:hover {
+    text-decoration: none;
+}
+
+.v-divider {
+    border-left-color: white;
+    border-left-width: thin;
+    border-left-style: solid;
+    padding-left: 10px;
+    height: 90%;
+    float: left;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 0px;
+}
+
+.logo-text {
+    font: 400 20px Arial, Helvetica, sans-serif;
+    position: absolute;
+    padding-top: 15px;
+}
+
+.logo-bar {
+    float: left;
+}
+
+.aci-ui.logo {
+    width: 198px;
+}
+
+.aci-menu-button {
+    color: #FFFFFF;
+    background-color: transparent;
+    font-size: x-large;
+}
+
+.aci-content {
+    height: 85%;
+    display: block;
+}
+
+/*END  - Header and Logo Bar*/
+
+/*START  - Tab Bar*/
+.ct-tab .ct-pagitem {
+    padding-bottom: 5px;
+    color: #878787 !important;
+    white-space: nowrap;
+}
+
+.ct-pag.ct-tab.ct-pag-hor.ct-pag-top {
+    background-color: #fff;
+}
+
+.ct-underline > .ct-tab.ct-pag-hor.ct-pag-top .ct-pagitem.ct-cur {
+    padding-bottom: 2px;
+    border-bottom: 3px solid #439900 !important;
+}
+
+/*END  - Tab Bar*/
+#ruler { visibility: hidden; white-space: nowrap; font-family: 'Helvetica'; font-size: 15px; }
+/*bootstrap overrides*/
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+/*
+.aci-logical-splitter .ct-canvas{
+    margin-top: -20px;
+}
+.aci-logical-splitter .a-splitter{
+    height: 550px;
+}*/
+
+html,
+body {
+    font: 14px SourceSansPro-Regular;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.pane-content {
+    scrollable: false;
+}
+
+.configurationButtons {
+    padding: 4px;
+    background: #ffffff;
+    border: 1px solid #dadada;
+    margin: 0 -1px 0 0;
+}
+
+.configurationButtons span {
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/diagram-sprite.png");
+    background-repeat: no-repeat;
+    -webkit-transform: translatez(0);
+    display: block;
+}
+
+#panelBar div {
+    background: #f4f4f4;
+}
+
+.alignLeft {
+    background-position: -144px 0;
+}
+
+.alignRight {
+    background-position: -160px 0;
+}
+
+.alignTop {
+    background-position: -112px 0;
+}
+
+.alignBottom {
+    background-position: -128px 0;
+}
+
+.toFront {
+    background-position: -176px 0;
+}
+
+.toBack {
+    background-position: -192px 0;
+}
+
+.a-menu .upload-item {
+    overflow: hidden;
+    padding: 0;
+}
+
+.a-menu .upload-item .a-dropzone {
+    padding: 0;
+}
+
+.a-menu .a-upload {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.a-menu .a-upload-button {
+    height: 100px;
+}
+
+.a-ie7 .a-menu .a-upload {
+    filter: alpha(opacity=0);
+}
+
+.a-menu .upload-item .a-upload-button {
+    border-width: 0;
+    border-radius: 0;
+    padding: 0;
+}
+
+.a-menu #export {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+}
+
+.a-ie7 .a-menu #export {
+    filter: alpha(opacity=0);
+}
+
+.a-menu .a-sprite {
+    background-image: url("../images/diagram-sprite.png");
+}
+
+.new-item {
+    background-position: 0 0;
+}
+
+.blank-item {
+    background-position: 0 0;
+}
+
+.open-item {
+    background-position: -32px 0;
+}
+
+.save-item {
+    background-position: -16px 0;
+}
+
+.undo-item {
+    background-position: -48px 0;
+}
+
+.redo-item {
+    background-position: -64px 0;
+}
+
+.copy-item {
+    background-position: -80px 0;
+}
+
+.paste-item {
+    background-position: -96px 0;
+}
+
+.a-slider {
+    vertical-align: middle;
+}
+
+.a-numerictextbox {
+    width: 60px;
+}
+
+/* styles to add a divider in between the tabs */
+.tab-divider {
+    padding-right: 14px;
+    border-right-style: solid;
+    border-right-width: medium;
+    border-right-color: lightgray;
+}
+
+#splitter {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: auto;
+    top: 0px;
+    bottom: 35px;
+    border-width: 0 0 1px;
+}
+
+#bottom-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 3px;
+    text-align: right;
+}
+
+#appDiagram {
+    border: 0;
+    padding-top: 0px;
+    width: 100%;
+}
+
+#appDiagram,
+#center-pane .pane-content {
+    /*height: 100%;*/
+}
+
+.a-panelbar .a-content ul {
+    margin: 0;
+    padding: 0;
+}
+
+.a-panelbar .a-content li {
+    text-align: right;
+    position: relative;
+    list-style: none;
+    padding: 5px 0 0;
+}
+
+.a-panelbar .a-content {
+    padding-bottom: 5px;
+}
+
+.a-panelbar .a-content li > span {
+    position: absolute;
+    display: block;
+    left: 10px;
+    top: 10px;
+}
+
+.a-panelbar .a-content li > .a-widget {
+    width: 50%;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: left;
+    position: static;
+}
+
+.a-panelbar .a-content .a-selected-color {
+    width: 100%;
+}
+
+.a-panelbar {
+    border-width: 0;
+}
+
+.a-panelbar,
+.a-panelbar .a-panel,
+.a-panelbar li.a-item {
+    background: transparent;
+}
+
+.a-panelbar .a-panel,
+.a-panelbar .a-content {
+    background: white;
+    border: none;
+    padding-left: 10px;
+
+}
+
+#shapesPanelBar .a-panel .a-item {
+    display: inline-block;
+    width: 80%;
+}
+
+#shapesPanelBar .a-panel .a-state-hover,
+#shapesPanelBar .a-panel .a-state-selected {
+    color: inherit;
+/ / background : #fff;
+}
+
+.shapeItem {
+
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-image: url("../images/appicons-sprites.png");
+    background-size: auto 100%;
+}
+
+#tol3 {
+    margin-top: -5px;
+    width: 60px;
+    height: 60px;
+}
+
+hr {
+
+    margin-top: 1.5px;
+    margin-bottom: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    height: 0px;
+    border: 0px;
+    border-top: 2px solid #efefef;
+}
+
+#shapesPanelBar {
+    margin-top: 28px;
+    width: 100px !important;
+    border: 1.5px solid #848484;
+    border-left: none;
+    border-bottom: none;
+    border-color: #848484;
+    height: 100% !important;
+}
+
+#shapesPanelBar span {
+    text-align: center;
+    display: block;
+    background-color: white;
+    color: #878787;
+    border: none;
+    font-family: Roboto-Medium;
+    font-size: 15px;
+
+}
+
+#shapesPanelBar span .a-icon {
+    display: none;
+}
+
+#shapesPanelBar .shapeItem {
+    display: inline-block;
+}
+
+div.pane-content {
+    height: 100% !important;
+}
+
+#menu > .a-menu {
+    height: 40px;
+}
+
+#menu .a-item > .a-link {
+    padding: .8em 1.4em;
+}
+
+.header {
+    color: #fff;
+    background: #000;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 20px;
+    height: 50px;
+    line-height: 50px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.header a {
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: none;
+    color: #fff;
+    display: inline-block;
+    margin-right: 30px;
+    float: right;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+div.about {
+    color: #333;
+    padding: 20px 30px;
+}
+
+.about ul {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 90px;
+    margin: 0;
+    width: 130px;
+    color: #25A0DA;
+}
+
+.about a {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.about a:hover {
+    text-decoration: underline;
+}
+
+.about h2,
+.about h3 {
+    color: #000;
+    font-size: 16px;
+}
+
+.about h3 {
+    margin-top: 25px;
+    padding-top: 25px;
+    display: block;
+    border-top: 1px solid #eee;
+}
+
+.about p {
+    margin: 25px 0;
+}
+
+.a-window-titlebar {
+    font-weight: bold;
+    color: #fff;
+    padding: .6em 0;
+    text-indent: .4em;
+}
+
+.a-window-actions {
+    text-indent: 0;
+    margin-right: .2em;
+    margin-top: .2em;
+}
+
+.ct-dot > .ct-viewport.ct-hNative {
+    height: 96% !important;
+    padding-top: 12px;
+}
+
+.aci-content,
+.ct-cur {
+    height: 100% !important;
+}
+
+.aci-logical-splitter {
+    height: 99% !important;
+}
+
+/* END : logical diagram and Fabric css */
+
+.ng-scope,
+.full-height {
+    height: 100% !important;
+}
+
+#tenant-pane1 {
+    max-height: 25% !important;
+}
+
+.tenantCarousal {
+    padding-left: 10px;
+    padding-right: 90px;
+    margin-top: -30px;
+    width: 90% !important;
+}
+
+.tenantCard,
+.tenantCardSelected {
+    border: 0.1em solid #848484;
+    padding: 2px 2px 2px 2px;
+  //  box-shadow: 0px 0px 1px 1px #aac6db;
+    box-sizing: border-box;
+    width: 180px !important;
+    height: 90px !important;
+}
+
+.tenantCardSelected {
+    border: 0.12em solid #03a3e2;
+	//border-bottom: 5px solid #109FD4;
+
+}
+
+.tenantInstances{
+    background-color:#848484;
+    font-family:Roboto-Regular;
+    font-size:15px;
+    margin-left:115px;
+    color: white;
+    width:50px;
+    border:0;
+    text-align:center;
+    border-radius:2px;
+}
+/*
+#tenantInstances:focus{
+	 background-color:#03a3e2;
+	 padding:0;
+}*/
+
+.instancesSelected{
+	 background-color:#03a3e2;
+	 font-family:Roboto-Regular;
+	font-size:15px;
+	margin-left:115px;
+    color: white;
+	width:50px;
+	border:0;
+	text-align:center;
+	border-radius:2px;
+}
+
+.tenantCardTitle {
+    font-size:15px;
+    margin-top:2px;
+    color:#686868;
+    margin-left:10px;
+    font-family:Roboto-Medium;
+}
+
+.tenantCardText {
+    color:#878787;
+    font-size: 12px;
+    font-family:Roboto-Regular;
+    margin-left:10px;
+    width:60px!important;
+
+}
+.dashed {
+	width:50%;
+	border-right: 1px dotted #878787;
+	margin-top:-10px;
+}
+
+.vis-hidden {
+    visibility: hidden;
+}
+
+#app-slider {
+/ / max-height : 8 % !important;
+    min-height: 15px;
+}
+
+.applicationCarousal {
+    margin-left: 45px;
+    margin-top: -55px;
+}
+
+.applicationCard,
+.applicationCardSelected {
+    border: 1px solid #109fd4;
+    box-shadow: 1px 1px 1px #aac6db;
+    box-sizing: border-box;
+    color: #109fd4;
+/ / font-weight : 600;
+    text-align: center;
+    font-size: 12px;
+    font-family: Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+    width: 70px !important;
+    height: 25px !important;
+}
+
+.applicationCardSelected {
+    background-color: #109fd4;
+    color: white;
+}
+
+#applicationName {
+/ / padding-left : 12 px;
+    margin-top: 3px;
+}
+
+.fieldlist li {
+    list-style: none;
+    display: block;
+}
+
+.sachin {
+    height: 1000px !important;
+}
+
+.popover-title {
+    background: #109fd4;
+    color: white;
+    font-weight: 700;
+
+}
+
+.progress-title {
+    float: left;
+    line-height: 10px;
+    margin-left: -25px;
+    width: 60%;
+}
+
+.progress {
+    height: 10px;
+}
+
+.popover {
+    width: 380px;
+    height: 200px;
+    margin-left: 45px !important;
+    max-width: none;
+    line-height: 7%;
+}
+
+.error-popup {
+    width: 300px;
+    height: 100px;
+}
+
+.error-popup h3 {
+    font-size: 1em;
+    padding: 12px 10px 5px;
+}
+
+.error-popup img {
+    float: left;
+    margin: 15px 15px 15px 15px;
+}
+
+#left-pane {
+    overflow: hidden;
+    height: 100% ! important;
+}
+
+/* Dialog box changes */
+
+.a-window-titlebar {
+    background-color: white;
+    border-color: #848484;
+    border-radius: 8px 8px 0 0;
+}
+
+.a-window-title {
+    font-family: SourceSansPro-Semibold;
+    font-size: 16px;
+    color: #393939;
+    text-indent: 12px;
+}
+
+div.a-widget.a-window {
+    border-radius: 6px;
+}
+
+ul.fieldlist {
+    margin-left: -20px;
+}
+
+.fieldlist label {
+    font-size: 14px;
+	font-family: SourceSansPro-Regular;
+	color:#4f4f4f;
+    width: 23%;
+	font-weight:normal;
+}
+
+div.a-edit-buttons.a-state-default {
+    border-style: none;
+    background-color: white;
+    text-align: center;
+}
+
+a.a-button.a-button-icontext:hover {
+    background-color: #03a3e2;
+    color: white;
+}
+
+.a-icon.a-update,
+.a-icon.a-cancel {
+    display: none;
+}
+
+/*.a-numerictextbox .a-select .a-link span.a-i-arrow-s {
+    margin-top: -5px;
+}
+*/
+/*span.a-icon.a-i-arrow-n {
+    margin-top: -3px;
+}
+*/
+.a-window-action.a-icon.a-i-close.a-state-hover {
+    background-color: none;
+}
+
+.a-numerictextbox .a-select {
+    /*margin-top: 2px;*/
+    height: 22px;
+}
+
+
+.aci-dialog-content-span label {
+    margin-left: 12px;
+}
+
+#addApplication label.a-checkbox-label::after {
+ /* margin-left:123px;*/
+	border-radius: 3px;
+}
+
+#addApplication .a-checkbox-label
+ {
+
+    /*margin-left: -9px;*/
+}
+
+#contractTemplate label.a-checkbox-label::after,
+#contractl3 label.a-checkbox-label::after {
+    border-radius: 3px;
+	margin-left:-39px;
+}
+
+/*#contractTemplate .a-checkbox-label,
+#contractl3 .a-checkbox-label {
+    margin-left: -20px;
+}
+*/
+#addTenant label {
+    width: 100px;
+    margin-left: 12px;
+	font-size: 14px;
+	font-family: SourceSansPro-Regular;
+	color:#4f4f4f;
+	font-weight:normal;
+}
+
+#addApplication label {
+    width: 120px;
+    margin-left: 12px;
+	font-size: 14px;
+	font-family: SourceSansPro-Regular;
+	color:#4f4f4f;
+	font-weight:normal;
+}
+
+.window-button {
+    margin-left: 23%;
+    padding-top: 10px;
+}
+#l3outDialgog label {
+	width:100px;
+}
+
+
+/* Dialog box changes - END */
+
+#splitter > .a-splitbar-horizontal{
+	display:none;
+}
+
+.titles {
+    left: 105px;
+    font-family: Roboto-Medium;
+    font-size: 15px;
+    color: black;
+	width:140px;
+}
+
+/*Code tabs styles*/
+.ct-underline > .ct-tab.ct-pag-hor .ct-pagitem {
+    padding: 12px 0;
+    margin: 0 3px;
+}
+
+ .tenantSave {
+	display: inline-block;
+	width: 24px !important;
+    height: 24px;
+    background-image: url("../images/ok-cancel-icon.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	margin-top:10px;
+}
+.tenantSave:hover{
+	background-position: 0 -24px;
+}
+
+.tenantClose {
+    display: inline-block;
+	width: 24px !important;
+    height: 24px;
+    background-image: url("../images/ok-cancel-icon.png");
+	padding-left:0px;
+	margin-top:10px;
+	background-position: -24px 0;
+	background-repeat: no-repeat;
+}
+
+.tenantClose:hover{
+	background-position: -24px -24px;
+}
+
+.plus-icon {
+    display: inline-block;
+	width: 16px !important;
+    height: 16px;
+    background-image: url("../images/plus-icon.png");
+	padding-left:0px;
+	margin-top:0px;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	border-style:none;
+	cursor:pointer;
+}
+
+.plus-icon:hover{
+	background-position: 0 -16px;
+}
+
+div.a-resize-handle {
+	height:0px;
+}
+
+/* VRF-Switch - Starts */
+
+
+.tswitch 
+{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 60px !important;
+  height: 26px;
+  padding: 3px;
+  background-color: white;
+  cursor: pointer;
+
+}
+.tswitch-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.tswitch-label 
+{
+  position: relative;
+  display: block;
+  height: inherit;
+  font-size: 12px;
+  font-family: SourceSansPro-Regular;
+  background: #eceeef;
+  border-radius: 3px;
+  margin-top:-6px;
+}
+.tswitch-label:before, .tswitch-label:after 
+{
+  position: absolute;
+  top: 50%;
+  margin-top: -.5em;
+  line-height: 1;
+}
+.tswitch-label:before {
+  content: attr(data-off);
+  right: 9px;
+  color: #4f4f4f;
+}
+.tswitch-label:after {
+  content: attr(data-on);
+  left: 11px;
+  color: white;
+  
+  opacity: 0;
+}
+.tswitch-input:checked ~ .tswitch-label {
+  background: #03a3e2;
+}
+.tswitch-input:checked ~ .tswitch-label:before {
+  opacity: 0;
+}
+.tswitch-input:checked ~ .tswitch-label:after {
+  opacity: 1;
+}
+
+.tswitch-handle {
+  position: absolute;
+  border-radius: 2px;
+  top: -2px;
+  left: 4px;
+  width: 22px;
+  height: 24px;
+  background: white;
+  -webkit-transition: left 0.15s ease-out;
+  -moz-transition: left 0.15s ease-out;
+  -o-transition: left 0.15s ease-out;
+  transition: left 0.15s ease-out;
+}
+.tswitch-handle:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -6px 0 0 -6px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  
+}
+.tswitch-input:checked ~ .tswitch-handle 
+{
+  left: 40px;
+}
+/* VRF-Switch - END */
+
+#fabricDiagram {
+	border:none;
+}
+
+/* Sizer Results Table - STARTS*/
+.sizerResultTable .a-grid-header .a-header
+{
+	background-color: #fff;
+}
+.sizerResultTable .a-grid-header th.a-header>.a-link 
+{
+	font-size:13px;
+	color : #8a8a8a;
+}
+.sizerResultTable tr.ng-scope.a-state-selected 
+{
+	background-color:#f8f8f8;
+	color:#757575;
+}
+
+.view-icon {
+    display: inline-block;
+	width: 21px !important;
+    height: 21px;
+	outline:none;
+    background-image: url("../images/results-view-icon.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	border:0;
+	outline-style:none;
+}
+
+.view-icon:hover{
+	background-position: 0px -21px;
+}
+/* Sizer Results Table - ENDS */
+
+</style>	
+	
+</head>
+<body>
+
+    <div id="splitter" resize>
+        <div id="left-pane">
+            <div class="pane-content" style="height:100%;">
+                <ul id="shapesPanelBar">
+                   List
+                </ul>
+	
+            </div>
+        </div>
+        <div id="center-pane">
+			<div id="tenant-splitter" style="height: 100% !important;">
+				<!-- START : the Tenant pane -->
+				<div id="tenant-pane">
+                    <div class="pane-content">
+					<div style="margin-left:10px; width:40px; margin-top:0px">
+						<p class="titles">TENANTS</p>
+						<!--div class= "icon icon-plus" ng-click="openTenantWindow()" ng-show="!tenantWindowVisible" style="margin-left:70px;margin-top:-28px;" ></div-->
+					</div>
+					<div style="padding-top:30px; position:relative;">
+						<div ng-class="{'vis-hidden': tenantsControls==false}">
+							<span class="glyphicon glyphicon-chevron-left" ng-click="showPrevTenant()" style="margin-left:10px;"></span>
+							<span class="glyphicon glyphicon-chevron-right" ng-click="showNextTenant()" style="right:50px;top:30px;position:absolute;"></span>
+						</div>
+						<span ng-include src="'views/tenantList.html'" onload="getTenants()"></span>
+					</div>
+                        </div>
+				</div>
+				<!-- STA1RT : the application and VRF pane -->
+                <div>
+                    <div id="center-splitter" style="height: 100% !important;">
+                        <div id="app-left-pane">
+                            <div class="pane-content">
+                                <p class="titles" style="margin-left:10px;">APPLICATIONS</p>
+                                <div class= "plus-icon" ng-click="openApplicationWindow()" ng-show="!appWindowVisible" style="margin-left:10px; margin-top:0px;" ></div>
+                                <div id="app-slider">
+                                    <div ng-class="{'vis-hidden': appControls==false}">
+                                        <span class="glyphicon glyphicon-chevron-left" ng-click="showPrevApplication()" style="margin-left:10px;margin-top:12px;"></span>
+                                        <span class="glyphicon glyphicon-chevron-right" ng-click="showNextApplication()" style="right:30px;top:12px;position:absolute;"></span>
+                                    </div>
+
+                                    <!--span class="glyphicon glyphicon-plus-sign" ng-click="openApplicationWindow()" ng-show="!appWindowVisible" style="left:30px;top:25px;position:absolute;color:#3185d7;font-size:15px;"></"></span-->
+                                    <span ng-include src="'views/applicationList.html'"></span>
+                                </div>
+                                <div id="appDiagram"></div>
+                            </div>
+
+                        </div>
+                        <div id="fabric-right-pane">
+                            <div class="pane-content">
+                                <div class="titles" style="margin-left:10px">FABRIC</div>
+                                <div id="fabricDiagram"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- END : the application and VRF pane -->
+			</div>
+		<!--END: tenant splitter-->
+		</div>
+    </div>
+
+	<script>
+	  $("#splitter").aciSplitter({
+                panes: [
+                    {collapsible: true, size: "110px"},
+                    {collapsible: false, scrollable: false}
+                ]
+            });
+
+            $("#tenant-splitter").aciSplitter({
+                orientation: "vertical",
+                panes: [
+                    {collapsible: true, size: "23%", scrollable: false},
+                    {collapsible: false, scrollable: false}
+                ]
+            });
+
+
+            $("#center-splitter").aciSplitter({
+                resize: function(e) {
+
+                    if(e.sender.options.panes[1].size.indexOf("%") > -1){
+                    }else if (e.sender.options.panes[1].size.indexOf("px") > -1){
+                    }
+
+                },
+                panes: [
+                    {collapsible: true, scrollable: false},
+                    {collapsible: true, scrollable: false}
+                ]
+            });
+	</script>
+</body>
+</html>

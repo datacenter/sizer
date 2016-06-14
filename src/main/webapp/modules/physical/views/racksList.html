@@ -1,0 +1,183 @@
+<div class="racksviewContainer">
+   <div class="col-lg-12" ng-click="hideUnterminatedRacks()">
+      <div class="clear">
+         <div class="wid58">
+            <a href="javascript:void(0)" class="dropdown-toggle viewproject-btn" data-toggle="dropdown">
+               <div class="room-title-text  rackRoomlistdrop dropdown-toggle" data-toggle="dropdown">
+                  {{roomDetailsArr[selectedRoomIndex].name}}   
+                  <i class="fa fa-caret-down linkColor"></i> 
+                  <ul class="dropdown-menu" id="roomDropDown">
+                     <li ng-repeat="room in roomDetailsArr" ng-click="showRoomDetails($index)" ng-if="$index!=selectedRoomIndex">
+            <a>{{room.name}}</a></li>
+            <li ng-click="loadRoomDetails()"><a class="view-arrow">View All <i class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+            </div>
+            </a>   
+                      
+         </div>
+         <div class="pull-right rowactionItems terminationPart">
+           
+                             <!--  <span>{{row.inventoryInfo.totalNumOfRacks}} racks, </span>  
+                              <i class="fa fa-pencil cursor"></i>  -->
+                            
+
+                             <i class="tooltip" title="Terminate Rows"><span class="terminate_icon cursor" ng-click="terminateRoomEvent()" title=""></span></i>
+                             <i class="tooltip" title="Revert"><span class="fa fa-undo cursor" title=""  ng-click="revertRoomTermination()"></span></i>
+                            <i class="tooltip" title="Remove Room"><span class="fa fa-trash cursor" title="" ng-click="delRoom(selectedRoomIndex, roomDetailsArr[selectedRoomIndex].id)"></span></i> 
+        </div>
+      </div>
+      <div class="clear"> 
+         <div class="wid60 pull-left">
+         <div class="editForm" style="display:none" id="editFormBox"></div>
+           <div class="list-container"  id="rowScrollBar" ng-style="{height:rowContainerHeight}">
+                <div class="wid100 row_Scrollcontainer">
+                  <div class="row_rack_container" id="wid60scrollbar">
+                     <li ng-repeat="row in rowsArray" style="list-style-type:none; box-shadow:1px 5px 6px #CDCDCD" >
+                        <div class="row_expand_icon" ng-show="!rackDetails" ng-click="rowAction($index,$event);" ng-class="{activeIconSelected:$index == selectedRowIndex}"></div>
+                        <div class="row_collapse_icon" ng-hide="!rackDetails" ng-click="rowAction($index,$event);" ng-class="{activeIconSelected:$index == selectedRowIndex}"></div>
+
+                        <div class="row_titleBox" ng-click="changeRowDisplay($index)" style="margin-left:50px;margin-top:-40px;"ng-class="{activeRow:$index == selectedRowIndex}">
+                           
+                           <span class="rowInnerTitle">{{row.name}} : </span> 
+                           <div class="pull-left rackdetailsDisplay">
+                            <div class="pull-left"> 
+                                <span>Device : </span><span class="colorBlock width15 display_inline">{{row.inventoryInfo.totalDeviceCount}}</span> <span>|</span>
+                                <span>Leafs : </span> <span class="colorBlock width15 display_inline">{{row.inventoryInfo.deviceCounts.Leaf}}  </span>  <span>|</span>  
+                                <span>Spines : </span> <span class="colorBlock width15 display_inline">{{row.inventoryInfo.deviceCounts.Spine}} </span>  <span>|</span>  
+                                <span>Ports : </span><span class="colorBlue display_inline">{{row.inventoryInfo.totalNumOfPotsTerminated}}/{{row.inventoryInfo.totalNumOfPorts}}</span> 
+                                <span>Terminated</span>
+                             </div>
+                             <div class="pull-right rowactionItems removeRow rowItm hide" ng-hide="!rackDetails">
+                             <!--  <span>{{row.inventoryInfo.totalNumOfRacks}} racks, </span>  
+                              <i class="fa fa-pencil cursor"></i>  -->
+                              
+                             <i class="tooltip" title="Terminate Port"><span class="terminate_icon cursor" ng-click="terminatedEvent($index)"  title="" ></span></i>
+                              <i  class="tooltip" title="Revert"><span class="fa fa-undo cursor"  ng-click="revertTermination($index)" title="" ></span></i>
+                              <i  class="tooltip" title="Remove Row"><span class="fa fa-trash cursor"  ng-click="deleteRowRoomClick(event); event.stopPropagation();" title="" ></span></i> 
+                             </div>
+
+                                 
+                              <i class="tooltip terminateStatus" title="" id="terminateStatus"  >  <div class="statuscircle" title="" ng-class="getRowStateCircleClass(row.state)" ng-click="toggleRacksDiv($index, $event)" ng-mouseover="tooltipAdd($event)" ></div> </i>
+                        </div>
+                        </div>
+
+                           <div ng-show="showUnterminatedRacks && $index==selectedRowIndex" ng-if="row.unterminatedRacks.length>0" class="unterminatedListView">
+                              <div class="unterminatedRacksTitle">Unterminated Racks</div>
+                              <span ng-repeat="rack in row.unterminatedRacks" class="unterminatedListText" ng-click="goToRack($parent.$index,rack.id)">{{rack.name}}<span ng-show="row.unterminatedRacks.length > ($index+1)" style="margin-right:-10px;margin-left:4px">|</span></span>
+                           </div>
+                      <div class="rack_list " data-ng-show="rackDetails">
+                          <div ng-show="racksArray.length==0" ng-if="$index==selectedRowIndex" class="noRacksText">No data available</div>
+                           <dl id="rackdl" data-ng-if="rackDetails">
+                              <dd id="rackdd1" ng-if="$index==selectedRowIndex" ng-click="showRackDetails(0);" ng-class="{activeRack:selectedRackIndex == 0}">
+                                 <div class="racks_title divideEle"><span >{{racksArray[displayedRackIndex].name}} {{racksArray[displayedRackIndex].isNetworkTypeRack == true  ? '(Network Rack)': ''}}</span> <span class="pull-right rackDelete" ng-show="addDevice1"><!--RU{{racksArray[displayedRackIndex].rackType.physicalStats.noOfRus}}-->
+                                <i class="tooltip" title="Add Device"> <span class="fa fa-plus-circle cursor" title="" ng-click="addDeviceWindow()"></span></i> 
+                                <i class="tooltip" title="Delete Rack"> <span class="fa fa-trash cursor" title="" ng-click="deleteRackClicked($event)"></span></i>
+                                  </span> </div>
+                                 <div class="clear">
+                                    <div ng-style="{height:rackHeight}">
+                                       <div class="wid100 list_inner_container" id="rack1scroll" ng-scrollbar rebuild-on="rebuild:me" scrollbar-x="false" scrollbar-y="true" scrollbar-config="{show: true}">
+                                          <div id="mySVG"></div> 
+                                          
+                                            <ul class="device_box" id="rack1" ng-if="$index==selectedRowIndex">
+                                            </ul> 
+                                          
+                                       </div>
+                                    </div>
+                                 </div>
+                              </dd>
+                              <dd id="rackdd2" ng-if="$index==selectedRowIndex" ng-click="showRackDetails(1);" ng-class="{activeRack:selectedRackIndex == 1}">
+                                 <div class="racks_title divideEle"><span>{{racksArray[displayedRackIndex+1].name}} {{racksArray[displayedRackIndex+1].isNetworkTypeRack == true  ? '(Network Rack)': ''}}</span> <span class="pull-right rackDelete" ng-show="addDevice2"><!--RU{{racksArray[displayedRackIndex+1].rackType.physicalStats.noOfRus}}-->
+                                 
+                                 <i class="tooltip" title="Add Device"> <span class="fa fa-plus-circle cursor" title="" ng-click="addDeviceWindow()"></span></i> 
+                                <i class="tooltip" title="Delete Rack"> <span class="fa fa-trash cursor" title="" ng-click="deleteRackClicked($event)"></span></i>
+
+                                 </span></div>
+                                 <div class="clear">
+                                    <div ng-style="{height:rackHeight}">
+                                       <div class="wid100 list_inner_container" id="rack2scroll" ng-scrollbar scrollbar-x="false" scrollbar-y="true" scrollbar-config="{show: true}">
+                                          <ul class="device_box" id="rack2" ng-if="$index==selectedRowIndex">
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </dd>
+                              <dd id="rackdd3" ng-if="$index==selectedRowIndex" ng-click="showRackDetails(2);" ng-class="{activeRack:selectedRackIndex == 2}">
+                                 <div class="racks_title divideEle"><span>{{racksArray[displayedRackIndex+2].name}} {{racksArray[displayedRackIndex+2].isNetworkTypeRack == true  ? '(Network Rack)': ''}}</span> <span class="pull-right rackDelete" ng-show="addDevice3"><!--!RU{{racksArray[displayedRackIndex+2].rackType.physicalStats.noOfRus}}--> 
+                                 <i class="tooltip" title="Add Device"> <span class="fa fa-plus-circle cursor" title="" ng-click="addDeviceWindow()"></span></i> 
+                                <i class="tooltip" title="Delete Rack"> <span class="fa fa-trash cursor" title="" ng-click="deleteRackClicked($event)"></span></i>
+
+                                 </span></div>
+                                 <div class="clear">
+                                    <div ng-style="{height:rackHeight}">
+                                       <div class="wid100 list_inner_container" id="rack3scroll" ng-scrollbar scrollbar-x="false" scrollbar-y="true" is-bar-shown="selectedRackIndex==2" scrollbar-config="{show: true}">
+                                          <ul class="device_box" id="rack3" ng-if="$index==selectedRowIndex">
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </dd>
+                           </dl>
+                        </div>
+                          <div  class="paginationBar" align="center">  <span class="rackCount" ng-show="rackCount && $index==selectedRowIndex && rackDetails && racksArray.length>0"><i class="fa fa-angle-double-left" ng-click="moveRacksLeft()"></i>&nbsp; {{rackIndex}} &nbsp;<i class="fa fa-angle-double-right" ng-click="moveRacksRight()"></i></span></div>
+                     </li>
+                  </div> 
+                </div>
+            </div>
+         </div>
+         <div class="wid40 pull-left"  ng-click="hidePolicy()"> 
+            <div class="row-Details-Container overflowHidden" ng-style="{height:rightHeight}">  
+            <div class="breadCrumb">
+               <span ng-bind="displayRoomName" ng-class="{active_link: (showRowDetails == true || rackDetails == true)}" ng-click="changeRoomDisplay(selectedRoomIndex)"></span>
+               <span data-ng-show="showRowDetails || rackDetails"> <i class="fa fa-angle-right"></i> </span>
+               <span ng-bind="displayRowName" data-ng-show="showRowDetails || rackDetails" ng-class="{active_link: showRowDetails==false && rackDetails==true}" ng-click="changeRowDisplay(selectedRowIndex)"></span>
+               <span data-ng-show="showRowDetails==false && rackDetails==true"> <i class="fa fa-angle-right"></i> {{racksArray[selectedRackIndex+displayedRackIndex].name}} Details</span>
+            </div>
+            <div ng-if="showRowDetails==false && chartView==true && deviceShow==false
+               && editDelSwitchShow==false && rackDetails==false" ng-include src="'modules/physical/views/roomDetails.html'">
+               <!--Chart representation starts here-->
+            </div>
+             <div ng-if="showRowDetails==true && chartView==true && deviceShow==false
+               && editDelSwitchShow==false" ng-include src="'modules/physical/views/rowDetails.html'">
+               <!--Chart representation starts here-->
+            </div>
+            <div  ng-if="chartView==false" ng-include src="'modules/physical/views/editRoom.html'"></div>
+        
+         <div class="position_relative"  ng-if="showRowDetails==false  && rackAdded==false && serverAdded==false && deviceShow==false && editDelSwitchShow==false" ng-include src="'modules/physical/views/rackDetails.html'"></div> 
+         <div class="position_relative" ng-show="deviceShow" ng-include src="'modules/physical/views/devices.html'"></div>
+         <div class="position_relative" ng-show="editDelSwitchShow" ng-include src="'modules/physical/views/switches.html'">
+         </div>
+
+         <div class=" margin_top_15 padding-15 position_relative"  ng-show="serverAdded">
+            <h4 class="usedValue">Server added to <span>{{racksArray[selectedRackIndex].name}}</span></h4>
+            <label class="margin_top_5">Rack 01 to Rack 05</label>
+            <div class="clear margin_top_5"><input type="button" class="btn save_btn wid50" ng-click="addedDevice()" value="Add Device"/> </div>
+         </div>
+         <div class="margin_top_15 padding-15 position_relative"  ng-show="rackAdded">
+            <h4 class="usedValue">Server <span>{{racksArray[selectedRackIndex].name}}</span> Connected to</h4>
+            <label class="margin_top_5">Rack 01 and Rack 05</label>
+            <div class="clear margin_top_5"><input type="button" class="btn save_btn wid50" value="Add Switch"/> </div>
+            <p class="margin_top_10"><a href="javascript:void(0)" ng-click="rackAddedSwitch()">Back to rack view <i class="fa fa-angle-double-right"></i></a></p>
+         </div>
+
+         
+          </div>
+         </div>
+      </div>
+   </div>
+
+</div>
+</div>
+<div id="deleteRowWindow" style="display:none;" ng-include src="'modules/physical/views/deleteRow.html'" style="border-radius:4px"></div>
+<div id="deleteRackWindow" ng-include src="'modules/physical/views/deleteRack.html'" style="border-radius:4px; display:none;"></div>
+<div id="deleteServerWindow" style="display:none;" ng-include src="'modules/physical/views/deleteServer.html'" style="border-radius:4px"></div>
+<div id="deleteSwitchWindow" style="display:none;" ng-include src="'modules/physical/views/deleteSwitch.html'" style="border-radius:4px"></div>
+<div id="addDeviceWindow"  ng-include src="'modules/physical/views/addDevice.html'" style="border-radius:4px; display:none;"></div>
+<div id="terminateWindow"  ng-include src="'modules/physical/views/terminate.html'" style="border-radius:4px; display:none;"></div>
+<div id="terminateRowWindow"  ng-include src="'modules/physical/views/terminateRow.html'" style="border-radius:4px; display:none;"></div>
+<div id="terminateStatusWindow"  ng-include src="'modules/physical/views/terminateStatus.html'" style="border-radius:4px; display:none;"></div>
+<div id="revertTerminationWindow"  ng-include src="'modules/physical/views/revertTermination.html'" style="border-radius:4px; display:none;"></div>
+
+<div id="terminateRoomWindow"  ng-include src="'modules/physical/views/terminateRoom.html'" style="border-radius:4px; display:none;"></div>
+<div id="revertRoomWindow"  ng-include src="'modules/physical/views/revertRoom.html'" style="border-radius:4px; display:none;"></div>
+
+

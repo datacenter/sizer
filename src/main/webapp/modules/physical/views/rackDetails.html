@@ -1,0 +1,259 @@
+ 
+  <div  class="clear"> 
+    <ul class="rowTabs">
+          <li id="rackDeviceTab" class="rowtabActive" ng-click="rowTabs('rackDeviceTab','rackDeviceContent')">Rack Details </li>
+            <li id="rackPortTab" ng-click="rowTabs('rackPortTab','rackPortContent')">Inventory </li>
+            <li id="rackPhysicalTab" ng-click="rowTabs('rackPhysicalTab','rackPhysicalContent')">Port Details</li>
+        </ul>
+        <div class="tabBorder"></div>
+      <div class="clear overflowHidden  innerBoxContainer">
+                <div id="rackDeviceContent" style="display:block"> 
+                  <a href="javascript:void(0)" class="editBtn pull-right" ng-click="editRackSelected($event)"><i class="fa fa-pencil  cursor" ></i>Edit Rack</a>
+                            <div class="roomDet clear ">
+                            
+                            	<dl class="deviceValue overflowHidden"> 
+                                       <dd>
+                                            <div class="wid20 pull-left">Rack Height</div>
+                                            <div class="wid12 pull-left  group"> 
+                                            	<div class="select-style colorBlue" style="background:none">
+                                                          <select required  class="text_field" ng-model="editRack.rackType" 
+                                                          ng-options="rackType.id as rackType.type for rackType in rackTypesArr"
+                                                          ng-disabled="editRowView2">
+                                                            <!-- <option value="" selected hidden></option>  -->
+                                                          </select> 
+                                            	</div>
+                                           </div>
+                                       </dd>
+
+                                       <dd>
+                                          <div class="wid20 pull-left">Role</div>
+                                          <label class="aci-radio-label radio-text-align">
+                                          <input type="radio" class="aci-radio" checked="checked" ng-model="editRack.isNetworkRack" value="1" ng-disabled="editRowView2"/> 
+                                          <span class="colorBlue" style="font-weight:normal;">Network Rack</span>
+                                           </label>
+                                
+                                          <label class="aci-radio-label radio-text-align" style="margin-left:20px;">
+                                          <input type="radio" class="aci-radio" ng-model="editRack.isNetworkRack" value="0" ng-disabled="editRowView2"> 
+                                          <span class="colorBlue" style="font-weight:normal;">Server Rack</span>
+                                          </label>
+                                      </dd>
+
+
+                                        <dd ng-show="editRowView2==false">                
+                                        <div class="pull-left">  
+                                            <div class="pull-left editCheckbox">
+                                              <input type="checkbox" id="rowPolicy" ng-model="editRack.policyFlag" /> 
+                                               <label for="rowPolicy">Inherit policy</label> 
+                                       </div> 
+                                        </div>
+                                    </dd>
+                                       <dd id="rackPolicytooltip">
+                                            <div class="wid20 pull-left">Policy</div>
+                                            <div class="wid30 pull-left group"> 
+                                            		<div class="select-style  colorBlue" style="background:none" ng-click="showExpandedPolicy()"> 
+                                                       <input type="text" class="text_field wid90 cursor" readonly   ng-model="editRack.policy" ng-click="togglePolicyDisplay(); $event.stopPropagation()" required></input>
+                                                    </div>
+                                             </div>
+                                             <label class="infoIcon" ng-mouseover="roomPolicyBox=true"  ng-mouseleave="roomPolicyBox=false" ng-hide="!tooltipPolicy" ></label> 
+                                             <div class="policyDetails" id="policyDiv"   ng-show="!editRowView2 && room.policyDetail">
+                                                 <div class="list-container" style="height:220px">
+                                                       <div class="wid100 left_Scrollcontainer"  id="wid60scrollbar">
+                                                        <ul> 
+                                                                <li ng-repeat="policy in roomPolicyArr" ng-click="selectRackPolicy(policy.id, policy.name);  $event.stopPropagation()">
+                                                                 <h5 class="grayTextColor">{{policy.name}}</h5>   
+                                                                    <div>                                                                     
+                                                                        <label>Leaf Oversubscription Ratio:</label>
+                                                                        <label class="colorBlue">{{policy.details.leafOversubscription}}</label>
+                                                                        <label> Leaf Utilization: </label>
+                                                                        <label class="colorBlue">{{policy.details.leafUtilization}}%</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Rack RUs Utilization:</label>
+                                                                        <label class="colorBlue">{{policy.details.rackRuUtilization}}%</label>
+                                                                        <label>Rack Power Utilization:</label>
+                                                                        <label class="colorBlue">{{policy.details.rackPowerUtilization}}%</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Preferred Leaf: </label>
+                                                                        <label class="colorBlue"> {{policy.details.preferredAciLeaf}}</label>
+                                                                        <label>Preferred Spine: </label>
+                                                                        <label class="colorBlue">{{policy.details.preferredAciSpine}}</label>
+                                                                    </div>
+                                                                    
+                                                                </li> 
+                                                        </ul>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                       </dd>
+                            	</dl> 
+                                <div class="policyDetails"   ng-show="roomPolicyBox" style="margin-top:-20px;">
+                                                        <ul> 
+                                                                <li>
+                                                                 <h5 class="grayTextColor">{{roomPolicyArr.name}}</h5>   
+                                                                    <div>                                                                     
+                                                                        <label>Leaf Oversubscription Ratio:</label>
+                                                                        <label class="colorBlue">{{racksArray[selectedRackIndex+displayedRackIndex].policy.details.leafOversubscription}}</label>
+                                                                        <label> Leaf Utilization: </label>
+                                                                        <label class="colorBlue">{{racksArray[selectedRackIndex+displayedRackIndex].policy.details.leafUtilization}}%</label>
+                                                                     </div>
+                                                                     <div>
+                                                                        <label>Rack RUs Utilization: </label>
+                                                                        <label class="colorBlue">{{racksArray[selectedRackIndex+displayedRackIndex].policy.details.rackRuUtilization}}%</label>
+                                                                        <label> Rack Power Utilization: </label>
+                                                                        <label class="colorBlue">{{racksArray[selectedRackIndex+displayedRackIndex].policy.details.rackPowerUtilization}}%</label>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Preferred Leaf: </label>
+                                                                        <label class="colorBlue">{{racksArray[selectedRackIndex+displayedRackIndex].policy.details.preferredAciLeaf}}</label>
+                                                                        <label>Preferred Spine: </label>
+                                                                        <label class="colorBlue">{{racksArray[selectedRackIndex+displayedRackIndex].policy.details.preferredAciSpine}}</label>
+                                                                    </div>
+                                                                </li> 
+                                                        </ul>
+                                                </div>
+                               <p class="clear" ng-hide="editRowView2">
+                                    <input type="button" class="btn cancel_btn  wid48 margin_right_10"   value="Cancel" 
+                                    ng-click="cancelEditRackDetails()">     
+                                    <input type="submit" class="btn save_btn pull-right wid48" value="Save" 
+                                    ng-click="editRackDetails()" /> 
+                                </p>
+                                </div><br/><br/>   
+                        </div> 
+                        
+                          <div class="clear"  id="rackPortContent"  style="display:none">  
+                            <div  class="deviceCarousel overflowHidden">
+                                <h4 class="grayTextColor headingBrd">Device Inventory</h4> 
+                                    <dl class="deviceValue">
+                                        <dd ng-repeat ="devices in racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.deviceCounts">
+                                        <div class="wid30 pull-left">{{rackInventoryKeys[$index]}} </div><div class="wid70 pull-left colorBlue" >{{racksArray[selectedRackIndex + displayedRackIndex].inventoryInfo.deviceCounts[rackInventoryKeys[$index]]}}</div></dd>
+                                    </dl> 
+                            </div>
+
+                            <div class="clear overflowHidden">
+                         <h4 class="grayTextColor subheadingBrd">Utilization Details</h4>
+                               <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr>
+                                  <th ></th>
+                                  <th >Available</th>
+                                  <th >Used</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>RU</td>
+                                   <td class="colorBlue" >{{racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.totalNumOfRus}}</td>
+                                   <td class="colorBlue" >{{racksArray[selectedRackIndex + displayedRackIndex].inventoryInfo.rusConsumed}}</td>
+                                   <td class="colorBlue" >{{rackRuUtilization}}</td>
+                                </tr>
+                               <tr><td nowrap>Power (kWh)</td>
+                                  <td  class="colorBlue" >{{rackTotalPower}}</td>
+                                  <td  class="colorBlue" >{{rackPowerConsumed}}</td>
+                                  <td  class="colorBlue" >{{rackPowerUtilization}}</td>
+                                </tr>
+                                <tr><td nowrap>Cooling (BTU/hr)</td>
+                                  <td  class="colorBlue" >{{racksArray[selectedRackIndex + displayedRackIndex].inventoryInfo.totalCooling}}</td>
+                                  <td  class="colorBlue" >{{racksArray[selectedRackIndex + displayedRackIndex].inventoryInfo.coolingConsumed}}</td>
+                                  <td  class="colorBlue" >{{rackCoolingUtilization}}</td>
+                                </tr>
+                              </tbody>
+                            </table>  
+                         </div> 
+                   </div> 
+              
+                             
+                  <div class="canvas-holder overflowHidden position_relative "  id="rackPhysicalContent" style="display:none"> 
+                      <h4 class="grayTextColor headingBrd">Device Ports <label class="infoIcon"></label></h4>
+                      	  <div  class="tabbedContents" > 
+                                <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr ng-show= "racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventoryDevice.length > 0">
+                                  <th ></th>
+                                  <th >Total</th>
+                                  <th >Terminated</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                 <tr>
+                                  <div class="noDataText" ng-hide="racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventoryDevice.length > 0">No data available</div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat ="devicePorts in racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventoryDevice">
+                                  <td>{{devicePorts.type}}</td>
+                                  <td class="colorBlue" nowrap>{{devicePorts.totalPorts}}</td>
+                                  <td class="colorBlue" nowrap>{{devicePorts.terminated}}</td>
+                                  <td class="colorBlue" nowrap>{{rackDevicePortUtil[$index]}}</td>
+                                </tr>
+                              </tbody>
+                            </table>   
+                            </div> 
+                             <h4 class="grayTextColor headingBrd">Leaf Ports  <label class="infoIcon"></label></h4>
+                                <div  class="tabbedContents">
+
+                                <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr ng-show= "racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventoryLeaf.length > 0">
+                                  <th ></th>
+                                  <th >Total</th>
+                                  <th >Terminated</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                <tr>
+                                  <div class="noDataText" ng-hide="racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventoryLeaf.length > 0">No data available</div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat ="leafPorts in racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventoryLeaf">
+                                  <td>{{leafPorts.type}}</td>
+                                  <td class="colorBlue">{{leafPorts.totalPorts}}</td>
+                                  <td class="colorBlue">{{leafPorts.terminated}}</td>
+                                  <td class="colorBlue">{{rackLeafPortUtil[$index]}}</td>
+                                </tr>
+                              </tbody>
+                            </table>  
+                            </div>
+
+                             <h4 class="grayTextColor headingBrd">Spine Ports</h4>
+                                <div  class="tabbedContents"> 
+                             <table width="100%" border="0" class="table" cellspacing="0" cellpadding="0">
+                               <thead>  
+                                <tr ng-show= "racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventorySpines.length > 0">
+                                  <th ></th>
+                                  <th >Total</th>
+                                  <th >Terminated</th>
+                                  <th >Utilization</th>
+                                </tr>
+                                 <tr>
+                                  <div class="noDataText" ng-hide="racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventorySpines.length > 0">No data available</div>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr  ng-repeat ="spinePorts in racksArray[selectedRackIndex+displayedRackIndex].inventoryInfo.portInventorySpines">
+                                  <td>{{spinePorts.type}}</td>
+                                  <td  class="colorBlue">{{spinePorts.totalPorts}}</td>
+                                  <td  class="colorBlue">{{spinePorts.terminated}}</td>
+                                  <td  class="colorBlue">{{rackSpinePortUtil[$index]}}</td>
+                           		</tr>
+                              </tbody>
+                            </table>  
+                            </div> 
+                          </div> 
+                      </div> 
+               </div>
+
+
+
+  <!--     <div class="padding-10"> 
+       				 	<ul class="dropdown-menu_Item" ng-show="dropdownItem">
+                            <li ng-click="saveSwitch()">Add Switch </li>
+                            <li ng-click="saveServer()">Add Server </li> 
+                      	</ul>
+                     	<input type="button" value="Edit Rack" class="save_btn wid48"  ng-click="showDropMenu()" class="dropdown-toggle" data-toggle="dropdown" /> <i class="fa fa-caret-down drapArrow"></i>
+                       
+               -->                       
+ 
+
+
+ 

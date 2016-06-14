@@ -1,0 +1,54 @@
+<form class="formDataStyle" id="addroomPolicy" name="addRoomForm" ng-submit="addRoomForm.$valid && addRoom($event)">
+	<div class="roomTitle" style="padding-bottom:0px; margin-left:0px" ng-show="editMode == false">Room-{{roomDetailsArr.length +1}}</div>
+	<div class="roomTitle"   ng-show="editMode == true">{{editRoomName}}</div>
+	<div id="appclose" class="closeIcon" ng-click="closeAddRoom()">&#10006;</div>
+    <div class="clear editRoomDetails">
+    <div class="roomDetails clear"> <label class="pull-left">Rows</label><span class="addRoomYellowText"><input type="number" min="1"  class="text_field" id="rows" onkeypress="return numberOnly(event)" ng-model="room.noOfRows" required></span></div>
+	<div class="roomDetails clear"><label class="pull-left">Racks per row</label> <span class="addRoomYellowText"><input type="number" min="1" class="text_field" id="racks" onkeypress="return numberOnly(event)" ng-model="room.noOfRacks" required></span> </div>
+	<div class="roomDetails clear"> <label class="pull-left">Rack Height</label><span class="addRoomYellowText"><select id="racktype"  class="text_field" ng-model="room.rackType" ng-options="item.id as item.type for item in rackTypesArr" required>
+	<!-- 	<option value="" selected hidden></option> -->
+	</select></span></div> 
+	<div class="roomDetails clear" id="p_details"><label class="pull-left"> Room Policy</label><span class="addRoomYellowText">
+        <!--select id="roomPolicy" class="text_field" ng-model="room.roomPolicy" ng-options="item.id as item.name for item in roomPolicyArr" ng-click="room.policyDetail=!room.policyDetail">
+			<option value="" selected hidden></option>
+		</select-->
+        <input type="text" class="text_field cursor" id="roomPolicy" readonly  ng-click="myFunc();  $event.stopPropagation()" ng-model="room.roomPolicyName" required></span> 
+        <div class="policyDetails" id="policyDiv" ng-hide="!room.policyDetail">
+             <div class="list-container" id="editRoomID" style="height:242px">
+               <div class="wid100 left_Scrollcontainer"  id="wid60scrollbar">
+                 <ul>
+                        <li ng-repeat="policy in roomPolicyArr" ng-click="selectRoomPolicy(policy.id, policy.name);  $event.stopPropagation()">
+                            <h5 class="grayTextColor">{{policy.name}}</h5>
+                            <div>
+                                <label>Leaf Oversubscription Ratio:</label>
+                                <label class="colorBlue">{{policy.details.leafOversubscription}}</label>
+                                <label>Leaf Utilization: </label>
+                                <label class="colorBlue">{{policy.details.leafUtilization}}%</label>
+                            <div>
+                                <label>Rack RUs Utilization: </label>
+                                <label class="colorBlue">{{policy.details.rackRuUtilization}}%</label>
+                                <label>Rack Power Utilization: </label>
+                                <label class="colorBlue">{{policy.details.rackPowerUtilization}}%</label>
+                                </div>
+                             <div>
+                                <label>Preferred Leaf: </label>
+                                <label class="colorBlue"> {{policy.details.preferredAciLeaf}}</label>
+                                <label>Preferred Spine: </label>
+                                <label class="colorBlue">{{policy.details.preferredAciSpine}}</label>
+                             </div>
+                            </div>
+                        </li> 
+                </ul>  
+                 
+                </div>
+                </div>
+        </div>
+        </div>
+        
+       </div> 
+    </div>
+	<div class="group">
+	<input class = "save_btn wid100" type="submit" value="Save" ng-disabled="saveBtnClicked" />
+    </div>
+	</form>	
+  

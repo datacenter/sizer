@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div ng-controller="MyCtrl">
+        <div class="demo-section aci-content">
+            <button class="aci-button" ng-show="!win1visible" ng-click="win1.open()">Open Calendar</button>
+            <button class="aci-button" ng-show="!win2visible" ng-click="win2.open()">Open AJAX content</button>
+        </div>
+        <div aci-window="win1" aci-title="'Calendar'" aci-on-open="win1visible = true" aci-on-close="win1visible = false">
+            <div aci-calendar></div>
+        </div>
+      
+        <div aci-window="win2" aci-title="'AJAX content'"
+            aci-width="600" aci-height="200" aci-visible="false"
+            aci-content="{ url: 'sample.html' }"
+            aci-on-open="win2visible = true" aci-on-close="win2visible = false"></div>
+      
+    </div>
+    <style>
+        .example {
+            min-height: 400px;
+        }
+    </style>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.hello = "Hello from Controller!";
+      })
+</script>
+
+
+</body>
+</html>

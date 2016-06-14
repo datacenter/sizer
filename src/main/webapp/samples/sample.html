@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div class="demo-section" ng-controller="MyCtrl" style="overflow: auto;">
+
+        <h4>Show notification:</h4>
+        <p>
+            <button class="aci-button" ng-click="notf1.show('This is a notice', 'error')">Popup bottom-right</button><br />
+            <button class="aci-button" ng-click="showInContainer()">Show in container</button><br />
+            <button class="aci-button" ng-click="dismissAll()">Dismiss all</button><br />
+			
+			<aci-button class="aci-primary" ng-click="onClick1()">Primary Button</aci-button><br />
+            <aci-button on-click="onClick2()">Button</aci-button>
+			
+			
+        </p>
+        <span aci-notification="notf1"></span>
+        <span aci-notification="notf2" data-append-to="'#container'"></span>
+
+    </div>
+
+    <div id="container" class="demo-section aci-header"></div>
+
+    <style>
+        .demo-section {
+            text-align: center;
+            line-height: 4em;
+        }
+        .demo-section .aci-button {
+            width: 250px;
+        }
+    </style>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.showInContainer = function() {
+              var date = new Date();
+              date = aci.toString(date, "HH:MM:ss.") + aci.toString(date.getMilliseconds(), "000");
+              $scope.notf2.show(date, "info");
+          };
+          $scope.dismissAll = function() {
+              $scope.notf1.hide();
+              $scope.notf2.hide();
+          };
+		  $scope.onClick1 = function() {
+            alert("Primary button click");
+          };
+          $scope.onClick2 = function() {
+            alert("Second button click");
+          };
+      })
+</script>
+
+
+</body>
+</html>

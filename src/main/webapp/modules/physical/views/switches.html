@@ -1,0 +1,76 @@
+<div  class="addServer paddingInner margin_top-10 clear" >
+						<form class="formDataStyle"  >
+                    	<h4 class="grayTextColor headingBrd margin_left10">Switch Details</h4> 
+                        
+                        <div class="clear">
+                        
+                         <dl class="serverDevice lightGray">
+                                 	 <dd>
+                                        <div class="wid30 pull-left">Type</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                        	<div class="select-style colorBlue" style="background:none">
+                                        		<select required  class="text_field"  readonly> 
+                                                    <option value="1" selected>{{showSwitchDetails.deviceType}}</option> 
+                                                  </select> 
+                                             </div>
+                                        </div>
+                                    </dd>
+                                    <dd>
+                                        <div class="wid30 pull-left">Template Type</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                       		 <div class="select-style colorBlue" style="background:none">
+                                        		<select required  class="text_field"  readonly> 
+                                                <option value="1" selected>{{showSwitchDetails.templateType}}</option> 
+                                              </select> 
+                                          </div>
+                                        </div>
+                                    </dd>
+                                     <h4 class="grayTextColor headingBrd margin_top_15 margin_left10">Instance Details</h4>
+                                      <dd>
+                                        <div class="wid30 pull-left">RUs:</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                        		 <input type="text" class="text_field text_readonly" value="{{showSwitchDetails.rus}}" required readonly/>
+                                        </div>
+                                      </dd>
+                                         <dd>
+                                        <div class="wid30 pull-left">Power (W)</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                        		<input type="text" class="text_field text_readonly" value="{{showSwitchDetails.power}}" required readonly/>
+                                        </div>
+                                      	</dd>
+                                        <dd>
+                                        <div class="wid30 pull-left">Cooling (BTU/hr)</div>
+                                        <div class="wid50 pull-left colorBlue" >
+                                        		<input type="text" class="text_field text_readonly" value="{{showSwitchDetails.cooling}}" required readonly/>
+                                        </div>
+                                  	</dd>
+                           </dl>                  
+                        </div> 
+                       <h4 class="grayTextColor subheadingBrd margin_left10">Ports</h4>
+                        <!--form name="myValid" -->
+                        <div class="padTopBottom">
+                        <table class="table" cellpadding="0" cellspacing="0" width="100%"> 
+                            <thead>
+                            	<!--th>Port group</th-->
+                                <th>Speed </th>
+                                <th>Ports</th>
+                                <th>Connector </th>
+                                 
+                            </thead>
+                            <tbody>
+                           	 <tr  ng-repeat="switchPort in showSwitchDetails.list">
+                                <!--td>{{switchPort.name}}</td-->
+                                <td>{{switchPort.speed}}</td>
+                                <td>{{switchPort.numOfPorts}}</td>
+                                <td>{{switchPort.type}}</td>                            
+                            </tr>
+                            </tbody>
+                        </table> 
+                        </div> 
+                     <!--div class="clear buttonFooter">
+                                <!--input type="button" class="btn save_btn wid48"   value="Edit Switch" ng-click=""    
+                                <input type="submit" class="btn save_btn wid48" value="Delete Switch" ng-click="deleteSwitch()"> 
+                         </div-->
+                    </form>
+                  </div>
+         

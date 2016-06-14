@@ -1,0 +1,41 @@
+<div class="aci-dialog-content-div">
+    <form class="formDataStyle" name="addProjectForm" ng-submit="addProjectForm.$valid && validateAddProject($event)" id="addProject">
+
+    <!-- Use the form instead of attributes -->
+        <div class="aci-dialog-content-span">
+			<label class="tooltip" title="Project Name"><span title="">Name</span></label>
+            <input type="text" class="a-textbox aci-field tenant-project-label" id="name" ng-model="addProject.name" placeholder="Project Name">
+            <div class="errorMsgAddProject" ng-show="projectNameShow">Please Fill the Project Name</div>
+        </div>
+        <br/>
+        <div class="aci-dialog-content-span">
+			<label class="tooltip" title="Project Description"><span title="">Description</span></label>
+            <input type="text" class="a-textbox aci-field tenant-project-label" id="Description" ng-model="addProject.description" placeholder="Description">
+            <div class="errorMsgAddProject" ng-show="projectDescShow">Please Fill the Project Description</div>
+        </div>
+        <br/>
+        <div class="a-dialog-content-span">
+             <label class="tooltip" title="Select Fabric Type - ACI / Nexus9000"><span title="">Type</span></label>
+             <div id="mydiv" ng-if="!editProject">
+            <select id="apptype" name="apptype" validationMessage="Enter {0}" placeholder="Select Type" class="aci-field tenant-project-label"style="width:90%">
+            </select>
+        </div>
+            <input type="text" ng-if="editProject" class="a-textbox aci-field tenant-project-label" ng-disabled="true" ng-model="addProject.type" placeholder="Description">
+            <div class="errorMsgAddProject" ng-show="appTypeShow">Please Select the Project Type</div>
+        </div>
+        <br/>
+        <div class="aci-dialog-content-span">
+			<label class="tooltip" title="Customer Name"><span title="">Customer Name</span></label>
+            <input type="text" class="a-textbox aci-field tenant-project-label" id="Account" ng-model="addProject.account" placeholder="Customer Name">
+            <div class="errorMsgAddProject" ng-show="projectAccountShow">Please Fill the Account Name</div>
+        </div>        
+        <br/>
+        <br/>
+        <div class="aci-dialog-content-span add-tenant-footer">
+            <div class="window-button">
+                <input  class = "a-button add-project-footer" type="submit" value="Save"/>
+                <span><input  type="button" class = "a-button add-project-footer" type="button" ng-click="onCanceladdProject()" value="Cancel" style="margin-left:0px;padding-bottom: 1px"></span>
+            </div>
+       </div>
+    </form>
+</div>

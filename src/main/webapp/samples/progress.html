@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+     <link rel="stylesheet" href="../styles/aci.common.core.min.css" />
+    <link rel="stylesheet" href="../styles/aci.material.css" />
+
+    <script src="../scripts/framework/jquery.min.js"></script>
+    <script src="../scripts/framework/angular.min.js"></script>
+    <script src="../scripts/framework/aci.ui.core.js"></script>
+</head>
+<body>
+<div id="example" ng-app="AciDemos">
+    <div class="demo-section" ng-controller="MyCtrl" style="width : 400px;">
+        <h4>{{status}}</h4>
+        <div aci-progress-bar="progressBar" aci-min="0" aci-max="100" ng-model="progress" style="width: 100%;"></div>
+    </div>
+</div>
+
+<script>
+  angular.module("AciDemos", [ "aci.directives" ])
+      .controller("MyCtrl", function($scope, $timeout){
+          $scope.status = "Working...";
+          $scope.progress = 0;
+          $scope.labels = [
+            "Running Sizer configs",
+            "Generating report",
+            "Successful"
+          ];
+          var i = -1;
+          function update() {
+            $scope.progress += random(0, 10);
+            if ($scope.progress > random(70, 90)) {
+              $scope.progress = random(5, 50);
+              i = (i + 1) % $scope.labels.length;
+              $scope.status = $scope.labels[i];
+            }
+            $timeout(update, 200);
+          }
+          function random(a, b) {
+            return a + Math.floor(Math.random() * (b - a));
+          }
+          update();
+  })
+</script>
+
+
+</body>
+</html>
