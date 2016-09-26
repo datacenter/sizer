@@ -1,5 +1,5 @@
 /**
- * CopyRight @MapleLabs
+ * 
  */
 package com.cisco.acisizer.services;
 

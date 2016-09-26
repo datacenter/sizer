@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.services.PolicyServices;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController

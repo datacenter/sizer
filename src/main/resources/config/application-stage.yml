@@ -14,8 +14,8 @@ spring:
   datasource:
     serverName: http://localhost
     driverClassName: org.postgresql.Driver
-    databaseName: acisizerMaster
-    url: jdbc:postgresql://localhost:5432/acisizerMaster
+    databaseName: acisizer
+    url: jdbc:postgresql://localhost:5432/acisizer
     user: postgres
     password: postgres
     prepStmtCacheSize: 250
@@ -30,6 +30,11 @@ spring:
     idleTimeout: 30000
 
 
+  jpa:
+    show-sql : false
+    properties: 
+      hibernate.current_session_context_class: org.springframework.orm.hibernate4.SpringSessionContext
+
     
 cisco: 
   remote:
@@ -39,3 +44,15 @@ cisco:
 logging:
   level:
     org.hibernate : DEBUG
+
+acisizer:
+  security:
+    jwt:
+      issuer: admin   
+      secret: acisizer
+      ttlMillis: 60000000
+      token: token
+  plugin: 
+    path: /
+    file: predefinedApplicationPauloAlto.xml    
+    jar:  palo_plugin-1.0.jar

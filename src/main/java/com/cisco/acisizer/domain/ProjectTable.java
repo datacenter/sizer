@@ -8,7 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -16,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.cisco.acisizer.physical.rest.models.View;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
@@ -26,11 +29,30 @@ public class ProjectTable {
 
 	
 
+	/**
+	 * @return the device
+	 */
+	public Device getDevice() {
+		return device;
+	}
+
+	/**
+	 * @param device the device to set
+	 */
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+	
+	/*@Id
 	@GenericGenerator(name = "seq_id", strategy = "com.cisco.acisizer.util.GenericIdGenerator")
 	@GeneratedValue(generator = "seq_id")
 	@Column(name = "id")
-	private int id;
+	private int id;*/
 	
 	@Column(name = "userid")
 	private String userId;
@@ -106,6 +128,11 @@ public class ProjectTable {
 	@OneToMany(mappedBy = "projectTable",fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JsonView(View.Room.class)
 	private List<RoomTable> rooms;
+	
+	@ManyToOne
+	@JoinColumn(name = "device_id")
+	@JsonView(View.Device.class)
+	private Device device;
 	
 	public boolean isUsePhysical() {
 		return usePhysical;
@@ -389,6 +416,7 @@ public class ProjectTable {
 		this.salesContact = table.salesContact;
 		this.type = table.type;
 		this.userId = table.userId;
+		this.device = table.device;
 
 	}
 

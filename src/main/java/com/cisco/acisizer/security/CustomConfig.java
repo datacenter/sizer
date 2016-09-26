@@ -1,5 +1,5 @@
 /**
- * Copyright @maplelabs
+ * 
  */
 package com.cisco.acisizer.security;
 
@@ -27,7 +27,7 @@ public class CustomConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/index*", "/scripts/**", "/static_jsons/**", "/samples/**", "/styles/**", "/images/**",
+				.antMatchers("/index*","/profiler/**/","/app/**", "/scripts/**", "/static_jsons/**", "/samples/**", "/styles/**", "/images/**",
 						"/modules/**", "/bower_components/**", "/", "/about", "/login", "/Config/AuthConfig",
 						"/views/**", "/acisizer/**","/api-docs",
 						"/api-docs/default/app-controller","/api-docs/default/bd-controller","/api-docs/default/epg-controller",

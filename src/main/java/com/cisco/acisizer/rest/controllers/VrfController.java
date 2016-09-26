@@ -1,5 +1,5 @@
 /**
- * Copyright @maplelabs
+ * 
  */
 package com.cisco.acisizer.rest.controllers;
 

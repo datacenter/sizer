@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.util.CustomDoubleSerializer;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

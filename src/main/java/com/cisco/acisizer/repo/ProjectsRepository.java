@@ -21,6 +21,11 @@ public interface ProjectsRepository extends JpaRepository<ProjectTable, Integer>
 	void updateProject(int id, String name, String type, String customerName, String salesContact, String opportunity,
 			String account, Timestamp lastUpdatedTime, String description);
 
+	@Modifying
+	@Transactional
+	@Query("update ProjectTable p set p.device.id=?2 where p.id = ?1")
+	void updateProjectWithDeviceId(int id, int deviceId);
+	
 	/**
 	 * query to get all project names
 	 * 

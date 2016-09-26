@@ -3,6 +3,9 @@
  */
 package com.cisco.acisizer.helper;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import com.cisco.acisizer.models.Bd;
 import com.cisco.acisizer.models.EpgPrefixes;
 import com.cisco.acisizer.models.L3out;
@@ -176,4 +179,10 @@ public class TenantHelper {
 		}
 		return null;
 	}
+	
+	public static void modifiedTime(Tenant tenantAdded){
+		tenantAdded.setModifiedTime(new Timestamp(new Date().getTime()));		
+	}
+	
+	
 }

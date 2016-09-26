@@ -92,6 +92,14 @@
 	
 }
 
+#addRoomWin .closeIcon,.roomCardContainer .closeIcon{
+    margin-top: -16px;
+    left: 17px;
+    width: 12px;
+    font-size: 10px;
+    position: relative; 
+    float: right;
+} 
 .row_collapse_icon
 {
     width: 50px;
@@ -163,11 +171,12 @@
 .summarymoreBtn {
     right: 5px;
     position: absolute;
-    margin-top: -18px;
+    margin-top: -20px;
     width: 36px;
     cursor: pointer;
-    padding: 1px 0 0 7px;
+    padding: 0px 3px 0px 7px;
     color: #fff;
+    line-height: 23px;
     background-color: #8d8d8d;
 }
 
@@ -229,7 +238,7 @@
 }
 .subheadingBrd{ 
   margin-top: 12px !important;
-    margin-bottom: -5px !important;
+    margin-bottom: 0px !important;
 }
 /*Start Dashboard*/
 .margin_top_10{
@@ -681,7 +690,7 @@ a:hover,a:active{
   height:270px !important;
   width: 323px; 
   border:1px solid #e1e1e1;
-  background-color:#fff;
+  background-color:#fff; 
 }
 #addRoomWin form #appclose{
     margin-right: 30px;
@@ -704,6 +713,7 @@ a:hover,a:active{
   outline:none!important;  
   width:100%;
   font-size: 13px;
+  color: #444;
   padding: 6px 2px 6px 2px;
 } 
 
@@ -830,7 +840,7 @@ a:hover,a:active{
 .racksviewContainer
 {
   width:100%;
-  padding:0px;
+  padding:0px 15px;
   margin:0px 0px;
   background-color:#fafafa;
   overflow:hidden;
@@ -1118,7 +1128,7 @@ padding: 0px 0px 1px 0px;
 {
     margin-left: 8px;
     min-width: 140px!important;
-    top: 50px;
+    top: auto;
     position: absolute;
     left: 6px;
 }
@@ -1148,9 +1158,12 @@ padding: 0px 0px 1px 0px;
 }
 .roomCardContainer
 {
-  margin:10px 15px;
+  margin:7px 0px;
   width: 100%;
   font-family: HelveticaNeueLTStd-Roman;
+}
+.room_Scrollcontainer{
+  margin:0px 30px;
 }
 .roomCardContainer form.formDataStyle{
       margin: 0px;
@@ -1171,6 +1184,7 @@ padding: 0px 0px 1px 0px;
     padding-bottom: 0px;
     background: #fff;
     margin-left: 5px;
+    margin-top: 5px;
   }
 .breadCrumb {
   padding-bottom:14px;
@@ -1207,8 +1221,8 @@ padding: 0px 0px 1px 0px;
 .edit_form_fields  input.a-textbox{
   width:98%;
 }
-.gray_btn{
-  height: 30px !important;
+.gray_btn,.gray_btn:hover{
+    height: 30px !important;
     color: #fff;
     border-radius: 4px;
     background: #666;
@@ -1273,6 +1287,7 @@ padding: 0px 0px 1px 0px;
     color: #9D9D9D;
     position: relative; 
     z-index: 235;
+    top:-2px;
 }
 .rackDelete i{
   margin-right: 5px;
@@ -1454,6 +1469,16 @@ color: #8e8e8e;
   font-size: 14px;
   letter-spacing: 0.7px;
 }
+
+#deviceContent .deviceValue dd, #rowDeviceContent .deviceValue dd, #rackDeviceContent .deviceValue dd {
+  border-bottom: 1px solid #EDEDED;
+  line-height: 21px;
+  font-family: HelveticaNeueLTStd-Roman;
+  overflow: hidden;
+  font-size: 14px;
+  padding: 10px 0px 5px 0px;
+  letter-spacing: 0.7px;
+}
 .portHeight{
   min-height: 100px;
   max-height: 150px;
@@ -1499,7 +1524,7 @@ color: #8e8e8e;
     width: 98% !important;
     margin: 2px 0px;
     font-family: HelveticaNeueLTStd-Roman;
-    line-height: 20px;
+    line-height: 17px;
 }
 .serverDevice dd> div:first-child{
   padding-top: 5px;
@@ -1514,6 +1539,7 @@ line-height: 30px;
   }
 #addServerWindow .serverDevice dd .text_field,#addSwitchWindow .serverDevice dd .text_field{
   width: 115px;
+  height: 24px;
 }
 #addServerWindow,#addSwitchWindow{
       padding: 7px 15px 15px 15px; 
@@ -1680,7 +1706,7 @@ line-height: 30px;
 /*Edit Row*/
 .group  { 
   position:relative; 
-  margin:7px 0px 10px -2px;
+  margin:0px 0px 10px -2px;
   padding: 0px 15px;
 }
 .group select{
@@ -1801,7 +1827,7 @@ select{
     border-left: 1px solid #ccc;
     padding: 0px 5px 0px 15px;
     position: relative;
-    top: -12px;
+    top: -11px;
     line-height: 40px;
     float: right;
     margin-bottom: -13px;
@@ -1926,7 +1952,7 @@ select{
 }
 .addServer dd{ 
 	width:45%;
-	margin:5px 10px;
+	margin:3px 10px;
 }
 .txtFields{
     background: #fff;
@@ -1937,13 +1963,11 @@ select{
   color: #8e8e8e !important;
 }
 .table tr > td:first-child,.table tr > th:first-child{
-  color: #757575;
-  text-align: right !important;
-  font-weight: bold;
+  color: #757575; 
 }
-.table{
+/*.table{
   margin-top: 10px;
-}
+}*/
 .table th,.table td{  
 	    font-weight: normal;
     font-size: 13px;
@@ -1971,6 +1995,7 @@ input[type="radio"]{
 	border:1px solid #ebebeb !important;
   text-align: center !important;
   padding-left: 1px;
+  font-size: 12px;
   font-family: HelveticaNeueLTStd-Roman;
 }
 .table>tbody>tr>td input{
@@ -2015,14 +2040,7 @@ input[type="radio"]{
 .activeRack ul li span{
   color: #fff !important;
 }
-.closeIcon{
-	margin-top: -16px;
-    left: 17px;
-    width: 12px;
-    font-size: 10px;
-    position: relative; 
-    float: right;
-}
+ 
 .policyToolBox{
 	position: absolute;
     width: 640px !important;
@@ -2217,7 +2235,7 @@ input[type="radio"]{
 }
 
 .select-style1 select { 
-    background:#1B98CA    url("../../../images/white_arrow.png")  no-repeat 90% 40%;
+    background:#1B98CA    url("../../../images/white_arrow.png")  no-repeat 98% 10%;
     background-repeat: no-repeat;
     padding: 12px; 
     border-radius: 2px !important; 
@@ -2231,12 +2249,32 @@ input[type="radio"]{
    background: #1B98CA;
 }
 
-.select-style {
+.combo-style {
     padding: 0;
     margin: 0; 
     overflow: hidden;
     background-color: #fff;
     background: #fff url("../../../images/arrowdown.png")  no-repeat 98% 40%;
+  
+}
+.combo-style select {  
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.7px; 
+    text-indent: 0px;
+    -moz-appearance: none; 
+}
+
+
+.select-style {
+    padding: 0;
+    margin: 0; 
+    overflow: hidden;
+    /*background-color: #fff;*/
+    background: #fff url("../../../images/arrowdown.png")  no-repeat 98% 10% !important;
   
 }
 .select-style select { 
@@ -2364,7 +2402,7 @@ input[type="number"]:focus {
   background: #747474 !important;
 }
 #addRoomWin .editRoomDetails{
-  padding: 6px 2px 6px 13px;
+  padding: 0px 2px 6px 13px;
 }
 .editRoomDetails .roomDetails {
   padding:21px 0px 23px 3px;
@@ -2800,13 +2838,13 @@ margin-top:33px;
     position: absolute;
     background: #FFFFFF;
     line-height: 21px;
-    width: 83%;
+    width: 88%;
     font-size: 14px;
     left: 0px;
     text-align: center;
     z-index: 100;
     font-family: Roboto-Light;
-    margin-left: 25px;
+    margin-left: 15px;
     border-radius: 7px;
     border: 2px dotted;
     border-color: #DCDCDC;
@@ -2888,6 +2926,9 @@ margin-top:33px;
   }
   .addServer dd{
     margin: 2px 10px;
+  }
+  .editRoomDetails .roomDetails {
+    padding:16px 0px 23px 3px; 
   }
 }
 @media only screen and (min-width:990px) and (max-width: 1024px)  {

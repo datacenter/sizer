@@ -15,9 +15,9 @@ import com.cisco.acisizer.domain.RackTable;
 import com.cisco.acisizer.exceptions.AciEntityNotFound;
 import com.cisco.acisizer.exceptions.GenericInvalidDataException;
 import com.cisco.acisizer.physical.rest.models.RackUi;
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.services.RackServices;
 import com.cisco.acisizer.physical.util.AciPhysicalSizerConstants;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Controller

@@ -1,22 +1,40 @@
 /**
- * CopyRight @MapleLabs
+ * 
  */
 package com.cisco.acisizer.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
 import com.cisco.acisizer.util.ACISizerConstant;
 
-/**
- * @author Deepa
- *
- */
 @XmlRootElement
 public class Contract extends ACISizerModel implements Comparable<Contract> {
 
+	private String configName;
+
+	public String getConfigName() {
+		return configName;
+	}
+
+	public void setConfigName(String configName) {
+		this.configName = configName;
+	}
+
+	private List<Subject> subjects = new ArrayList<Subject>();
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
 	private String providerId;
+
 	/**
 	 * @return the providerId
 	 */
@@ -25,13 +43,15 @@ public class Contract extends ACISizerModel implements Comparable<Contract> {
 	}
 
 	/**
-	 * @param providerId the providerId to set
+	 * @param providerId
+	 *            the providerId to set
 	 */
 	public void setProviderId(String providerId) {
 		this.providerId = providerId;
 	}
 
 	private String consumerId;
+
 	/**
 	 * @return the consumerId
 	 */
@@ -40,7 +60,8 @@ public class Contract extends ACISizerModel implements Comparable<Contract> {
 	}
 
 	/**
-	 * @param consumerId the consumerId to set
+	 * @param consumerId
+	 *            the consumerId to set
 	 */
 	public void setConsumerId(String consumerId) {
 		this.consumerId = consumerId;
@@ -60,7 +81,7 @@ public class Contract extends ACISizerModel implements Comparable<Contract> {
 		this.displayName = name;
 		this.appName = appName;
 	}
-	
+
 	public Contract(String id, String name, String appName) {
 
 		this.name = "" + id;
@@ -86,6 +107,7 @@ public class Contract extends ACISizerModel implements Comparable<Contract> {
 	}
 
 	public void copyContract(Contract contract) {
+		this.subjects = contract.subjects;
 		this.consumerEnforced = contract.consumerEnforced;
 		this.consumerId = contract.consumerId;
 		this.consumerType = contract.consumerType;
@@ -141,8 +163,6 @@ public class Contract extends ACISizerModel implements Comparable<Contract> {
 	private int unique_filters;
 	private boolean providerEnforced;
 	private boolean consumerEnforced;
-
-	
 
 	public String getProviderType() {
 		return providerType;
@@ -215,11 +235,12 @@ public class Contract extends ACISizerModel implements Comparable<Contract> {
 
 	@Override
 	public int compareTo(Contract o) {
-		return (int) (this.uiData.getX()-o.getUiData().getX());
+		return (int) (this.uiData.getX() - o.getUiData().getX());
 	}
+
 	@Override
 	public String toString() {
-		String temp = ACISizerConstant.NAME +  this.name +this.displayName;
+		String temp = ACISizerConstant.NAME + this.name + this.displayName;
 		return temp;
 	}
 

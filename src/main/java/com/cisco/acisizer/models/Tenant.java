@@ -1,8 +1,10 @@
 /**
- * CopyRight @MapleLabs
+ * 
  */
 package com.cisco.acisizer.models;
 
+
+import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,6 +29,20 @@ public class Tenant extends ACISizerModel {
 	private boolean localVrf;
 	private boolean localL3out;
 	private String l3outComplexity;
+	private Timestamp modifiedTime;
+	private Timestamp lastPushedTime;
+	
+	
+	
+	
+	public Timestamp getModifiedTime() {
+		return modifiedTime;
+	}
+
+	public void setModifiedTime(Timestamp modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
 	public Set<L3out> getL3outs() {
 		return l3outs;
 	}
@@ -76,6 +92,7 @@ public class Tenant extends ACISizerModel {
 		this.localVrf=tenant.localVrf;
 		this.localL3out=tenant.localL3out;
 		this.l3outComplexity=tenant.l3outComplexity;
+		this.modifiedTime=tenant.modifiedTime;
 	}
 
 	public int getTotalContractCount() {
@@ -323,6 +340,20 @@ public class Tenant extends ACISizerModel {
 	 */
 	public void setL3outComplexity(String l3outComplexity) {
 		this.l3outComplexity = l3outComplexity;
+	}
+
+	/**
+	 * @return the lastPushedTime
+	 */
+	public Timestamp getLastPushedTime() {
+		return lastPushedTime;
+	}
+
+	/**
+	 * @param lastPushedTime the lastPushedTime to set
+	 */
+	public void setLastPushedTime(Timestamp lastPushedTime) {
+		this.lastPushedTime = lastPushedTime;
 	}
 
 }

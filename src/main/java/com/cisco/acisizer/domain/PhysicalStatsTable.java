@@ -6,7 +6,7 @@ package com.cisco.acisizer.domain;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import com.cisco.acisizer.physical.rest.models.View;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**

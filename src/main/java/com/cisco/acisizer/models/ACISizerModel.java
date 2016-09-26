@@ -26,8 +26,14 @@ public abstract class ACISizerModel {
 	/**
 	 * @return the name
 	 */
+	
+	
 	public String getName() {
 		return name;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	public String getDisplayName() {

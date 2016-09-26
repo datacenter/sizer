@@ -33,19 +33,22 @@
                 <select id="epgBd" name="bdName" placeholder="Select BD..." class="disabledDropdown" required/>
             </li>
 			</br>
-            <li>
-                 <label>Shared Services</label><hr/>
-            </li>
-            </br>
-			<li>
-				<input type="checkbox" id="shared-checkbox" name="sharedServicesEnabled" class="a-checkbox">
-				<label class="a-checkbox-label" id="shared-checkbox-label" for="shared-checkbox">Enable</label>
-                <div class="filtersEPG">
-                 <label class="tooltip" title="Number of unique access control list elements" id="epgFilterTooltip"><span title="" id="sharedFilterTitle">Filter &nbsp &nbsp</span></label>
-                <input type="number" id="sharedfilter" class="sharedfilter" name="noOfsharedServiceFilter" min="0" required/>
-                </div>
-			</li>  
-            </br>      
+            <!-- @Manohar::start :: this is commented / hidden to not increase the contracts and/or filters count on creating an EPG  -->
+            <span style="display:none;">
+                <li>
+                    <label>Shared Services</label><hr/>
+                </li>
+                </br>
+                <li>
+                    <input type="checkbox" id="shared-checkbox" name="sharedServicesEnabled" class="a-checkbox">
+                    <label class="a-checkbox-label" id="shared-checkbox-label" for="shared-checkbox">Enable</label>
+                    <div class="filtersEPG">
+                     <label class="tooltip" title="Number of unique access control list elements" id="epgFilterTooltip"><span title="" id="sharedFilterTitle">Filter &nbsp &nbsp</span></label>
+                    <input type="number" id="sharedfilter" class="sharedfilter" name="noOfsharedServiceFilter" min="0" required/>
+                    </div>
+                </li>  
+                </br>
+            </span>
         </ul>
     </div>
 </script>
@@ -64,7 +67,7 @@
 </ul>
 
 </script>
-
+ 
 <script id="contractTemplate" type="text/x-aci-template">
     <ul class="fieldlist" style="width:350px;" id="contractTemplate">
         <li>
@@ -73,11 +76,17 @@
         </li>
 		</br>
         <li>
-            <label class="tooltip diagramArrow filtersLabel" title="Number of unique access control list elements"><span title=" ">Filters</span></label>
-            <input type="number" id="contractCount" class="" name="count" min="1"/>
+         
+            <div>
+                <label class="tooltip diagramArrow filtersLabel" title="Number of unique access control list elements"><span title=" ">Mapped to</span></label>
+                </div>
+            <div class="clr"> 
+                <input type="text" class="a-textbox aci-field" name="configName" id="contractText"  style="width:74%"/> 
+                <input type="button" id="contractConfig" value="Map" class="addBtn pull-right"  /> 
+            </div>
         </li>
 		</br>
-        <li>
+        <li class="clr">
             <label>Provider</label>
             <select id="contractproviderId" name="providerId" required validationMessage="Enter {0}" placeholder="Select Epg..."
                     class="aci-field disabledDropdown"/>
@@ -90,18 +99,16 @@
         </li>
 		</br>
         </br>
-        <li> 
+        <li class="pull-left wid50"> 
             <div  class="tooltip providerEnforcedToolTip" title="The contract enforced by Provider EPG">
             <span title=" ">       
 			<input type="checkbox" name= "providerEnforced" id="provider-checkbox" class="a-checkbox">                        
 			<label class="a-checkbox-label" for="provider-checkbox">Provider Enforced</label>
         </span>
         </div>
-        </li>
-		</br>	
-        </br>
-        <li>
-            <div  class="tooltip consumerEnforcedToolTip" title="The contract enforced by Consumer EPG">
+        </li> 
+        <li class="pull-left">
+            <div  class="tooltip consumerEnforcedToolTip marginleft10" title="The contract enforced by Consumer EPG">
             <span title=" ">
             <input type="checkbox" name= "consumerEnforced" id="consumer-checkbox" class="a-checkbox">             
 			<label class="a-checkbox-label" for="consumer-checkbox">Consumer Enforced</label>
@@ -117,24 +124,29 @@
     <ul class="fieldlist" style="width:350px;" id="contractl3">
         <li>
             <label>Name</label>
-            <input type="text" class="a-textbox aci-field" name="name" id="contractl3Name" maxlength="10"/>
+            <input type="text" style="width:96%" class="a-textbox aci-field" name="name" id="contractl3Name" maxlength="10"/>
         </li>
 		</br>
         <li>
-            <label class="tooltip diagramArrow filtersLabel" title="Number of unique access control list elements"><span title=" ">Filters
+            <div>
+            <label class="tooltip diagramArrow filtersLabel" title="Number of unique access control list elements"><span title=" ">Mapped To
             </span></label>
-            <input type="number" id="contractl3count" class="" name="count" min="1"/>
+            </div>
+            <div class="clr" style="width: 94%;"> 
+                <input type="text" class="a-textbox aci-field" name="configName" id="contractL3Text"  style="width:78%"/> 
+                <input type="button" style="margin-right:-4px" id="contractL3Config" value="Map" class="addBtn pull-right"  /> 
+            </div>
         </li>
 		</br>
         <li>
             <label>Provider</label>
-            <select id="contractl3providerId" name="providerId" required validationMessage="Enter {0}" placeholder="Select Epg..."
+            <select id="contractl3providerId" style="width:96%" name="providerId" required validationMessage="Enter {0}" placeholder="Select Epg..."
                     class="aci-field disabledDropdown"/>
         </li>
 		</br>
         <li>
             <label class="tooltip diagramArrow" title="This is the l3out in common or local used for external connectivity"><span title=" ">Consumer</span></label>
-            <select id="contractl3consumerId" name="consumerId" required validationMessage="Enter {0}" placeholder="Select L3Out..."
+            <select id="contractl3consumerId" style="width:96%" name="consumerId" required validationMessage="Enter {0}" placeholder="Select L3Out..."
                     class="aci-field disabledDropdown" />
         </li>
 		</br>
@@ -408,8 +420,8 @@
                 <td>#: name #</td>
             </tr> 
             <tr>
-                <td style="font-weight:bold">Filters:</td>
-                <td>#: noOfFilters #</td>
+                <td style="font-weight:bold">Mapped To:</td>
+                <td>#: configName #</td>
             </tr>                       
             <tr>
                 <td style="font-weight:bold">Provider:</td>
@@ -450,8 +462,8 @@
                 <td>#: name #</td>
             </tr> 
             <tr>
-                <td style="font-weight:bold">Filters:</td>
-                <td>#: noOfFilters #</td>
+                <td style="font-weight:bold">Mapped to:</td>
+               <td>#: configName #</td>
             </tr>  
             <tr>
                 <td style="font-weight:bold">Provider:</td>

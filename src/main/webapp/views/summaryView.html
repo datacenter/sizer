@@ -1,5 +1,6 @@
-      <div class="leafNodes" style="width:25%!important;border-right:1px solid #eaeaea;">
-		<div style="height:60px;border-bottom:1px solid #eaeaea;">
+      <div id="summaryView">
+      <div class="leafNodes" style="width:22%!important;border-right:1px solid #eaeaea; height:90px; margin-top: 30px;">
+		<div style="height:45px;border-bottom:1px solid #eaeaea;">
 			<div class="leafs-count">{{currProject.logicalRequirementSummary.leafCountRegular}}</div>
             <div class="leaftitle-text">Regular Leaf</div>
 		</div>
@@ -9,23 +10,20 @@
 		</div>
 	  </div>
 	  
-	   <div class="ProjectSummaryTitle" style="left:25%!important;top:0px; position:absolute; height:30px!important;border-bottom:1px solid #eaeaea;right:0px;">
+	   <div class="ProjectSummaryTitle" style="left:0%!important;top:0px; position:absolute; background: #fafafa; height:30px!important;border-bottom:1px solid #eaeaea;right:0px;">
 		<div class="summary-headerText">Project Summary</div>
 
-		<div class="summarymoreBtn chooseSwitchButton dropdown" ng-hide="showSizingResults"> <!--ng-click="chooseSwitchesFromPhySizer-->
+		<div class="summarymoreBtn chooseSwitchButton dropdown" ng-hide="showSizingResults"> 
 			<span class="tooltip" id="chooseSwitches" style="position:relative;" title="This feature available only on the next release">
 			 <a class="dropdown-toggle" data-toggle="dropdown" style="color:#fff" id="switchDropDown">Choose Switches from Room
-	             <!--ul class="dropdown-menu">
-	             	<li ng-click="activeRoomItem(0, null)" ng-class="{activeRoom:0 == selectedRoomIndex}"><a href="javascript:void(0)" ng-class="{checkArrow:0 == selectedRoomIndex}">None</a></li>
-	                <li ng-repeat="switch in chooseSwitch.roomList" ng-click="activeRoomItem($index+1, switch.id)" ng-class="{activeRoom:$index+1 == selectedRoomIndex}"><a href="javascript:void(0)" ng-class="{checkArrow:$index+1 == selectedRoomIndex}">{{switch.name}}</a></li> 
-	             </ul-->
+	            
             </a> 
         </span>
-		</div>
-		<div class="summarymoreBtn" ng-click="moreButtonDisabled || showExpandedView();" ng-hide="showSizingResults" ng-disabled="moreButtonDisabled">More</div>
+		</div><!--ng-click="chooseSwitchesFromPhySizer-->
+		<div class="summarymoreBtn" id="expandtableid" ng-click="moreButtonDisabled || showExpandedView();" ng-hide="showSizingResults" ng-disabled="moreButtonDisabled">More</div>  
 	   </div>
 	
-	   <div class="ProjectFirstCol" style="left:25%!important;top:30px; position:absolute; width: 25%!important; border-right:1px solid #eaeaea; height:90px !important;">
+	   <div class="ProjectFirstCol" style="left:22%!important;top:30px; position:absolute; width: 31%!important; border-right:1px solid #eaeaea; height:90px !important;">
 		<div style="height:30px; border-bottom:1px solid #eaeaea;">
 			<div class="wlsummary-label">Tenants:</div>
 			<div class="wlsummary-data">
@@ -38,12 +36,12 @@
                         {{currProject.logicalRequirementSummary.epgCount}}
                     </div>
 		</div>
-			  <div class="wlsummary-label">End Points:</div>
+			  <div class="wlsummary-label" style=" border-left:1px solid #eaeaea;">End Points:</div>
                     <div class="wlsummary-data">
                         {{currProject.logicalRequirementSummary.endPoints}}
                     </div>
 	   </div>
-	   <div class="ProjectSecCol" style="left:50%!important;top:30px; position:absolute; width: 25%!important; border-right:1px solid #eaeaea; height:90px !important;">
+	   <div class="ProjectSecCol" style="left:53%!important;top:30px; position:absolute; width: 29%!important; border-right:1px solid #eaeaea; height:90px !important;">
 		<div style="height:30px; border-bottom:1px solid #eaeaea;">
 				<div class="wlsummary-label">Contracts:</div>
                     <div class="wlsummary-data">
@@ -61,7 +59,7 @@
                         {{currProject.logicalRequirementSummary.vrfCount}}
                     </div>
 	   </div>
-	    <div class="ProjectLastCol" style="left:75%!important;top:30px; position:absolute;right:0px; height:90px !important;">
+	    <div class="ProjectLastCol" style="left:82%!important;top:30px; position:absolute;right:0px; width:18%; height:90px !important;">
 		<div style="height:30px; border-bottom:1px solid #eaeaea;">
 			<div class="wlsummary-label">BDs:</div>
                     <div class="wlsummary-data">
@@ -71,6 +69,15 @@
 		<div style="height:30px; border-bottom:1px solid #eaeaea;">
 		</div>
 	   </div>
-
+	</div>
+	    <div class="apicdetails" ng-if="showapic" style="left:100.1%!important;top:-1px; font-size:12px; position:absolute;right:0px; width:38%; height:120px !important; background:#fff; border: 1px solid #ddd; border-left: 0px;">
+	    <div class="saveConfig" >Save Config to APIC</div>
+		<div style="height:80px;">
+			<div class="" style="padding: 15px 0px;">APIC Name : <span> {{currProject.device.name}}</span></div>
+			<!-- <p class="apicConfig">Save config to APIC</p> -->
+            <input type="button" class="add_btn" value="Start Now"  ng-click="pushApicPopup()"/>
+		</div>
+	 
+	   </div>
 	   
 	   

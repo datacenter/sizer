@@ -1,6 +1,6 @@
 package com.cisco.acisizer.domain;
 
-import com.cisco.acisizer.physical.rest.models.View;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 public class PortInventory {

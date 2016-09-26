@@ -1,4 +1,4 @@
-package com.cisco.acisizer.rest.controllers;
+package com.cisco.acisizer.logical.controllers;
 
 import java.util.List;
 
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cisco.acisizer.exceptions.AciEntityNotFound;
 import com.cisco.acisizer.services.ContractServices;
 import com.cisco.acisizer.ui.models.ContractUi;
+import com.cisco.acisizer.view.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
@@ -76,6 +78,7 @@ public class ContractController extends AciController {
 	@ApiOperation(value = "Get all Contracts", notes = "Get all Contract details for a particular tenant by providing project id ,tenant id and app id", response = ContractUi.class, responseContainer = "List")
 	@RequestMapping(value = "/acisizer/v1/project/{projectId}/tenant/{tenantId}/app/{appId}/contracts", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@JsonView(View.AuditInfo.class)
 	public List<ContractUi> getContracts(@PathVariable("projectId") int projectId,
 			@PathVariable("tenantId") int tenantId, @PathVariable("appId") int appId) throws AciEntityNotFound {
 		List<ContractUi> respCtrts = m_service.getContracts(projectId, tenantId, appId);
@@ -86,6 +89,7 @@ public class ContractController extends AciController {
 	@ApiOperation(value = "Get all Contracts per epg", notes = "Get all Contract details for a particular tenant by providing project id ,tenant id, app id and epg id", response = ContractUi.class, responseContainer = "List")
 	@RequestMapping(value = "/acisizer/v1/project/{projectId}/tenant/{tenantId}/app/{appId}/epg/{epgId}/contracts", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
+	@JsonView(View.AuditInfo.class)
 	public List<ContractUi> getContractsEx(@PathVariable("projectId") int projectId,
 			@PathVariable("tenantId") int tenantId, @PathVariable("appId") int appId, @PathVariable("epgId") int epgId) throws AciEntityNotFound {
 		List<ContractUi> respCtrts = m_service.getContractsEx(projectId, tenantId, appId, epgId);

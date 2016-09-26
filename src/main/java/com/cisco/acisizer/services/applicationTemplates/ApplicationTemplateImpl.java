@@ -142,13 +142,17 @@ public class ApplicationTemplateImpl extends AbstractApplicationTemplate {
 		newContract.setUnique_filters(filterCount);
 		newContract.setUiData(uiData);
 		newContract.setProviderEnforced(true);
+		newContract.setConfigName("Allow Web Traffic");
 		
 		if (true == consumer.getClass().equals(L3out.class)) {
 			newContract.setConsumerType(ACISizerConstant._l3out);
+			newContract.setConfigName("Allow Web Traffic");
 		} else if (true == consumer.getClass().equals(SharedResource.class)) {
 			newContract.setConsumerType(ACISizerConstant._shared_resource);
+			newContract.setConfigName("Allow Web Traffic");
 		} else if (true == consumer.getClass().equals(Epg.class)) {
 			newContract.setConsumerType(ACISizerConstant._epg);
+			newContract.setConfigName("Allow App traffic");
 		}
 		newContract.setConsumerId(consumer.getName());
 
@@ -222,7 +226,11 @@ public class ApplicationTemplateImpl extends AbstractApplicationTemplate {
 		
 		if (appTemplate.getConfiguration().isSharedServiceEnabled()) 
 		{
-			int filterCount = contractComplexity.get(appTemplate.getConfiguration().getContractComplexity());
+			//int filterCount = contractComplexity.get(appTemplate.getConfiguration().getContractComplexity());
+		    // The template complexity is defined for inter EPG filter count, not for filters with L3out or shared service.
+		    // Hence for these contracts set filter count as 1 always.
+		    //
+		    int filterCount = 1;
 			for (SharedResource iter : commonTenant.getSharedResources()) 
 			{
 				// assuming that there is only one shared resource in the
@@ -233,7 +241,6 @@ public class ApplicationTemplateImpl extends AbstractApplicationTemplate {
 				break;
 			}
 		}
-		
 		
 		epgServices.addEpg(epg, targetTenant,commonTenant, logicalSummary, app);
 

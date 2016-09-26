@@ -9,15 +9,18 @@
  */
 angular.module('webappApp')
 
-    .controller('MainController', function ($scope, $rootScope, $location,appService, DIAGRAM_CONSTANTS, DIALOG_CONSTANTS,ERROR_STRING_CONSTANTS,CONSTANT_FACTORY, PHY_SIZER_CONSTANTS) {
+    .controller('MainController', function ($scope, $rootScope, $location,appService, DIAGRAM_CONSTANTS, DIALOG_CONSTANTS,ERROR_STRING_CONSTANTS,CONSTANT_FACTORY, PHY_SIZER_CONSTANTS, $compile, popupService, repoTestService, OBJECT_TYPES, deviceService) {
         //$scope.isTabVisible = {'visibility': 'hidden'};
 		//Window height set to div tag height dynamically		
 		 $scope.listContainerHeight = window.innerHeight-90;
 		  $scope.rightContainerHeight = window.innerHeight-110;
+		  var _selectedContractConfigDetails = null;
         if(!$rootScope.projectId){
-            $location.path( "/" );
+            $location.path( "/" ); 
         }
 
+
+        $rootScope.projectDropDown = false;
         $rootScope.authenticated = true;
         $scope.menuOrientation = "horizontal";
         $scope.onSelect = function (ev) {
@@ -32,11 +35,23 @@ angular.module('webappApp')
         $scope.vrfsLength = 1;
 		
 		$scope.sumToggle = function(){
-			console.log("in sumToggle");
 			$('.slideTogglebox').slideToggle();
 			 $rootScope.hideProjectSummaryPane = false;
 		}
 		
+		setTimeout(function() {
+
+          // GET the devices list & filter to APIC devices with key name as 'aci'
+          deviceService.query().$promise.then(function(devicesList) {
+            $rootScope.apicDevices = [];
+            for(var i=0; i<devicesList.length; i++){
+              if(devicesList[i].type === 'ACI' ){
+                $rootScope.apicDevices.push( devicesList[i] );                
+              }              
+            }
+          });
+
+      	},500);
 
 		
         $rootScope.showTabs = function () {
@@ -58,7 +73,6 @@ angular.module('webappApp')
         }
 		
 		$scope.detailedResults = function(){
-			console.log("Detailed Results called");
 			$location.path( "/results" );
 			$("#sizer-result-tab").addClass("active");
 			$("#sizer-logical-tab").removeClass("active");
@@ -77,6 +91,7 @@ angular.module('webappApp')
 					if ($scope.isDisplayed == false) {
 						$scope.isDisplayed = true;
 						$rootScope.showLogicalView();
+						console.log($rootScope.currProject)
 						if($rootScope.currProject) {
 							$rootScope.projectName= ($rootScope.currProject.name.length < 32) ? $rootScope.currProject.name : $rootScope.currProject.name.slice(0,29)+"...";
 									$scope.getTenants();
@@ -139,9 +154,9 @@ angular.module('webappApp')
             appService.getFabricNodeConnection(function (resp) {
 				var log = [];
 				var data = resp;
-				//  var data = fabricData.fabric;
+				 // var data = fabricData.fabric;
 				angular.forEach(data.nodes, function (value, key) {
-					//value.id = value.id;
+					// value.id = value.id;
 					value.pKey = value.id;
 					$scope.fabricDiagram.dataSource.pushCreate(value);
 					$scope.fabricDiagram.dataSource.sync();
@@ -977,6 +992,7 @@ angular.module('webappApp')
 
             function onEdit(e) {
                // e.shape.dirty=true;
+               _selectedContractConfigDetails= null;
                 /* <!-- If EPG then render a different template --> */
                 if (e.shape.type === "epg") {
                     //$rootScope.tenantList
@@ -1035,6 +1051,35 @@ angular.module('webappApp')
 
                 }
                 else if (e.shape.type === "contract") {
+
+
+                	$('#contractText').val(e.shape.configName || 'None');
+
+		            $('#contractConfig').click(function(){
+
+		              //showing the list of contracts in popup
+		              popupService.showContractSelection($scope.$new()).then(function(data){
+		                //updating the selected contract name in UI
+		                $('#contractText').val(data.objectName);
+		                $('#contractText').trigger('change');
+		                repoTestService.getObjectDetails(data.id, OBJECT_TYPES[data.objectType].repoTypeRestReq)
+		                  .then(function(objectDetails){
+		                    _selectedContractConfigDetails = objectDetails;
+		                  });
+		              });
+		            })
+
+		            $('#contractText').click(function(){
+		              //showing the config object details in popup
+		              if(_selectedContractConfigDetails){
+		                popupService.showObjectDetails($scope.$new(), _selectedContractConfigDetails, e.shape.type);
+		              }else if(e.shape.subjects && e.shape.subjects.length){
+		                repoTestService.getObjectDetails(e.shape.subjects[0].id, OBJECT_TYPES[e.shape.type].repoTypeRestReq)
+		                  .then(function(detailsObject){
+		                    popupService.showObjectDetails($scope.$new(), detailsObject, e.shape.type);
+		                  });
+		              }
+		            })
                     var log = [];
                     var data = appDiagram.dataSource.data();
                     for (var i = 0; i < data.length; i++) {
@@ -1069,11 +1114,11 @@ angular.module('webappApp')
                         suggest: true
                     });
                    
-                    $("#contractCount").aciNumericTextBox({format: 'n0'});
+                    // $("#contractCount").aciNumericTextBox({format: 'n0'});
 
 					if (!e.shape.pKey) {
 						appService.getNodeDefaultValues("contract", function (resp) {
-							$("#contractCount").getAciNumericTextBox().value(resp.noOfFilters);
+							// $("#contractCount").getAciNumericTextBox().value(resp.noOfFilters);
 							e.shape.count = resp.noOfFilters;
 							document.getElementById("contractName").value = resp.name;
 							e.shape.name = resp.name;
@@ -1083,14 +1128,42 @@ angular.module('webappApp')
                             e.shape.consumerEnforced = resp.consumerEnforced;
 						});	
 					} else {
-						appService.getContractDetails(e.shape.pKey, function (resp) {
-							 $("#contractCount").getAciNumericTextBox().value(resp.noOfFilters);
-						  });
+						// appService.getContractDetails(e.shape.pKey, function (resp) {
+						// 	 $("#contractCount").getAciNumericTextBox().value(resp.noOfFilters);
+						//   });
 					}
 				//	document.getElementById('contractproviderId').disabled = true;
                 }
 				
 				else if (e.shape.type === "contractl3") {
+
+					 $('#contractL3Text').val(e.shape.configName || 'None');
+
+		            $('#contractL3Config').click(function(){
+		              //showing the list of contracts in popup
+		              popupService.showContractSelection($scope.$new()).then(function(data){
+		                //updating the selected contract name in UI
+		                $('#contractL3Text').val(data.objectName);
+		                $('#contractL3Text').trigger('change');
+		                repoTestService.getObjectDetails(data.id, 'contracts')
+		                  .then(function(objectDetails){
+		                    _selectedContractConfigDetails = objectDetails;
+		                  });
+		              });
+		            })
+
+		            $('#contractL3Text').click(function(){
+		              //showing the config object details in popup
+		              if(_selectedContractConfigDetails){
+		                popupService.showObjectDetails($scope.$new(), _selectedContractConfigDetails, 'contract');
+		              }else if(e.shape.subjects && e.shape.subjects.length){
+		                repoTestService.getObjectDetails(e.shape.subjects[0].id, 'contracts')
+		                  .then(function(detailsObject){
+		                    popupService.showObjectDetails($scope.$new(), detailsObject, 'contract');
+		                  });
+		              }
+		            })
+		            
                     var log = [];
 					var consumer=[];
                     var data = appDiagram.dataSource.data();
@@ -1136,11 +1209,11 @@ angular.module('webappApp')
                                 });
                                           
                    
-                    $("#contractl3count").aciNumericTextBox({format: 'n0'});
+                    // $("#contractl3count").aciNumericTextBox({format: 'n0'});
 
                     if (!e.shape.pKey) {
 						appService.getNodeDefaultValues("contractl3", function (resp) {
-							$("#contractl3count").getAciNumericTextBox().value(resp.noOfFilters);
+							// $("#contractl3count").getAciNumericTextBox().value(resp.noOfFilters);
 							e.shape.count = resp.noOfFilters;
 							document.getElementById("contractl3Name").value = resp.name;
 							e.shape.name = resp.name;
@@ -1171,7 +1244,7 @@ angular.module('webappApp')
 						});	
 					} else {
 						appService.getContractDetails(e.shape.pKey, function (resp) {
-							 $("#contractl3count").getAciNumericTextBox().value(resp.noOfFilters);
+							 // $("#contractl3count").getAciNumericTextBox().value(resp.noOfFilters);
                              //read the value from e.shape & set the checkbox on Edit
 
                              if(resp.providerEnforced === true) {
@@ -1435,64 +1508,59 @@ angular.module('webappApp')
                 visibleBottom = elBottom > scrollBot ? scrollBot : elBottom;
                 return visibleBottom - visibleTop;
             }
-            $scope.displayMouseClickPopUp = function(e,template){
+            $scope.displayMouseClickPopUp = function(e, template) {
+		          var myElement = document.getElementById("fabricDiagram");
+		          var position = $scope.getFabricPosition(myElement);
 
-                var myElement = document.getElementById("fabricDiagram"); 
-                var position = $scope.getFabricPosition(myElement);
+		          var cMenu = $("#context-menu").data("aciContextMenu");
+		          var nodePreviewHtml = template(e.item.dataItem);
+		          $("#node-preview").html(nodePreviewHtml);
+		          var visHt = $scope.getVisibleHeight();
+		          var yHeight = $rootScope.Y;
+		          var xHeight = $rootScope.X;
 
-                var cMenu = $("#context-menu").data("aciContextMenu");
-                var  nodePreviewHtml = template(e.item.dataItem);
-                $("#node-preview").html(nodePreviewHtml);
-                var visHt = $scope.getVisibleHeight();
-                var yHeight = $rootScope.Y;
-                var xHeight = $rootScope.X;
+		          if (e.item.dataItem.type != "app") {
+		            if ($rootScope.Y < 512) {
+		              yHeight = $rootScope.Y - visHt / 2;
+		            } else if ($rootScope.Y > 512) {
+		              yHeight = $rootScope.Y - visHt / 1.5;
+		            }
+		          } else {
+		            yHeight = $rootScope.Y;
+		          }
 
-                if(e.item.dataItem.type != "app"){
-                   if( $rootScope.Y < 512){
-                       yHeight = $rootScope.Y - visHt/2;
-                    }
-                    else if( $rootScope.Y > 512){
-                        yHeight = $rootScope.Y - visHt/1.5;
-                     }                
-             }
-             else{
-                   yHeight = $rootScope.Y;
-             }
+		          var xPositionDiff = position.x - $rootScope.X;
+		          if (e.item.dataItem.type != "app") {
+		            if (xPositionDiff > 325) {
+		              cMenu.open($rootScope.X + (e.item.bounds().width / 2), yHeight);
+		            } else {
+		              cMenu.open(($rootScope.X - (e.item.bounds().width) - 275), yHeight);
+		            }
+		          } else {
+		            cMenu.open($rootScope.X + (e.item.bounds().width / 2), yHeight);
+		          }
 
-             var xPositionDiff = position.x - $rootScope.X;
-             if(e.item.dataItem.type != "app"){
-             if(xPositionDiff > 325){
-                cMenu.open($rootScope.X+(e.item.bounds().width/2), yHeight);
-             }
-             else{
-                 cMenu.open(($rootScope.X-(e.item.bounds().width)-275), yHeight);
-             }
-         }
-         else{
-            cMenu.open($rootScope.X+(e.item.bounds().width/2), yHeight);
-         }
-              
-                $("#iconEditButton").aciButton({
-                        spriteCssClass: "aci-edit-icon-mouseclick",
-                        click: function(){
-                                e.item.diagram.edit(e.item);
-                            }
-                });
-                $("#iconDeleteButton").aciButton({
-                        spriteCssClass: "aci-del-icon-mouseclick",
-                        click: function(){
-                           // e.item.diagram.remove(e.item);
-                           var dItem = {};
-                           var src = appDiagram.dataSource.get(e.item.dataItem.id);
-                           angular.copy(src, dItem);
-                           if (dItem.type == "app") {
-                                  $scope.openDelAppWindow($rootScope.selectedApplicationIndex);
-                           } else {
-                                  $scope.openDelNodeWindow(dItem);
-                           }
-                        }
-                }); 
-            }        
+		          $("#iconEditButton").aciButton({
+		            spriteCssClass: "aci-edit-icon-mouseclick",
+		            click: function() {
+		              e.item.diagram.edit(e.item);
+		            }
+		          });
+		          $("#iconDeleteButton").aciButton({
+		            spriteCssClass: "aci-del-icon-mouseclick",
+		            click: function() {
+		              // e.item.diagram.remove(e.item);
+		              var dItem = {};
+		              var src = appDiagram.dataSource.get(e.item.dataItem.id);
+		              angular.copy(src, dItem);
+		              if (dItem.type == "app") {
+		                $scope.openDelAppWindow($rootScope.selectedApplicationIndex);
+		              } else {
+		                $scope.openDelNodeWindow(dItem);
+		              }
+		            }
+		          });
+	        }       
 
             var appDiagram = $("#appDiagram").aciCustomEditorDiagram({
                 theme: "default",
@@ -3000,10 +3068,10 @@ angular.module('webappApp')
 	            }).getAciPanelBar().expand(">li", true);
 
 	            function updateSliderIndicator(e) {
-                $("#diagramZoomIndicator").attr("value", e.value);
+	                $("#diagramZoomIndicator").attr("value", e.value);
 
-                appDiagram.zoom(e.value / 100);
-            }
+	                appDiagram.zoom(e.value / 100);
+	            }
 
             $("#diagramZoom").aciSlider({
                 min: 10,
@@ -3280,7 +3348,6 @@ angular.module('webappApp')
                                 }
                             }
                         }
-                       // console.log($scope.epgCountContract);
                         if( $scope.epgCountContract == 1){
                             if ($scope.nearestEpg != null) {
                                      $scope.nearestEpgId = null;
@@ -3316,7 +3383,6 @@ angular.module('webappApp')
         }
 
         $rootScope.diagramSelect = function (e) {
-            console.log(arguments);
         }
 
         $rootScope.selectedTenantIndex = 0;
@@ -3378,6 +3444,7 @@ angular.module('webappApp')
 	  }
 	  
 		$scope.createTenantListDropDown = function() {
+
 			var list = document.getElementsByClassName("tenantDropDown");
 			 var len = list.length;
 			 for(var i=0; i<len; ++i){
@@ -3411,10 +3478,7 @@ angular.module('webappApp')
 					}
 		}
 
-        $scope.makeTenantCarousel = function () {
-		
-		
-			
+        $scope.makeTenantCarousel = function () {			
             $scope.tenantSlider = $("#content-slider").lightSlider({
                 item: 1,
                 loop: false,
@@ -3469,7 +3533,6 @@ angular.module('webappApp')
 
 		$scope.editButtonsVisbible= false;
         $scope.changeSelectedTenant = function (index) {
-		
             $scope.currentZoomVal = 0.7;
 			if ((!$scope.editInstancesClicked) && (!$scope.delTenantWindowVisible)){
 				if (($rootScope.selectedTenantIndex == 0) && (index !=0))
@@ -3506,6 +3569,78 @@ angular.module('webappApp')
         }
 		
 		$scope.editTenantIndex = -1;
+
+		$scope.openEditTenantWindow = function(tenant, index) {
+	        var _indx = getIndexByProp($rootScope.tenantList, 'id', tenant.id);
+	        if(_indx !== -1){
+	          $rootScope.selectedTenantIndex = _indx;  
+	        }else{
+	          alert('Something went wrong!')
+	        }
+
+	        var window = $("#tenanteditwindow");
+	        $rootScope.tenantId = $rootScope.tenantList[$rootScope.selectedTenantIndex].id;
+	        $scope.tenantDisplayNameToEdit = $rootScope.tenantList[$rootScope.selectedTenantIndex].displayName;
+	        $scope.tenantCount = $rootScope.tenantList[$rootScope.selectedTenantIndex].count;
+
+	        //this is to bind/update the UI with scope data
+	        $compile(window.contents())($scope);
+	        
+	        var onClose = function() {}
+	        $('#lightBox').show();
+	        if (!window.data("aciWindow")) {
+	          window.aciWindow({
+	            width: "375px",
+	            title: "Edit Tenant",
+	            actions: [
+	              "Close"
+	            ],
+	            close: onClose
+	          });
+        }
+
+        $('.a-window-action').click(function(){$('#lightBox').hide();});
+        window.data("aciWindow").open();
+        window.data("aciWindow").center();
+
+      }
+
+      $scope.cancelUpdateTenant = function() {
+        $scope.editTenantIndex = -1;
+        $scope.updateTenantList();
+        $scope.editButtonsVisbible = false;
+        $("#tenanteditwindow").data("aciWindow").close();
+        $('#lightBox').hide();
+      }
+
+      function getIndexByProp(objList, prop, value){
+	    for(var i=0; i<objList.length; i++){
+	      if( objList[i][prop] == value ){
+	        return i;
+	      }
+	    }
+	    return -1;
+	  } 
+
+	  $rootScope.pushToApicStatus = 0;
+      $scope.pushApicPopup = function() {
+        if(!$rootScope.pushToApicStatus)
+          $rootScope.pushToApicStatus = 0;
+        popupService.showPushToApicPopup($rootScope.tenantList, $rootScope.apicDevices)
+          .then(function(apicDevice){
+            $rootScope.pushToApicStatus = 1;
+            $rootScope.currentApicDevice = apicDevice;
+            $scope.updateTenantList();
+            
+            //to update the apic device after the push
+            appService.getProjectById(function (resp) {
+				$rootScope.currProject = resp;
+			});            
+            
+          }, function(){
+            // $rootScope.pushToApicStatus = 2;
+          });
+      };
 		
 		$scope.editTenant = function(index,count) {
 			$scope.editTenantIndex = index;
@@ -3530,28 +3665,43 @@ angular.module('webappApp')
 			 $scope.moreButtonDisabled = false; 
 		}
 		
-		$scope.updateTenant = function() {
-			var jsonObj = {
-				"name" : $rootScope.tenantList[$rootScope.selectedTenantIndex].name,
-				"type" : "user",
-				"count" :$scope.updatedInstanceCount
-			};
+		$scope.updateTenant = function(index, name) {		
+			var jsonObj = {};
 
-			 appService.updateTenant(jsonObj, function (resp) {
+			if(index && !name){	
+				jsonObj = {
+					"displayName" : $rootScope.tenantList[index].displayName, 
+					"name" : $rootScope.tenantList[index].name,
+					"type" : "user",
+					"count" :$scope.updatedInstanceCount
+				}
+			}else{
+				jsonObj = { 
+					"displayName" : name,
+					"name" : $rootScope.selectedTenantIndex,
+					"type" : "user",
+					"count" :$scope.tenantCount
+				}
+				index = $rootScope.selectedTenantIndex;
+			}
+			$scope.showLoadingImage();	
+			 appService.updateTenant(jsonObj).then(function (resp) {
 				 $rootScope.canceler.resolve();
+				 // $scope.getTenants();
+				 $scope.updateTenantList();
+				 $scope.changeSelectedTenant(index);
 					$scope.showLoadingImage();	 
 				appService.getSizingResults(function(resp){
 	                $rootScope.currProject=resp;
-					 $scope.removeLoadingImage();
+					$scope.removeLoadingImage();
 				});
+				var aciWindow = $("#tenanteditwindow").data("aciWindow");
+				if(aciWindow){
+					aciWindow.close();
+				}
+        		$('#lightBox').hide();
 			 })
 			$scope.editTenantIndex = -1;
-			$scope.editButtonsVisbible = false;	
-		}
-		
-		$scope.cancelUpdateTenant = function() {
-			$scope.editTenantIndex = -1;
-			$scope.updateTenantList();
 			$scope.editButtonsVisbible = false;	
 		}
 		
@@ -3787,13 +3937,12 @@ angular.module('webappApp')
         $scope.addTenantMinNumInstances = DIALOG_CONSTANTS.tenant.minNumInstances;
 
         $scope.openTenantWindow = function () {
-
+        	$('#lightBox').show();
             var window = $("#tenantwindow");
 		    $("#addTenantInstances").aciNumericTextBox({format: 'n0'});
             $scope.tenant = {};
             var onClose = function () {
             }
-
             if (!window.data("aciWindow")) {
                 window.aciWindow({
                     width: "375px",
@@ -3804,7 +3953,7 @@ angular.module('webappApp')
                     close: onClose
                 });
             }
-          
+          	$('.a-window-action').click(function(){$('#lightBox').hide();});
             window.data("aciWindow").open();
             window.data("aciWindow").center();
 			
@@ -3813,6 +3962,7 @@ angular.module('webappApp')
 				$("#addTenantInstances").getAciNumericTextBox().value(resp.count);
 				 $scope.tenant['type'] = resp.type;
 				 $scope.tenant['displayName'] = resp.displayName;
+				 $scope.tenant['count'] = resp.count;
             })
 			$scope.tenant['l3OutSlider'] = "2";
             $scope.tenant['localVrf'] = "1";
@@ -3829,7 +3979,7 @@ angular.module('webappApp')
 
         $scope.validateAddTenant = function (event) {
             event.preventDefault();
-
+            $('#lightBox').hide();
 			//$scope.templateType = "tenant";
 			var count = $("#addTenantInstances").getAciNumericTextBox().value();
 			var addTenantJSON = null;
@@ -3878,15 +4028,16 @@ angular.module('webappApp')
 
         $scope.onCanceladdTenant = function () {
             $("#tenantwindow").data("aciWindow").close();
+            $('#lightBox').hide();
         }
 
 
         $scope.postTenant = function (jsonObj) {
             appService.addTenant(jsonObj, function (resp) {
                 $scope.tenants = resp;
-               // $rootScope.selectedTenantIndex = $rootScope.tenantList.length;
+               $rootScope.selectedTenantIndex = $rootScope.tenantList.length;
                 $scope.getTenants();
-				$scope.changeSelectedTenant($rootScope.tenantList.length);
+				$scope.changeSelectedTenant($rootScope.selectedTenantIndex);
 				$scope.createTenantListDropDown();
 				$rootScope.canceler.resolve();
 				$scope.showLoadingImage();
@@ -4155,8 +4306,9 @@ angular.module('webappApp')
 		}
 
 		$scope.showSizingResults = false;
-
+		$scope.showapic=true;
 		$scope.showExpandedView = function(){
+			$scope.showapic=false;
 			$scope.showSizingResults = true;
 			$scope.moreButtonDisabled = false;
 			$scope.getUtilDetails();
@@ -4164,6 +4316,7 @@ angular.module('webappApp')
 		
 		$scope.hideExpandedView = function(){
 			$scope.showSizingResults = false;
+			$scope.showapic=true;
 		}
 
 
@@ -4175,7 +4328,7 @@ angular.module('webappApp')
 		
         $scope.sizingSummary={};
 		$scope.resourceGridOptions={};
-		$scope.resourceGridData={};
+		$scope.resourceGridData=[];
 		var rowIndex = 0;
         $scope.utilizationDetails = [];
         $scope.popoverTitle = "TOR1 Utilization Details";
@@ -4209,82 +4362,87 @@ angular.module('webappApp')
 		//	if($location.path() == "/results") {
 				// $scope.getInputJSON- Added for testing
 			//	$scope.getInputJSON();
-				$scope.resourceGridDataSource.data([]);
+				$scope.resourceGridDataSource= [];
 				appService.getSizingSummary(function (resp) {
 					$scope.resourceGridData = resp.resourceGridData;
-					$scope.resourceGridDataSource.data(resp.resourceGridData);
+					$scope.resourceGridDataSource.push($scope.resourceGridData);
 				})
 		//	}
 		};
 
-        $scope.resourceGridDataSource = new aci.data.DataSource({
-                data : [],
-                pageSize: 8,
-                serverPaging: false,
-                serverSorting: false,
-                serverFiltering: false
-        });
+		$scope.sort = function(keyname){
+	        $scope.sortKey = keyname;
+	        $scope.reverse = !$scope.reverse;
+	    }
 
-        $scope.resourceGridOptions = {
-            sortable: true,
-            pageable: true,
-            selectable: "multiple",
-            change: function () {
-                var selectedRows = this.select();
-                $scope.rowIndex = selectedRows[0].rowIndex;
-            },
-            columns: [
-                {
-                    field: "switch",
-                    title: "Switch",
-					width:70
-                }, {
-                    field: "vrfs",
-                    title: "VRFs",
-					width:65
-                }, {
-                    field: "bds",
-                    title: "BDs",
-					width:65
-                }, {
-                    field: "epgs",
-                    title: "EPGs",
-					width:65
-                }, {
-                    field: "l3Out",
-                    title: "L3Out",
-					width:65
-                }, /*{
-					title: "Utilization",
-                    template: function (dataItem) {
-                        return '<div style="width: 16px;height:16px;background-color:green;display: inline-block;margin-right: 10px;margin-bottom:2px;"></div><div class="view-icon" ng-click="getPopoverDetails(dataItem);" custom-popover id="popover" popover-title={{popoverTitle}} \
-											popover-html="Some Popover Text" popover-placement="right" \
-											popover-label=""/></div>';
-                    }
-                }*/ {
-					field: "utilizationDetails[0].displayCount",
-                    title: "Policy TCAM",
-					width:100
-				}, {
-					field: "utilizationDetails[1].displayCount",
-                    title: "VLAN Table",
-					width:100
-				}, {
-					field: "utilizationDetails[2].displayCount",
-                    title: "Source Prefix TCAM",
-					width:120
-				}, {
-					field: "utilizationDetails[3].displayCount",
-                    title: "Dest Prefix TCAM",
-					width:100
-				}, {
-					field: "utilizationDetails[4].displayCount",
-                    title: "Router IP Table",
-					width:100
-				}
+        // $scope.resourceGridDataSource = new aci.data.DataSource({
+        //         data : [],
+        //         pageSize: 8,
+        //         serverPaging: false,
+        //         serverSorting: false,
+        //         serverFiltering: false
+        // });
+
+    //     $scope.resourceGridOptions = {
+    //         sortable: true,
+    //         pageable: true,
+    //         selectable: "multiple",
+    //         change: function () {
+    //             var selectedRows = this.select();
+    //             $scope.rowIndex = selectedRows[0].rowIndex;
+    //         },
+    //         columns: [
+    //             {
+    //                 field: "switch",
+    //                 title: "Switch",
+				// 	width:70
+    //             }, {
+    //                 field: "vrfs",
+    //                 title: "VRFs",
+				// 	width:65
+    //             }, {
+    //                 field: "bds",
+    //                 title: "BDs",
+				// 	width:65
+    //             }, {
+    //                 field: "epgs",
+    //                 title: "EPGs",
+				// 	width:65
+    //             }, {
+    //                 field: "l3Out",
+    //                 title: "L3Out",
+				// 	width:65
+    //             }, {
+				// 	title: "Utilization",
+    //                 template: function (dataItem) {
+    //                     return '<div style="width: 16px;height:16px;background-color:green;display: inline-block;margin-right: 10px;margin-bottom:2px;"></div><div class="view-icon" ng-click="getPopoverDetails(dataItem);" custom-popover id="popover" popover-title={{popoverTitle}} \
+				// 							popover-html="Some Popover Text" popover-placement="right" \
+				// 							popover-label=""/></div>';
+    //                 }
+    //             } {
+				// 	field: "utilizationDetails[0].displayCount",
+    //                 title: "Policy TCAM",
+				// 	width:100
+				// }, {
+				// 	field: "utilizationDetails[1].displayCount",
+    //                 title: "VLAN Table",
+				// 	width:100
+				// }, {
+				// 	field: "utilizationDetails[2].displayCount",
+    //                 title: "Source Prefix TCAM",
+				// 	width:120
+				// }, {
+				// 	field: "utilizationDetails[3].displayCount",
+    //                 title: "Dest Prefix TCAM",
+				// 	width:100
+				// }, {
+				// 	field: "utilizationDetails[4].displayCount",
+    //                 title: "Router IP Table",
+				// 	width:100
+				// }
 				
-                ]
-        };
+    //             ]
+    //     };
 
 
       $scope.getPopoverDetails = function (data){
@@ -4317,6 +4475,7 @@ angular.module('webappApp')
     $scope.uniqueSubnet="Unique";
 
     $scope.toggleModal = function(){
+
     	if($rootScope.tenantList[$rootScope.selectedTenantIndex].type == CONSTANT_FACTORY.getUtility()){
     		$rootScope.fadeOutBackground();
     		 $rootScope.notification.show({
@@ -4324,7 +4483,6 @@ angular.module('webappApp')
                  message: ERROR_STRING_CONSTANTS.FORBIDDEN_APPLICATION_MESSAGE
              }, "error");
     	}else{
-    	
 	    //    $rootScope.fadeOutBackground();
 		    $("modal.in").prepend("<div id='PopupMaskProject' style='position:fixed;width:100%;height:100%;z-index:11;background-color:gray;'></div>");
 		    $("#PopupMaskProject").css('opacity', 0.1); 

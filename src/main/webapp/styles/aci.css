@@ -40,7 +40,7 @@
 }
 body {
     font-family: Lato-Regular;
-	background:#f4f4f4; 
+	/*background:#f4f4f4; */
     /*background:#fcfcfc;*/ 
 	overflow:hidden;
 }
@@ -128,8 +128,9 @@ img {
     font-family:SourceSansPro-Regular;
     font-size: 15px;
     color:#fff;
-    margin-top:10px;
-    margin-left:12px;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 10px;
 }
 .tenantName-box
 {
@@ -222,10 +223,10 @@ img {
 /*END  - Tab Bar*/
 #ruler { visibility: hidden; white-space: nowrap; font-family: 'Helvetica'; font-size: 15px; }
 /*bootstrap overrides*/
-.row {
+/*.row {
     margin-left: 0px;
     margin-right: 0px;
-}
+}*/
 
 /*
 .aci-logical-splitter .ct-canvas{
@@ -387,11 +388,11 @@ body {
 
 #splitter {
     position: absolute;
-    left: 0;
+    left: 15px;
     right: 0;
     height: auto;
     top: 0px;
-    bottom: 35px;
+    bottom: 5px;
     border-width: 0 0 1px;
 	border:none;
 }
@@ -746,80 +747,97 @@ div.about {
 }
 
 .tenantCarousal {
-    padding-left: 250px;
-    margin-top: -78px;
-    width: 255px !important;
+    padding-left: 325px;
+    margin-top: -89px; 
+    width: 330px !important;
 }
 
 .tenantMenu{
-	border: 1px solid #eaeaea; 
-    margin-left: 505px;
-    height: 87px;
-    width: 30px;
+    margin-left: 330px;
+    height: 22px;
+    width: 160px;
     border-left: none;
-    margin-top: -4px;
-    background-color: #fff;
-	//border-bottom: 6px solid #0e99da;
+    margin-top: 0px;
+    /*z-index: 10000;*/
+    position: relative;
+    border: 1px solid #ececec;
 }
 
+@-moz-document url-prefix() { 
+  .tenantMenu {
+      margin-top: 5px;
+  }
+}
 .tenantMenuIcon{
 	display: inline-block;    
-    background-image: url("../images/menu.png");
-	margin-left:7px;
-	margin-top:4px;
-	width:15px;
+    background: url("../images/arrowdown.png") right 1PX;
+	margin-left:-30x; 
+	width:155px;
 	height:15px;
 	cursor:pointer;
+    background-repeat: no-repeat;
+    opacity: 0.7;
 }
 .tenantCard,
-.tenantCardSelected { 
-    padding: 2px 2px 2px 2px;
+.tenantCardSelected {  
     box-sizing: border-box;
-    width: 255px !important;
-	border:1px solid #eaeaea;
+    width: 330px !important; 
 	background-color:#fff;
 }
 
 .tenantInstances{
-    background-color:#fff;
-    font-family:Roboto-Regular;
-    font-size:12px;
-    margin-left:170px;
+    background-color: #fff;
+    font-family: Roboto-Regular;
+    font-size: 12px;
+    margin-left: 29px;
     color: #848484;
-    width:48px;
-    border:1px solid #848484;
-    text-align:center;
-	display:inline-block;
-	top:8px;
-	position:absolute;
+    width: 48px;
+    border: 1px solid #e8e7e7;
+    text-align: center;
+    display: inline-block;
+    top: 4px;
+    line-height: 20px;
+    position: absolute;
 } 
 
 .instancesSelected{
-     background-color:#fff;
-     font-family:Roboto-Regular;
-    font-size:12px;
-    margin-left:170px;
+     background-color: #fff;
+    font-family: Roboto-Regular;
+    font-size: 12px;
+    margin-left: 29px;
     color: #848484;
-    width:48px;
-    text-align:center;
-	top:8px;
-	position:absolute;
+    width: 48px;
+    border: 1px solid #e8e7e7;
+    text-align: center;
+    display: inline-block;
+    top: 4px;
+    line-height: 20px;
+    position: absolute;
 }
 
 .tenantCardTitle {
-    font-size:16px;
-    padding-top:8px;
-    color:#4f4f4f;
-    margin-left:15px;
+    font-size: 14px;
+    padding-top: 4px;
+    color: #03a2e3;
+    padding-left: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-family: SourceSansPro-Regular;
+    padding-bottom: 4px;
 }
 
 .tenantCardText {
     color:#4f4f4f;
     font-size: 12px;
-    font-family:SourceSansPro-Regular;
-    margin-left:15px;
+    font-family:SourceSansPro-Regular; 
     width:60px!important;
+
+}
+.tenantText {
+    color:#4f4f4f;
+    font-size: 12px;
+    font-family:SourceSansPro-Regular;  
 
 }
 .dashed {
@@ -867,7 +885,7 @@ div.about {
 
 .fieldlist li {
     list-style: none;
-    display: block;
+    display: block; 
 }
 
 .sachin {
@@ -960,7 +978,7 @@ div.about {
 /* Dialog box changes */
 
 .a-window-titlebar {
-    background-color: #49abff;
+    background-color: #49abff !important;
     border-color: #49abff;
     border-radius: 0px;
 }
@@ -975,7 +993,7 @@ div.about {
 }
 
 div.a-widget.a-window {
-    /*border-radius: 6px;*/
+     border-radius: 0px
 }
 
 ul.fieldlist {
@@ -1122,8 +1140,9 @@ a.a-button.a-button-icontext:hover {
     white-space: nowrap;
 }
 .window-button {
-    margin-left: 23%;
+    margin-left: 30%;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 #l3outDialgog label {
     width:100px;
@@ -1136,11 +1155,12 @@ a.a-button.a-button-icontext:hover {
     display:none;
 }
 
-.titles {
-    font-weight:bold;
-    font-size: 14px;
-    color: #606060;
-	padding-top:7px;
+.titles { 
+    font-size: 13px;
+    color: #606060; 
+    padding-left: 3px;
+    top: 2px;
+    position: relative;
 }
 .summaryboxTitle {
  	margin-left:10px;
@@ -1691,8 +1711,7 @@ summary-tabbtn .nav nav-tabs
 .my-titleBar{   
     font-size:18px; 
     font-weight:normal;
-    color:#FFFFFF;
-    margin-left:30px;
+    color:#FFFFFF; 
     margin-top: -4px;   
 }
 .my-close{        
@@ -1702,7 +1721,8 @@ summary-tabbtn .nav nav-tabs
     font-weight: normal;
 }
 .modal-header .close{
-    margin-top: 4px;
+    margin-top: 15px;
+    margin-right: 10px;s
 }
 .close:hover{
     color:#FFFFFF;
@@ -1828,7 +1848,7 @@ input.appDialog-input-width{
 
 /*Overriding Framework CSS elements*/
 input.a-textbox{
-    height: 34px;
+    height: 34px !important;
     width: 90%;
     text-indent: .13em;
     border-radius: 0px;
@@ -2019,9 +2039,9 @@ input[type=range]:focus::-ms-fill-upper {
   background: #dedede;
 }
 .add-tenant-footer{
-    background-color: #f1f1f1;
+    background-color: #f9f9f9;
     margin-bottom: -7px;
-    border-top: 1px solid #d9d9d9;
+    border-top: 1px solid #efefef;
     margin-left: -7px;
     margin-right: -8px;
 }
@@ -2043,7 +2063,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .modal-footer-custom{
     height:53px;
-    background-color:#f1f1f1;
+    background-color:#f9f9f9;
 }
 .epg-slider-pos{
     width:41% !important;
@@ -2197,17 +2217,24 @@ input[type=range]:focus::-ms-fill-upper {
 {
 	font-family: Roboto-Light;
     color:#f9bb00;
-    font-size: 35px;
-	margin-left:21px;
-	padding-top:5px;
+    font-size: 19px;
+    margin-left: 8px;
+    padding-top: 7px;
+    text-align: left;
+}
+.saveConfig{
+    background: #fafafa;
+    padding: 7px 7px 8px 7px;
+    border-bottom: 1px solid #ddd;
+    letter-spacing: 0.7px;
 }
 .leaftitle-text
 {
 	font-family: SourceSansPro-Regular;
-    color:#8F8F8F;
-    font-size: 16px;
-	margin-left:81px;
-	margin-top:-30px;
+    color: #8F8F8F;
+    font-size: 13px;
+    margin-left: 27px;
+    margin-top: -20px;
 }
 .nodesdet-container
 {
@@ -2215,18 +2242,23 @@ input[type=range]:focus::-ms-fill-upper {
 	margin:0 0 0 16px;
     height:295px;
 }
+.apicConfig{
+    color: #ff0000;
+    font-size: 14px;
+}
 .wlsummary-label
 {
-    font-size: 14px;
+    font-size: 12px;
     font-family: SourceSansPro-Regular;
     color:#4f4f4f;
     padding-top: 6px;
-	text-align:right;
+    text-align: left;
+    padding-left: 5px;
 	padding-right:60px;
 }
 .wlsummary-detailbtn
 {
-    font-size: 14px;
+    font-size: 12px;
     font-family: SourceSansPro-Regular;
     color:#03a3e2;
     float:right;
@@ -2260,7 +2292,7 @@ input[type=range]:focus::-ms-fill-upper {
     display: inline;
     position: relative;
     opacity:1;
-    font-size:14px;
+    font-size:12px;
     font-family: sourceSansPro-Regular;
 }
 .tooltip:hover:after{
@@ -2281,7 +2313,7 @@ input[type=range]:focus::-ms-fill-upper {
     border-width: 0px 6px 6px 6px;  
     content: "";
     left: 40%;
-    top:65%;
+    top:68%;
     position: absolute;
     z-index: 99;
 }
@@ -2468,12 +2500,13 @@ padding: 11px 14px;
 }
 .summary-headerText
 {
-font-family:SourceSansPro-Regular;
-color:#606060;
-font-size: 14px;
-margin-left: 15px;
-margin-top:6px;
-font-weight:bold;
+    text-align: left;
+    font-family: SourceSansPro-Regular;
+    color: #606060;
+    font-size: 13px;
+    margin-left: 10px;
+    margin-top: 6px; 
+    letter-spacing: 0.7px;
 }
 .summary-box-close
 {
@@ -2483,7 +2516,7 @@ font-weight:bold;
 .dropdown-menu {
 	min-width: 179px !important;
 	padding:0px !important;
-	margin-top:-17px;
+	margin-top:1px;
 	border: 1px solid #eaeaea;
 	border-radius:0px;
 	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.175);
@@ -2492,7 +2525,9 @@ font-weight:bold;
 }
 
 #tenantDropDownList {
-	min-width:155px !important;
+	min-width:159px !important;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 #appToggle{
@@ -2539,12 +2574,12 @@ li.divider {
 	width:100% !important;
 }
 .formDataStyle #appclose{
-    margin-right: 23px;
+    margin-right: 35px;
 }
 
 #appclose{
 	margin-right: 12px;
-    margin-top: -26px;
+    margin-top: -30px;
     color: #9c9c9c;
     font-size: 11px;
     cursor: pointer;
@@ -2591,6 +2626,7 @@ div.appName{
      color: #525252;
      font-family: Verdana;
      height:22px;
+     text-align:left !important;
  }
 
 #context-menu{
@@ -2723,28 +2759,30 @@ label#epgFilterTooltip.tooltip:hover:before{
 .tenantView{
 	margin-left:10px;
 	margin-top:10px;
-	width:540px;
+	width:674px;
 	background-color:rgb(250,250,250);
 	height:120px;
 }
 
 .summaryView{
- top:10px; 
- left:560px;
- position:absolute;
- right:10px;
-// width:60%;
- border:1px solid #e1e1e1;
- height:120px;
+    top: 10px;
+    left: 695px;
+    position: absolute;
+    right: 10px;
+    border: 1px solid #e1e1e1;
+    height: 120px;
+    text-align: center;
+    width: 34.5%;
 }
 
 .commonTenant
 {
-    width: 240px;
-    border: 1px solid #eaeaea;
-    height: 87px!important;
-    margin-top: -18px;
+    width: 324px;
+    border-right: 1px solid #eaeaea;
+    height: 85px!important;
+    margin-top: 10px;
 	background-color:#fff;
+    padding-left: 0px;
 }
 
 .arrow-left {
@@ -2778,6 +2816,10 @@ label#epgFilterTooltip.tooltip:hover:before{
 }
 .addTenantTable dl dd label{ 
         font-weight: normal;
+}
+.addTenantTable input[type="radio"]{
+    position: relative;
+    top: 4px;
 }
 .radio-text-align{
     vertical-align: middle;
@@ -2864,7 +2906,7 @@ a.checkArrow{
 	height: 550px!important;
     width: 1100px;
     float: right;
-    right: 6px;
+    right: 25px;
     margin-top: 11px;
     border: 1px solid #e1e1e1;
     background-color: #fff;
@@ -2964,10 +3006,10 @@ left:-135px;
 }
 .selectedTenant{
 	left:0px;
-	height:6px!important;
-	width:242px;
+	height:2px!important;
+	width:321px;
 	background-color:#0e99da;
-	margin-top:-6px;
+	margin-top:-2px;
 }
 .dropdown-menu > li > a
 {
@@ -3017,6 +3059,128 @@ left:-135px;
 #physicaltab .tooltip:hover:before{
     top: 74%;
 }
-#tenantwindow .aci-dialog-content-span .addTenantTable{
+#tenantwindow .aci-dialog-content-span .addTenantTable,
+#tenanteditwindow .aci-dialog-content-span .addTenantTable{
     margin: 0px 12px;
+}
+.addBtn{
+    background: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 4px 20px;
+}
+#contractTemplate input.a-textbox,#contractTemplate .disabledDropdown{
+    width: 95%
+}
+.map-contract-btn{
+    border: 1px solid #ddd;
+    padding: 4px 5px;
+    width: 72%;
+    float: left;
+    margin-bottom: 10px; 
+} 
+div.a-window-content{
+      margin-top: 10px !important;
+}
+.a-window-titlebar{
+      height: 23px !important;
+}
+.modal-header .close{
+        background: #fff;
+        padding: 7px 7px;
+        color: #666;
+        border-radius: 100%;
+        font-size: 20px;
+}
+
+#contractConfig,#contractL3Config{ 
+    margin-top: 0px; 
+    margin-right: 18px;
+    line-height: 22px;
+}
+#appDropDown .dropdown-menu{
+    margin-top: -17px;
+}
+
+/*.no-of-instances{
+    display: none;
+}*/
+.editTenant{
+    border-right: 1px solid #ddd;
+    top: 6px;
+    padding-right: 15px;
+    margin-left: 116px;
+    position: relative;
+    padding-bottom: 2px;
+    cursor: pointer;
+    color: #a1a1a1;
+}
+ 
+.lightBoxPopup{
+  background: #797979;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10000;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    opacity: 0.8;
+}
+.navBar{
+    padding: 0px;
+    position: relative;
+    top: 12px;
+    display: inline;
+}
+.navBar li{
+    list-style-type: none;
+    cursor: pointer; 
+    padding: 6px 12px;
+    color: #fff;
+    background: #1a98ca;
+    display: inline;
+    margin-right: -3px;
+}
+.navBar li:last-child{
+    padding: 0px;
+    background: none;
+}
+.navBar li a{
+    color: #fff;
+    text-decoration: none
+    }
+.navbar-nav>li>a{
+    padding-top: 8px !important
+}
+.wid32{
+    width: 33%;
+}
+.wid50{
+    width: 50%;
+}
+.clr{
+    clear: both;
+}
+.btm_brd{
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+}
+.tenantList li label{
+    padding-left:0px;
+}
+
+.tenantListName label{
+    width: 40px;
+   font-weight: normal;
+}
+.padTopBottom4{
+    padding: 4px 0px;
+}
+.select-style1 select option:checked{
+    display: none;
+}
+.importDevice .progress-striped{
+    width: 50%;
 }

@@ -1,10 +1,13 @@
+(function(){
+	'use strict';
+
 angular.module('dashboard')
 .controller('HomeController', function ($scope, $rootScope, $location, dashboardService, DIALOG_CONSTANTS) {
 		
 		
 		//Window height set to div tag height dynamically		
 		 $scope.listContainerHeight = window.innerHeight-90;
-
+		  $rootScope.projectDropDown = false;
     	// Project Window - function - starts				
                     $rootScope.isProjectVisible=false;
 	                $scope.loadProjectview = function(proj,location) {
@@ -204,28 +207,26 @@ angular.module('dashboard')
 	                				 
 	                $scope.getProjectList = function() {
 						/*Start Add Field*/
-                        $rootScope.notification = $("#notificationProject").aciNotification({
-                            position: {
-                                pinned: true,
-                                top: "35%",
-                                 right: "40%",
-                                left: "35%",
-                                bottom: "40%"
-                            },
-                            autoHideAfter: 0,
-                            stacking: "down",
-                            hideOnClick:0,
-                            templates: [{
-                                type: "error",
-                                template: $("#errorTemplateProj").html()
-                            }]
-                    
-                        }).data("aciNotification");  
+                        // $rootScope.notification = $("#notificationProject").aciNotification({
+                        //     position: {
+                        //         pinned: true,
+                        //         top: "35%",
+                        //          right: "40%",
+                        //         left: "35%",
+                        //         bottom: "40%"
+                        //     },
+                        //     autoHideAfter: 0,
+                        //     stacking: "down",
+                        //     hideOnClick:0,
+                        //     templates: [{
+                        //         type: "error",
+                        //         template: $("#errorTemplateProj").html()
+                        //     }]                    
+                        // }).data("aciNotification");  
 						//$scope.projectGridDataSource.data([]); 
-						
 						/*End Add Field*/
 						dashboardService.getProjects(function(resp) {
-							$rootScope.currProject=resp[0];  
+							$rootScope.currProject=resp[0];
 							$scope.projectlistResponce = resp; 
 							$scope.physicalInventory = [];
 							$scope.date=[];
@@ -378,7 +379,7 @@ angular.module('dashboard')
 			}  
 			  
 			$scope.logicalSizer = function(event){ 
-				console.log($(event.currentTarget.parentElement))
+				// console.log($(event.currentTarget.parentElement))
 				 $(event.currentTarget.parentElement).next().addClass('show');
 				 $(event.currentTarget.parentElement).next().removeClass('hide');
 				 $(event.currentTarget.parentElement).next().next().addClass('hide');
@@ -405,4 +406,4 @@ angular.module('dashboard')
  			 
       })
 	  
-
+})();

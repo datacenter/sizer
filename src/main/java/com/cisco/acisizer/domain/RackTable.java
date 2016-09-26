@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Where;
 
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.util.PortDomainJpaConverter;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 

@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -159,5 +160,10 @@ public class DatabaseConfiguration implements EnvironmentAware {
 		liquibase.setChangeLog("classpath:config/master.xml");
 		liquibase.setContexts("development, production");
 		return liquibase;
+	}
+	
+	@Bean
+	public HibernateJpaSessionFactoryBean sessionFactory() {
+	    return new HibernateJpaSessionFactoryBean();
 	}
 }

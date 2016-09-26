@@ -5,7 +5,10 @@ angular.module('webappApp').constant("SERVICE_STATIC_JSON", {
 angular.module('webappApp').constant("REST_URI", {
 	projectUri : "acisizer/v1/project/",
 	getProjectUri : "acisizer/v1/projects",
-	aciSizerUri: "acisizer/v1"
+	aciSizerUri: "acisizer/v1",
+	profilerUri: "acisizer/v1",
+	baseUri : 'profiler/v1'
+
 })
 
 angular.module('webappApp').constant("ERROR_STRING_CONSTANTS", {

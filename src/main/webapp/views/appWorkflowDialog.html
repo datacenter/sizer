@@ -10,11 +10,12 @@
       </div>
       <br>
 
-      <div class="aci-dialog-content-span">
+      <div class="aci-dialog-content-span no-of-instances">
         <label class="appDialog-fonts">No. of Instances</label>
         <br>
         <input type="number" id="addAppInst" ng-model="addApp.noOfInstances" class="appDialog-input-width" min="1"/>
       </div>
+      <br>
       <br>  
 
       <div class="aci-dialog-content-span">
@@ -23,6 +24,9 @@
        <select id="appType" ng-model="addApp.model"  required validationMessage="Select Application Type" placeholder="Select Application Type" class="aci-field appDialog-input-width" ng-change="onAppTypeChange()">                  
        </select>
        <div id="validationError" ng-show="appTypeValid" style="font-size:13px;color:red;margin-left:2%">Please Select Application Type</div>
+      <br>
+      <br>
+      <br>
      </div>     
    </div>
    <br>

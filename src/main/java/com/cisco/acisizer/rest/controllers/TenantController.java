@@ -1,5 +1,5 @@
 /**
- * Copyright @maplelabs
+ * 
  */
 package com.cisco.acisizer.rest.controllers;
 
@@ -124,5 +124,12 @@ public class TenantController {
 					throws AciEntityNotFound, GenericInvalidDataException {
 		return tenantServices.getDefaultValues(projectId, tenantId, type);
 	}
-
+	// Repository service uses profiler URL.
+	@RequestMapping(value = "/profiler/v1/project/{projectId}/tenant/{tenantId}/apic/{apicId}/applychanges", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public void pushConfig(@PathVariable("projectId") int projectId,
+			@PathVariable("tenantId") int tenantId,@PathVariable("apicId") int apicId)
+					throws AciEntityNotFound, GenericInvalidDataException {
+		tenantServices.pushConfig(projectId, tenantId, apicId);
+	}
 }

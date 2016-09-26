@@ -3,24 +3,23 @@
     <!-- Use the form instead of attributes -->
         <div class="aci-dialog-content-span">
             <label>Name</label>
-            <input type="text" class="a-textbox aci-field tenant-project-label" id="name" ng-model="tenant.displayName" required/>
+            <input type="text" class="a-textbox aci-field tenant-project-label"  id="name" ng-model="tenant.displayName" required/>
         </div>
         </br>
-        <div class="aci-dialog-content-span">
+        <div class="aci-dialog-content-span no-of-instances">
             <label>No. of Instances</label>
             <input type="number" id="addTenantInstances" ng-model="tenant.count" class="tenant-project-label" max="{{addAppMaxNumInstances}}" min="{{addAppMinNumInstances}}" />
-        </div>
-       <br>              
+        </div>       
         <div class="aci-dialog-content-span">
              <table class="addTenantTable">
                    <tr>
-                    <td>
+                    <td colspan="2">
                       <label class="tenantTableLabel">VRF</label> 
                     </td>
                   </tr>
 
                   <tr>
-                    <td nowrap>
+                    <td nowrap width="175px">
                       <input type="radio" name="localVRF" class="aci-radio" checked="checked" ng-model="tenant.localVrf" value="1">
                       <label class="aci-radio-label radio-text-align tooltip" id="localVrfTooltip" title="A VRF, a BD are created under tenant."><span title=" ">Create Local VRF &nbsp &nbsp &nbsp &nbsp &nbsp</span></label>
                     </td>
@@ -33,13 +32,13 @@
         </br>
                <table class="addTenantTable">
                    <tr>
-                    <td nowrap>
+                    <td nowrap colspan="2">
                       <label class="tenantTableLabel">External Connectivity</label> 
                     </td>
                   </tr>
 
                   <tr>
-                    <td nowrap>
+                    <td nowrap  width="175px">
                       <input type="radio" name="localL3" class="aci-radio" checked="checked" ng-model="tenant.localL3Out" value="1" ng-change ="disableL3Slider()">
                       <label id="localL3Tootltip" class="aci-radio-label tooltip radio-text-align" title="An L3out is created for exclusive use of the tenant. It is created either in common tenant/common VRF or local VRF."><span title="">Create Dedicated L3Out</span></label>
                     </td>

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Service;
 import com.cisco.acisizer.domain.InventoryInfo;
 import com.cisco.acisizer.domain.ProjectTable;
 import com.cisco.acisizer.domain.RoomTable;
-import com.cisco.acisizer.domain.RowTable;
 import com.cisco.acisizer.domain.SwitchTable;
 import com.cisco.acisizer.domain.UserTable;
 import com.cisco.acisizer.exceptions.AciEntityNotFound;
@@ -52,13 +50,12 @@ import com.cisco.acisizer.models.Subnets;
 import com.cisco.acisizer.models.Tenant;
 import com.cisco.acisizer.models.UIData;
 import com.cisco.acisizer.models.UserProfile;
+import com.cisco.acisizer.models.UserResponse;
 import com.cisco.acisizer.models.Vrf;
-import com.cisco.acisizer.physical.rest.models.View.Room;
 import com.cisco.acisizer.physical.services.RoomServices;
-import com.cisco.acisizer.physical.services.RowServices;
 import com.cisco.acisizer.repo.ProjectsRepository;
-import com.cisco.acisizer.repo.RoomRepository;
 import com.cisco.acisizer.repo.SwitchRepository;
+import com.cisco.acisizer.repo.UserRepository;
 import com.cisco.acisizer.repo.UsersRepository;
 import com.cisco.acisizer.summary.SummaryElements;
 import com.cisco.acisizer.summary.SummaryLeaf;
@@ -70,10 +67,12 @@ import com.cisco.acisizer.ui.models.ApplicationConfiguration;
 import com.cisco.acisizer.ui.models.ApplicationTemplate;
 import com.cisco.acisizer.ui.models.ApplicationUi;
 import com.cisco.acisizer.ui.models.LeafChoiceUi;
+import com.cisco.acisizer.ui.models.ProjectUi;
 import com.cisco.acisizer.util.ACISizerConstant;
 import com.cisco.acisizer.util.AutoNameGenerator;
 import com.cisco.acisizer.util.FileUtilities;
 import com.cisco.acisizer.util.SizingExecution;
+import com.cisco.acisizer.util.UserUtil;
 import com.cisco.acisizer.util.Utility;
 import com.google.gson.Gson;
 
@@ -129,6 +128,10 @@ public class ProjectServices {
 
 	@Inject
 	private Gson gson;
+	
+	@Inject
+	private UserRepository userRepository;
+	
 	@Inject
 	private ProjectInventoryHelper projectInventoryHelper;
 	
@@ -352,6 +355,7 @@ public class ProjectServices {
 		proj.setDescription(projDb.getDescription());
 		proj.setRoomId(projDb.getRoomId());
 		proj.setUsePhysical(projDb.isUsePhysical());
+		proj.setDevice(projDb.getDevice());
 		return proj;
 	}
 

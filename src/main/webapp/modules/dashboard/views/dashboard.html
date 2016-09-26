@@ -44,7 +44,9 @@
                                 </ul> 
                                 <a href="javascript:void(0)" class="viewProject pull-right" ng-click="loadProjectview(projectlistResponce[$index], 'logical')">Logical Details</a>                   
                             </div>
-                            <div  class="physicalId overflowHidden" ng-style="projectlistResponce[$index].type !== 'Nexus 9000'">
+
+                            <!-- ng-style="projectlistResponce[$index].type !== 'Nexus 9000'" -->
+                            <div  class="physicalId overflowHidden">
                             	<ul class="physicalDetails">
                                 	<li>
                                     	 <dl> 
@@ -81,7 +83,7 @@
 <script>
     $("#tabs").tabs();
 </script>
-<script id="errorTemplateProj" type="text/x-aci-template">
+<!-- <script id="errorTemplateProj" type="text/x-aci-template">
     
     <div id="errorPopUpId" class="error-popup">
         <div class="error-popup-header">
@@ -96,7 +98,7 @@
         </div>
         <button id="errorClose" class="error-popup-close" onClick="errorClose()">Close</button>
     </div>
-</script>
+</script> -->
 <script>
 
 

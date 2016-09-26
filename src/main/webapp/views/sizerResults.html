@@ -1,6 +1,63 @@
 <div>
-		<div class="sizerResultTable" aci-grid="summaryGridRef" a-options="resourceGridOptions" a-data-source="resourceGridDataSource"  a-selectable="'row'"></div>
-		<script type="text/ng-template" id="templateId.html">
+		<!-- <div class="sizerResultTable" aci-grid="summaryGridRef" a-options="resourceGridOptions" a-data-source="resourceGridDataSource"  a-selectable="'row'"></div> -->
+		<table cellpadding="0" cellspacing="0" class="table table-bordered">
+			<thead>
+				<tr>
+					<th ng-click="sort('switch')">Switch
+						<span class="glyphicon sort-icon" ng-show="sortKey=='switch'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('vrfs')">VRFs
+						<span class="glyphicon sort-icon" ng-show="sortKey=='vrfs'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('bds')">BDs
+						<span class="glyphicon sort-icon" ng-show="sortKey=='bds'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('epgs')">EPGs
+						<span class="glyphicon sort-icon" ng-show="sortKey=='epgs'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('l3Out')">L3Out
+						<span class="glyphicon sort-icon" ng-show="sortKey=='l3Out'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('utilizationDetails[0].displayCount')">Policy TCAM
+						<span class="glyphicon sort-icon" ng-show="sortKey=='utilizationDetails[0].displayCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('utilizationDetails[1].displayCount')">VLAN Table
+						<span class="glyphicon sort-icon" ng-show="sortKey=='utilizationDetails[1].displayCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('utilizationDetails[2].displayCount')">Source Prefix TCAM
+						<span class="glyphicon sort-icon" ng-show="sortKey=='utilizationDetails[2].displayCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('utilizationDetails[3].displayCount')">Dest Prefix TCAM
+						<span class="glyphicon sort-icon" ng-show="sortKey=='utilizationDetails[3].displayCount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+					<th ng-click="sort('utilizationDetails[4].displayCounts')">Router IP Table
+						<span class="glyphicon sort-icon" ng-show="sortKey=='utilizationDetails[4].displayCounts'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr dir-paginate="data in resourceGridData |orderBy:sortKey:reverse | itemsPerPage:8">
+					<td>{{data.switch}}</td>
+					<td>{{data.vrfs}}</td>
+					<td>{{data.bds}}</td>
+					<td>{{data.epgs}}</td>
+					<td>{{data.l3Out}}</td>
+					<td>{{data.utilizationDetails[0].displayCount}}</td>
+					<td>{{data.utilizationDetails[1].displayCount}}</td>
+					<td>{{data.utilizationDetails[2].displayCount}}</td>
+					<td>{{data.utilizationDetails[3].displayCount}}</td>
+					<td>{{data.utilizationDetails[4].displayCount}}</td>
+				</tr>
+			</tbody>
+		</table>
+      	<dir-pagination-controls
+			max-size="5"
+			direction-links="true"
+			boundary-links="true" >
+		</dir-pagination-controls>
+
+				<!-- dir-paginate="user in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:5" -->
+		<!-- <script type="text/ng-template" id="templateId.html">
 		<ul style="list-style-type: none;">
 		<li ng-repeat="details in utilizationDetails">
 			<p class="progress-title">{{details.name}}</p>
@@ -11,14 +68,11 @@
 			</div>
 		<br>
 		</li>
-		</ul>
+		</ul> -->
 		</script>
 		<div id="inputJSon" style="margin-top:10px;margin-left:100px;"></div>
     </div>
 </div>
-
-
-
 
 
 

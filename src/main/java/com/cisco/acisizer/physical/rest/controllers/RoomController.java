@@ -22,9 +22,9 @@ import com.cisco.acisizer.exceptions.TerminationException;
 import com.cisco.acisizer.physical.rest.models.RoomRevertUi;
 import com.cisco.acisizer.physical.rest.models.RoomTerminationUi;
 import com.cisco.acisizer.physical.rest.models.RoomUi;
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.services.RoomServices;
 import com.cisco.acisizer.physical.util.AciPhysicalSizerConstants;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**

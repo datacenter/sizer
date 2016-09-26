@@ -13,13 +13,16 @@ import com.cisco.acisizer.exceptions.AciEntityNotFound;
 import com.cisco.acisizer.exceptions.ContractInvalidDetailException;
 import com.cisco.acisizer.exceptions.ContractNameExistsException;
 import com.cisco.acisizer.exceptions.GenericCouldNotSaveException;
+import com.cisco.acisizer.helper.TenantHelper;
 import com.cisco.acisizer.models.Application;
 import com.cisco.acisizer.models.Contract;
 import com.cisco.acisizer.models.Epg;
+import com.cisco.acisizer.models.Filter;
 import com.cisco.acisizer.models.L3out;
 import com.cisco.acisizer.models.LogicalRequirement;
 import com.cisco.acisizer.models.LogicalSummary;
 import com.cisco.acisizer.models.SharedResource;
+import com.cisco.acisizer.models.Subject;
 import com.cisco.acisizer.models.Tenant;
 import com.cisco.acisizer.repo.ProjectsRepository;
 import com.cisco.acisizer.ui.models.ContractUi;
@@ -52,7 +55,8 @@ public class ContractServices {
 		dest.setProviderType(src.getProviderType());
 		dest.setUiData(src.getUiData());
 		dest.setUnique_filters(src.getNoOfFilters());
-
+		dest.setSubjects(src.getSubjects());
+		dest.setConfigName(src.getConfigName());
 	}
 
 	public com.cisco.acisizer.ui.models.ContractUi outputMapping(Contract src, com.cisco.acisizer.ui.models.ContractUi dest, Tenant tenant,
@@ -71,6 +75,8 @@ public class ContractServices {
 		setConsumerName(src, dest, tenant, commonTenant);
 		dest.setProviderType(src.getProviderType());
 		dest.setUiData(src.getUiData());
+		dest.setSubjects(src.getSubjects());
+		dest.setConfigName(src.getConfigName());
 		if(src.getConsumerType().equals(ACISizerConstant._l3out)){
 			dest.setType(ACISizerConstant._contractWithl3out);
 		}
@@ -194,6 +200,7 @@ public class ContractServices {
 		LogicalRequirement logicalRequirement = gson.fromJson(proj.getLogicalRequirement(), LogicalRequirement.class);
 		Tenant commonTenant = Utility.getCommonTenant(logicalRequirement);
 		Tenant currTenant = Utility.getCurrentTenant(tenantId, logicalRequirement);
+		TenantHelper.modifiedTime(currTenant);
 		Application currApp = AppUtilities.getCurrentApp(appId, currTenant);
 		if (null == currApp) {
 			throw new AciEntityNotFound(ACISizerConstant.COULD_NOT_FIND_APP_FOR_ID );
@@ -247,6 +254,22 @@ public class ContractServices {
 		currApp.setTotalFilterCount(currApp.getTotalFilterCount()+contract.getUnique_filters());
 		
 		return addContract(contract, commonTenant, currTenant);
+	}
+	
+	
+	private void setUniqueFilterCount(Contract contract) {
+		int filterCount =0;
+		
+			for(Subject subject : contract.getSubjects()){
+				for(Filter filter : subject.getFilters()){
+					filterCount = filterCount + filter.getFilterEntry().size();
+					
+				}
+			}
+			
+		
+		
+		contract.setUnique_filters(filterCount);
 	}
 
 	public boolean addContract(Contract contract, Tenant commonTenant, Tenant currTenant) {

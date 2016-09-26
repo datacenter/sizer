@@ -23,9 +23,9 @@ import com.cisco.acisizer.exceptions.GenericInvalidDataException;
 import com.cisco.acisizer.exceptions.TerminationException;
 import com.cisco.acisizer.physical.rest.models.RowUi;
 import com.cisco.acisizer.physical.rest.models.SwitchUi;
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.services.RowServices;
 import com.cisco.acisizer.physical.util.AciPhysicalSizerConstants;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**

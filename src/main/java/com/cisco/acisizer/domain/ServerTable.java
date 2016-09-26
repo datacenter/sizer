@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.cisco.acisizer.physical.rest.models.View;
 import com.cisco.acisizer.physical.util.PortDomainJpaConverter;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 

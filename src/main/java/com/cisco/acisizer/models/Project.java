@@ -1,11 +1,13 @@
 /**
- * CopyRight @MapleLabs
+ * 
  */
 package com.cisco.acisizer.models;
 
 import java.sql.Timestamp;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.cisco.acisizer.domain.Device;
 
 /**
  * @author Deepa
@@ -32,11 +34,17 @@ public class Project implements Comparable<Project> {
 	private String description;
 	private int roomId;
 	private boolean usePhysical;
+	private Device device;
+	
+	
+	public Device getDevice() {
+		return device;
+	}
 
-	
-	
-	
-	
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
 	public int getRoomId() {
 		return roomId;
 	}

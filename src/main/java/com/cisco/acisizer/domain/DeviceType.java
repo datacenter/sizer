@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.cisco.acisizer.physical.rest.models.View;
+import com.cisco.acisizer.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.reflect.TypeToken;
 

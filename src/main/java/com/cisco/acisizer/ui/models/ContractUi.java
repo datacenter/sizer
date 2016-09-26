@@ -7,8 +7,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.Min;
 
+import com.cisco.acisizer.models.Subject;
 import com.cisco.acisizer.util.ACISizerConstant;
 
 /**
@@ -34,6 +38,26 @@ public class ContractUi extends AciSizerModelUi {
 	private String providerName;
 	private String consumerName;
 	private int noOfInstances;
+	private String configName;
+	private List<Subject> subjects = new ArrayList<Subject>();
+
+
+
+	public String getConfigName() {
+		return configName;
+	}
+
+	public void setConfigName(String configName) {
+		this.configName = configName;
+	}
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
 
 	public int getNoOfInstances() {
 		return noOfInstances;

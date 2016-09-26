@@ -2,26 +2,27 @@
 <div class="full-height">
     <div id="splitter">
 		<div id="tenant-splitter" >
-				<div id="tenant-pane" style="background-color:#fafafa;">
+				<div id="tenant-pane" style="background-color:#fafafa;  position:relative">
                 <!--div class="summarycallbtn" id="slideToggle" ng-click="sumToggle()">Project Summary</div-->
                     <div class="pane-content">
-                    <div class="tenantView" style="background-color:rgb(250,250,250);">
-						<div class="tenantTitle" style="height:35px;">
-							<div class="titles">Tenants</div>
-							<div class= "plus-icon" ng-click="openTenantWindow()" style="margin-top:-19px;margin-left:55px;"></div>
+                    <div class="tenantView" style="background-color:#fff;   border: 1px solid #ddd; text-indent: 5px; overflow:hidden">
+						<div class="tenantTitle" style="height:30px; border-bottom:1px solid #ddd; background:#fafafa">
+							<span class="titles">Tenants</span>
+							 <input type="button" class="add_btn" value="Add Tenant" ng-click="openTenantWindow()" style="top:3px; left:79%; position: relative "> 
 							<span ng-include src="'views/tenantList.html'"></span>
-							<div class="tenantMenu" ng-show="tenantList.length > 1"</div>
-								<a class="dropdown-toggle" data-toggle="dropdown" style="margin-top:0px;z-index:8000;">
-								<div class="tenantMenuIcon" aria-hidden="true"></div>
-									<ul class="dropdown-menu" id="tenantDropDownList"  ng-show="tenantList.length > 1" style="margin-left:358px;top:60px;position:absolute;">
-										<li><a></a></li>
-									</ul>
-					  
+							<div class="tenantMenu" ng-show="tenantList.length > 1" </div>
+			                  <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top:0px;z-index:8000;">
+			                    <div class="tenantMenuIcon" aria-hidden="true"></div>
+									 <ul class="dropdown-menu" id="tenantDropDownList" ng-show="tenantList.length > 1" style="margin-left:0px;top:23px;position:absolute;">
+
+										<li><a class="dropdown-toggle" data-toggle="dropdown" style="margin-top:0px;z-index:8000;"></a></li>
+									</ul>					  
+
 								</a>    
 							</div>
 						</div>
 					</div>
-					<div class="summaryView" id="summaryView" style="background-color:#fff;">
+					<div class="summaryView"  style="background-color:#fff;">
 						<span ng-include src="'views/summaryView.html'"></span>
 					</div>
 
@@ -52,7 +53,7 @@
                 </ul>
             </div>
         </div>
-	<div id="appPalette" style="float:right;">
+		<div id="appPalette" style="float:right;">
                 <ul id="shapesPanelBarApp">
                             <li>
                                             <span class="shapeItem"
@@ -74,7 +75,7 @@
                                                   data-type="contract" data-shape='{"type":"contractshared","Id":"-1","connectors":[{"name":"right"}]}'
                                                   style="background-position: -400px 0" data-role="draggable"></span>
                             </li>-->
-                        </ul>
+                </ul>
 		</div>
 							<!--div id="app-slider">
 									<div ng-class="{'vis-hidden': appControls==false}">
@@ -100,7 +101,7 @@
 							<!--<div class="fabric-pane-title" style="margin-left:10px; float:left;">FABRIC</div>-->
                                    <div class="fabric-pane-title">FABRIC</div>            					
 							<!--<Change Toggle value(1 or 2) below to set default value-->
-							<div id="fabricPalette" style="float:right;">
+							<div id="fabricPalette" style="float:right; margin-right:20px">
 								<ul id="shapesPanelBarFabric">
 									<li>
                                             <span class="shapeItem"
@@ -160,7 +161,7 @@
 		<div class="summaryView" style="margin-top:30px;left:9px;!important;width:680px;">
 			<span ng-include src="'views/summaryView.html'"></span>
 	    </div>
-		<div class="sizer" style="margin-top:155px; margin-left:-100px;">
+		<div class="sizer" style="margin-top:155px; margin-left:10px; margin-right: 10px">
 			<span ng-include src="'views/sizerResults.html'"></span>
 	    </div>
 	</div>		

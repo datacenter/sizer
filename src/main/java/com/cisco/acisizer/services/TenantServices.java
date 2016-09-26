@@ -1,19 +1,28 @@
 /**
- * CopyRight @MapleLabs
+ * 
  */
 package com.cisco.acisizer.services;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.cisco.acisizer.apic.ProcessBuilderApic;
+import com.cisco.acisizer.apic.models.ApicUser;
+import com.cisco.acisizer.apic.models.ProfilerToApicMapper;
+import com.cisco.acisizer.domain.Device;
 import com.cisco.acisizer.domain.ProjectTable;
 import com.cisco.acisizer.exceptions.AciEntityNotFound;
 import com.cisco.acisizer.exceptions.DefaultNodeException;
@@ -33,6 +42,7 @@ import com.cisco.acisizer.models.LogicalSummary;
 import com.cisco.acisizer.models.SharedResource;
 import com.cisco.acisizer.models.Tenant;
 import com.cisco.acisizer.models.Vrf;
+import com.cisco.acisizer.repo.DeviceRepository;
 import com.cisco.acisizer.repo.ProjectsRepository;
 import com.cisco.acisizer.ui.models.AciSizerModelUi;
 import com.cisco.acisizer.ui.models.ApplicationUi;
@@ -55,6 +65,12 @@ import com.google.gson.Gson;
  */
 @Service
 public class TenantServices {
+	private static final String APIC_TENANT_URL = "/api/mo/uni.xml";
+
+	private static final String APIC_LOGIN_URL = "/api/aaaLogin.xml";
+
+	private static final String HTTPS = "https://";
+	
 	public static final String SNAPSHOT_NOT_FOUND_FOR_THE_TENANT_ID = "Snapshot not found for the tenant id ";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TenantServices.class);
@@ -85,6 +101,15 @@ public class TenantServices {
 	
 	@Inject
 	private ProjectServices projectServices;
+	
+	@Inject
+	private ProfilerToApicMapper profilerToApicMapper;
+
+	@Inject
+	private DeviceRepository deviceRepository;
+	
+	@Inject
+	private ProcessBuilderApic processBuilderApic;
 
 	public Tenant addTenant(int projectId, Tenant newTenant) throws AciEntityNotFound, GenericInvalidDataException {
 		LOGGER.debug("adding tenant to" + projectId);
@@ -101,7 +126,7 @@ public class TenantServices {
 		if (newTenant.getType().equals(ACISizerConstant.TENANT_TYPE_UTILITY)) {
 			throw new GenericInvalidDataException("tenant type cannot be utility");
 		}
-
+		TenantHelper.modifiedTime(newTenant);
 		Tenant tenantAdded = addTenant(newTenant, proj);
 		proj.setLastUpdatedTime(new Timestamp(new Date().getTime()));
 
@@ -180,6 +205,10 @@ public class TenantServices {
 		}
 
 		// convert it to java obj
+		return getTenant(tenantId, proj);
+
+	}
+	private Tenant getTenant(int tenantId, ProjectTable proj) throws AciEntityNotFound {
 		LogicalRequirement logicalRequirement = gson.fromJson(proj.getLogicalRequirement(), LogicalRequirement.class);
 		for (Tenant tenant : logicalRequirement.getTenants()) {
 
@@ -373,9 +402,9 @@ public class TenantServices {
 			throw new AciEntityNotFound(ACISizerConstant.TENANT_NOT_FOUND_WITH_ID);
 		}
 		//LogicalSummary logicalSummary = gson.fromJson(proj.getLogicalRequirementSummary(), LogicalSummary.class);
-		
+		TenantHelper.modifiedTime(updatedTenant);
 		tenantToRemove.setCount(updatedTenant.getCount());
-		
+		tenantToRemove.setDisplayName(updatedTenant.getDisplayName());
 		//proj.setLogicalRequirementSummary(gson.toJson(logicalSummary));
 		
 		
@@ -387,6 +416,7 @@ public class TenantServices {
 
 		if (returnProj != null) {
 			//projectServices.callSizingSummary(projectId);
+			TenantHelper.modifiedTime(tenantToRemove);
 			return tenantToRemove;
 		}
 
@@ -877,5 +907,66 @@ public class TenantServices {
 			}
 		}
 	}
+	public void pushConfig(int projectId, int tenantId, int deviceId) throws AciEntityNotFound {
+
+		ProjectTable proj = projrepo.findOne(projectId);
+
+		if (proj == null) {
+			throw new AciEntityNotFound(ACISizerConstant.COULD_NOT_FIND_THE_PROJECT_FOR_ID);
+		}
+
+		// convert it to java obj
+		LogicalRequirement logicalRequirement = gson.fromJson(proj.getLogicalRequirement(), LogicalRequirement.class);
+		Tenant tenant = Utility.getCurrentTenant(tenantId, logicalRequirement);
+		
+		Device device = deviceRepository.findOne(deviceId);
+		String loginURL = getApicLoginUrl(device);
+		String loginXml=getApicLoginXml(device);
+		String tenantXml=profilerToApicMapper.mapProfilerToApic(tenant);
+		String apicToken=processBuilderApic.apicLogin(loginURL, loginXml);
+		LOGGER.info(apicToken);
+		
+		try {
+			processBuilderApic.pushTenant(getApicTenantUrl(device), tenantXml, apicToken);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		projrepo.updateProjectWithDeviceId(projectId, deviceId);
+		tenant.setLastPushedTime(new Timestamp(new Date().getTime()));
+		proj.setDevice(device);
+		projectServices.saveProject(proj, logicalRequirement);
+		
+	}
+
+	private String getApicLoginUrl(Device device) {
+		return HTTPS + device.getIpAddress() + APIC_LOGIN_URL;
+	}
+	
+	private String getApicTenantUrl(Device device){
+		return HTTPS+device.getIpAddress()+APIC_TENANT_URL;
+	}
+
+	private String getApicLoginXml(Device device) {
+		ApicUser user = new ApicUser();
+		String tenantXml = null;
+		JAXBContext jaxbContext;
+		try {
+			user.setName(device.getUsername());
+			user.setPwd(device.getPassword());
+			jaxbContext = JAXBContext.newInstance(ApicUser.class);
+			Marshaller marshaller = jaxbContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+			marshaller.marshal(user, arrayOutputStream);
+			tenantXml = arrayOutputStream.toString();
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return tenantXml;
+
+	}
 
 }
+
+

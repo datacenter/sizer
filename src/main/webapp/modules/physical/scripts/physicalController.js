@@ -2239,6 +2239,7 @@ $scope.addDevice =
 	}
 
 	$scope.changeRowDisplay = function(index) { 
+		$('#editFormBox,#headerBox').hide();
 		if ($scope.rowTermination || $scope.deleteRowSelected){
 			return false;
 		}
@@ -2264,6 +2265,7 @@ $scope.addDevice =
 		$scope.editRoom['value3'] = $scope.rowsArray[$scope.selectedRowIndex].policy.name;
 		$scope.editRoom['policyFlag'] =  $scope.rowsArray[$scope.selectedRowIndex].policyInherited;
 		$scope.hideRackScrollBars();
+
 	
 	}
 

@@ -1,5 +1,5 @@
 angular.module('webappApp').factory("appService",
-    ['$http', '$q', 'SERVICE_STATIC_JSON', "REST_URI", "$rootScope", function ($http, $q, SERVICE_STATIC_JSON, REST_URI, $rootScope,ngDialog) {
+    ['$http', '$q', 'SERVICE_STATIC_JSON', "REST_URI", "$rootScope", "$state", "$sessionStorage", function ($http, $q, SERVICE_STATIC_JSON, REST_URI, $rootScope,$state, $sessionStorage, ngDialog) {
         var service = {};
 
         //$rootScope.projectId = 387;
@@ -75,14 +75,17 @@ angular.module('webappApp').factory("appService",
                 "consumerType": jsonObj.consumerId.type,
                 "providerEnforced": jsonObj.providerEnforced,
                 "consumerEnforced": jsonObj.consumerEnforced,
-                "type":jsonObj.type
-				
+                "type":jsonObj.type,
+                "subjects":jsonObj.subjects,
+                "configName":jsonObj.configName
+                
             };
-			reqJson.uiData = {
-				"x": jsonObj.x,
-				"y": jsonObj.y
-			};
+            reqJson.uiData = {
+                "x": jsonObj.x,
+                "y": jsonObj.y
+            };
             // url needs to be changed
+            console.log($rootScope.projectId +'-'+$rootScope.tenantId+'-'+$rootScope.appId )
             var url = REST_URI.projectUri + $rootScope.projectId + '/tenant/' + $rootScope.tenantId + '/app/' + $rootScope.appId + '/contract';
             var res = $http.post(url, reqJson);
             res.success(function (data, status, headers, config) {
@@ -280,7 +283,8 @@ angular.module('webappApp').factory("appService",
 
         service.addTenant = function (jsonObj, callback) {
 			var url=null;			
-			url = REST_URI.projectUri  + $rootScope.projectId + "/tenantTemplate"; // Keep this remove the next call
+            console.log(REST_URI.projectUri  + $rootScope.projectId);
+			url = REST_URI.projectUri  + $rootScope.projectId + "/tenant"; // Keep this remove the next call
 			var res = $http.post(url, jsonObj);
             res.success(function (data, status, headers, config) {
                 callback(data);
@@ -296,20 +300,17 @@ angular.module('webappApp').factory("appService",
         }
 		
 		 service.updateTenant = function (jsonObj, callback) {
-
-                var url = REST_URI.projectUri  + $rootScope.projectId + "/tenant/" + $rootScope.tenantId;
-                 var res = $http.put(url, jsonObj);
-            res.success(function (data, status, headers, config) {
-                callback(data);
-            });
-            res.error(function (data, status, headers, config) {
-                console.log("error in api call");
-                $rootScope.fadeOutBackground();
-                $rootScope.notification.show({
-                    title: data.error,
-                    message: data.message
-                }, "error");
-            });
+            var deferred = $q.defer();
+            deferred.resolve(  $http({ method:'PUT', 
+                url: REST_URI.projectUri  + $rootScope.projectId + "/tenant/" + $rootScope.tenantId,
+                headers:{'Content-Type':'application/json;charset=utf-8'},
+                data: jsonObj})
+                .then( function (response) {
+                    var resp = response.data; 
+                    return resp; 
+                })
+            );
+            return deferred.promise;
         }
         service.addApplication = function (jsonObj, callback) {
 
@@ -896,19 +897,17 @@ angular.module('webappApp').factory("appService",
 			var url = REST_URI.projectUri + $rootScope.projectId + '/sizingresults/';
 			//canceler.resolve();
 			var res = $http.get(url, {timeout: $rootScope.canceler.promise});
-	
             res.success(function (data, status, headers, config) {
 				//	canceler.resolve();
                 callback(data);
 			
             });
             res.error(function (data, status, headers, config) {
-				if (status != 0) {
-					console.log("error in api call");
+				if (status != -1 && status != 0 ) {
 					$rootScope.fadeOutBackground();
 					$rootScope.notification.show({
-						title: data.error,
-						message: data.message
+						title: data ? data.error : '',
+						message: data ? data.message : ''
 					}, "error");
 				}
             });
@@ -1014,6 +1013,56 @@ angular.module('webappApp').factory("appService",
                 }, "error");
             });
             }
+
+
+            // =====================================================================
+            service.setUserDetails = function(userData){
+                var userDetails = {};
+                userDetails.name = userData.username;
+                userDetails.role = userData.role;
+                userDetails.id = userData.userId;
+
+                $sessionStorage._userInfo = userDetails;
+                $sessionStorage._isUserLoggedIn = true;
+                $sessionStorage._token = userData.jwtKey;
+
+                $rootScope.userInfo = $sessionStorage._userInfo; 
+              };
+
+              service.getUserInfo = function(){
+                return $sessionStorage._userInfo || {};
+              };
+
+              service.getToken = function(){
+                return $sessionStorage._token;
+              };
+
+              service.isUserLoggedIn = function(){
+                return $sessionStorage._isUserLoggedIn;
+              };
+
+              service.logout = function(){
+                $sessionStorage._isUserLoggedIn = false;
+                $sessionStorage._userInfo = {};
+                $sessionStorage._token = '';
+                window.sessionStorage.clear();
+                service.gotoView("login");
+              };
+
+              service.gotoView = function(viewName){
+                $state.go(viewName);
+              };
+
+              service.processRequest = function(config){
+                var deferred = $q.defer();
+                $http(config).success(function (response) {
+                    deferred.resolve(response);
+                }).error(function (response) {
+                    deferred.reject(response);
+                });
+
+                return deferred.promise;
+              };
 
         return service;
 
