@@ -1908,7 +1908,7 @@ input#diagramZoomIndicator.a-textbox{
 }
 .add-tenant-buttons{    
     width:43%;
-    height:27px;
+    height:30px;
     background-color: #ffffff;
     border-radius:0px;
     margin-bottom:8px;
@@ -3183,4 +3183,7 @@ div.a-window-content{
 }
 .importDevice .progress-striped{
     width: 50%;
+}
+#content-slider span[title="Succesfully Applied to Apic"]:hover:after{
+     width: 155px; 
 }

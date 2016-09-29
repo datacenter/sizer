@@ -1,6 +1,6 @@
 <div class="addprojectView clr">
   <div class="modal-header">
-    <h3 class="modal-title">Add Devices</h3>
+    <h3 class="modal-title">Add Device</h3>
     <i class="fa fa-close closeIcon" ng-click="$dismiss()"></i>
   </div>
   <form name="addDeviceForm" ng-submit='popupCtrl.addDevice(popupCtrl.deviceObject)' novalidate mpl-form-validation>
@@ -34,7 +34,7 @@
       <p class="help-block">Enter Password</p>
     </div>
     <div class="button_footer">
-      <input type="submit" value="Save" class="a-button add-tenant-buttons" />
+      <input type="button" value="Cancel" ng-click="$dismiss()" class="a-button add-project-footer" /> <input type="submit" value="Save" class="a-button add-tenant-buttons" />
     </div>
     <div class="popupLoadingProgress" ng-show="addDeviceLoading"></div>
     <div mpl-progress id="add-device-request"></div>

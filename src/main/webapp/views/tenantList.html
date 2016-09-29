@@ -26,7 +26,7 @@
 								<label>{{tenantList[0].totalFilterCount}} </label>
 							</div>
 							<div class="wid32 pull-left">
-								<label class="tenantText">Eps</label>
+								<label class="tenantText">EPs</label>
 								<label>{{tenantList[0].totalEndPoints}} </label>
 							</div>
 							</div> 
@@ -71,7 +71,7 @@
 						<!-- close tenant -->
 						<span style="position: absolute; border-right:1px solid #ddd; margin-top:8px; padding-right:13px; line-height: 15px; margin-left: 77px; cursor:pointer; z-index: 1000;">					 
 						 	<span  title="Modified" class="tooltip"><i class="fa fa-circle modified text-warning "  ng-if="tenant.modifiedTime > tenant.lastPushedTime"></i></span><!-- &nbsp;	Modified -->
-							<span  title="Success" class="tooltip"><i class="fa fa-circle success  text-success  " ng-if="tenant.lastPushedTime > tenant.modifiedTime"></i></span><!-- &nbsp;	Success -->			
+							<span  title="Succesfully Applied to Apic" class="tooltip"><i class="fa fa-circle success  text-success  " ng-if="tenant.lastPushedTime > tenant.modifiedTime"></i></span><!-- &nbsp;	Success -->			
 						</span>
 						<span class="editTenant tooltip" title="Edit Tenant" ng-click="openEditTenantWindow(tenant, $index+1)"><i class="fa fa-pencil"></i></span>
 						<div id="appclose" class="tooltip" title="Delete Tenant" style="clear: both; float: left; top: 11px; position: relative; left: 310px;" ng-click="openDelTenantWindow($index+1)">&#10006;</div>
@@ -105,7 +105,7 @@
 								<label>{{tenant.totalFilterCount}}</label>
 							</div>
 							<div class="wid32 pull-left">
-								<label class="tenantText">Eps</label>
+								<label class="tenantText">EPs</label>
 								<label>{{tenant.totalEndPoints}}</label>
 							</div>
 							</div> 

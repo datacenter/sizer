@@ -12,6 +12,7 @@
         $uibModal.open({
           templateUrl: 'app/views/home/users/modals/adduser.html',
           size: 'sm',
+          backdrop: 'static',
           scope: $scope,
           controller: 'userPopupController',
           controllerAs: 'popupCtrl',
@@ -32,6 +33,7 @@
         $uibModal.open({
           templateUrl: 'app/views/home/users/modals/edituser.html',
           size: 'sm',
+          backdrop: 'static',
           scope: $scope,
           controller: 'userPopupController',
           controllerAs: 'popupCtrl',
@@ -56,6 +58,7 @@
           $uibModal.open({
             templateUrl: 'app/views/home/users/modals/deleteuser.html',
             size: 'sm',
+            backdrop: 'static',
             scope: $scope,
             controller: 'userPopupController',
             controllerAs: 'popupCtrl',

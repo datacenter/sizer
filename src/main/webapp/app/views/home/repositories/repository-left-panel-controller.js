@@ -29,6 +29,7 @@
         scope: $scope,
         controller: 'devicePopupController',
         controllerAs: 'popupCtrl',
+        backdrop: 'static',
         resolve: {
           deviceObject: function() {
             return null;
@@ -64,6 +65,7 @@
       $uibModal.open({
         templateUrl: 'app/views/home/repositories/modals/editdevice.html',
         size: 'sm',
+        backdrop: 'static',
         scope: $scope,
         controller: 'devicePopupController',
         controllerAs: 'popupCtrl',
@@ -92,6 +94,7 @@
         scope: $scope,
         controller: 'devicePopupController',
         controllerAs: 'popupCtrl',
+        backdrop: 'static',
         resolve: {
           deviceObject: function() {
             return deviceToDelete;

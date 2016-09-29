@@ -903,6 +903,7 @@ angular.module('webappApp').factory("appService",
 			
             });
             res.error(function (data, status, headers, config) {
+                $("#summaryView").removeClass("loading");
 				if (status != -1 && status != 0 ) {
 					$rootScope.fadeOutBackground();
 					$rootScope.notification.show({

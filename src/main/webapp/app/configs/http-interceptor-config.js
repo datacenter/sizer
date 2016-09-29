@@ -9,7 +9,7 @@
   //interceptor definition
   function httpInterceptorsConfig($provide, $httpProvider) {
     // Intercept http calls.
-    $provide.factory('ProfilerHttpInterceptor', ["$q", "$sessionStorage", '$injector', function($q, $sessionStorage, $injector) {
+    $provide.factory('ProfilerHttpInterceptor', ["$q", "$sessionStorage", '$injector', '$rootScope', function($q, $sessionStorage, $injector, $rootScope) {
       return {
         // On request success
         request: function(config) {
@@ -21,6 +21,7 @@
           if (!isLoginRequest && !isTemplateRequest) {
           // if(config.requireToken){
             config.headers.token = appService.getToken();
+
           }
 
           // Return the config or wrap it in a promise if blank.
@@ -45,7 +46,11 @@
         // On response error
         responseError : function(response) {
           var config = response.config;
-
+          if(response && response.data && response.data.exception === "io.jsonwebtoken.ExpiredJwtException"){
+            alert("Your session is expired & will be redirected to login page");
+            $rootScope.logOut();
+            return;
+          }
           return $q.reject(response);
         }
       };

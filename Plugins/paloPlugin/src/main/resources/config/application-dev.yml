@@ -1,11 +1,11 @@
 #Web Server properties
 server:
-    port: 8080
+    port: 80
 
 #https Configuration
 keystorefile: keystore.p12
 keystorepass: maplelabs
-sslport: 8443
+sslport: 443
 
 #Spring properties
 spring:

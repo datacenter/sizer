@@ -197,7 +197,7 @@ CREATE VIEW public.repo_objects AS
 INSERT INTO users (username,password,email,authentication,role) VALUES ('admin','admin','admin@acme.com','Local Authentication','ROLE_ADMIN');
 INSERT INTO users (username,password,email,authentication,role) VALUES ('user','user','user@acme.com','Local Authentication','ROLE_USER');
 
-INSERT INTO plugin(name,version,description,path) VALUES ('palo_plugin','1.0','Palo Alto Networks','/home/sizer/acisizer_jenkins_Profiler-integration/aci_profiler_palo_plugin/');
+INSERT INTO plugin(name,version,description,path) VALUES ('palo_plugin','1.0','Palo Alto Networks','/home/appadmin/sizer/plugins/paloAlto/');
 
 INSERT INTO model(name,plugin_id) VALUES ('PA-500',1);
 INSERT INTO model(name,plugin_id) VALUES ('PA-5000',1);

@@ -7,7 +7,7 @@
       fn.showObjectDetails = function(scope, detailsObject, detailsObjectType) {
         $uibModal.open({
           templateUrl: 'app/views/home/repositories/modals/object-details.html',
-          scope: scope,  
+          scope: scope, 
           controller: function($scope, inputObject, objectType) {
             var vm = this;
             vm.objectType = objectType;
@@ -56,7 +56,7 @@
         var deferred = $q.defer();
         var modalInstance = $uibModal.open({
           templateUrl: 'app/views/home/projects/details/modals/contractConfig.html',
-          size: 'lg',
+          size: 'lg',          
           scope: scope,
           controller: ['$scope', 'util', 'repoFilterOptions', 'paginationOptions', 'repoTestService', 'OBJECT_TYPES', function($scope, util, repoFilterOptions, paginationOptions, repoTestService, OBJECT_TYPES) {
             var vm = this;
@@ -143,7 +143,8 @@
         
         var modalInstance = $uibModal.open({
           templateUrl: 'app/views/home/projects/details/modals/pushapic_popup.html',
-          size: 'sm',
+          size: 'sm',          
+          backdrop: 'static', 
           controller : ['$scope', 'projectDetailsService','$rootScope', function($scope, projectDetailsService,$rootScope){
             var vm = this;
             vm.tenants = tenants;
@@ -153,8 +154,8 @@
             vm.apicDevices = apicDevices;
             
             vm.toggleTenantSelection = function(event, index, tenant){
-              event.preventDefault();
-              if(event.target.tagName === 'INPUT') return;
+              // event.preventDefault();
+              // if(event.target.tagName === 'INPUT') return;
 
               var _isAtleatOneTenantSelected = false;
               vm.selectedTenant = tenant; 

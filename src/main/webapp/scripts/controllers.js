@@ -190,7 +190,25 @@ angular.module('webappApp')
 			 });
 			 
         }
-		 
+
+         $rootScope.notification = $("#notification").aciNotification({                    
+                    position: {
+                        pinned: true,
+                        top: "35%",
+                       /* right: "40%",*/
+                        left: "35%",
+                        bottom: "40%"
+                    },
+                    autoHideAfter: 0,
+                    stacking: "down",
+                    hideOnClick:0,
+                    templates: [{
+                        type: "error",
+                        template: $("#errorTemplate").html()
+                    }]
+
+            }).data("aciNotification");  
+				
         $rootScope.fadeOutBackground = function(){
             $("body").prepend("<div id='PopupMask' style='position:fixed;width:100%;height:100%;z-index:10;background-color:gray;'></div>");
             $("#PopupMask").css('opacity', 0.2); 

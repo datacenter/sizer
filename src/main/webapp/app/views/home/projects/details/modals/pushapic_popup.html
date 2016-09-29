@@ -14,12 +14,12 @@
     </div>
 
     <div class="clr">
-      <p class="margintop10">Select Tenant :: {{apicCtrl.selectedTenantIndex}}</p>
+      <p class="margintop10">Select Tenant : {{apicCtrl.selectedTenantIndex}}</p>
       <ul class="tenantList">
         <li ng-repeat="tenant in apicCtrl.tenants" >
           <div class="checkbox">
             <label ng-click="apicCtrl.toggleTenantSelection($event, $index, tenant)">
-              <input type="checkbox" style="pointer-events:none;" ng-checked="apicCtrl.selectedTenantIndxs[$index]"/> {{tenant.displayName}}
+              <input type="checkbox" ng-checked="apicCtrl.selectedTenantIndxs[$index]"/> {{tenant.displayName}}
             </label>
           </div>
         </li>
@@ -33,7 +33,7 @@
    </div>
 
     <div class="button_footer">
-      <input type="submit" value="Apply" class="a-button add-tenant-buttons"/>
+      <input type="submit" value="Cancel" ng-click="$dismiss()" class="a-button add-project-footer" /> <input type="submit" value="Apply" class="a-button add-tenant-buttons"/>
     </div>
 
   </form>

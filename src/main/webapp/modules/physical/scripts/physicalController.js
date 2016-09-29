@@ -113,7 +113,7 @@ angular.module('physical')
 	$scope.roomPolicyArr =[];
 	$scope.rackTypesArr = [];
 	$scope.enableAddRoom = function(){
-
+		$('#rows').focus();
 		if($scope.editMode == false) {
 			$scope.room['enterRoomDetails']=true;
 			$('#addRoomWin').fadeIn();
