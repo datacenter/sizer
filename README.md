@@ -1,10 +1,18 @@
 # sizer
-This directory contains all the source files related to sizer project.
+Cisco Network Sizer is a Web based application which helps in sizing ACI or Nexus 9000 based Network infrastructure for a data centre.
+
+Network Sizer consists of three high level modules,
+
+- Logical Sizer: For a given workload/application, it calculates the optimum number of leaf switches required. It also gives information about the utilization of these switches with respect to various switch attributes.
+- Physical Sizer: Calculates number of leafs, spine switches, and port termination statistics for a datacentre based on server, switches and rack characteristics.
+- Repository: The repository objects can be used in importing application specific constraints/configuration from third party devices. These configuration can be used in logical sizer contracts.
+
 
 ## Pre-requisites:
+These are pre-requisites for setting up a build environment and running application locally.
 - Install postgresql and create database.
 - Update username, password, and database name in application-dev.yml
-- Install Node components
+- Install Node components 
 
 ## Build
 - Run mvn install -DskipTests=true
